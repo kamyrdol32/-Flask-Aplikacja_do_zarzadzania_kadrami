@@ -628,7 +628,7 @@ particlesJS("particle", {
       "value": 100,
     },
     "color": {
-      "value": "#ff9900"
+      "value": "#ECB72D"
     },
     "shape": {
       "type": "circle",
@@ -644,7 +644,7 @@ particlesJS("particle", {
       }
     },
     "size": {
-      "value": 3,
+      "value": 2,
       "random": true,
       "anim": {
         "enable": false,
