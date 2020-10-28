@@ -3,8 +3,9 @@
     --black: #1f1f1f;
     --gray: #2f2f2f;
     --lightgray: #636363;
-    --primary: #ff9900;
-    --secondary: #ff6600;
+    --primary: #ECB72D;
+    --secondary: #dadada;
+    font-family: Roboto;
 }
 
 /* Borders */
