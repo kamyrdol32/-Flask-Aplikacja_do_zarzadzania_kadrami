@@ -5,7 +5,10 @@
     --lightgray: #636363;
     --primary: #ECB72D;
     --secondary: #dadada;
-    font-family: Roboto;
+}
+
+*:not(.password-like){
+  font-family: 'Roboto' !important;
 }
 
 /* Color & background */
@@ -104,6 +107,16 @@ input{
 
 input::placeholder{
   color: var(--secondary);
+}
+
+input.password-like{
+  font-family: 'password';
+  letter-spacing: 4px;
+}
+
+input.password-like::placeholder{
+  font-family: 'Roboto' !important;
+  letter-spacing: 0px;
 }
 
 .form-group{
