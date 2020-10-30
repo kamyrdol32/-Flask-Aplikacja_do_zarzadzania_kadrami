@@ -37,7 +37,7 @@ def login():
             session['isLogged'] = True
             print("Udalo sie")
 
-            return render_template("index.html")
+            return jsonify({"redirect": "/"})
         else:
             return jsonify({"title": "", "message": "Proszę wprowadzić poprawne dane!", "type": "danger"})
 
