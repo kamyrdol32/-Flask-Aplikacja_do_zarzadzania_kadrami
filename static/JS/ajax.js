@@ -38,7 +38,9 @@ function findParentForm($element){
           } else {
             console.log(data);
           }
-        })
+        }).fail(function($r){
+          console.log($r.responseText);
+        });
 
       })
     });
