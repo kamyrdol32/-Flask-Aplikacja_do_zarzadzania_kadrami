@@ -40,20 +40,17 @@ def index():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == "POST":
-        login_mail = request.form.get('login_mail', "", type=str)
+        login_email = request.form.get('login_mail', "", type=str)
         login_password = request.form.get('login_password', "", type=str)
 
         if Type == "Development":
-            print("Login: " + login_mail)
+            print("Login: " + login_email)
             print("Hasło: " + login_password)
 
-        if userLogin(login_mail, login_password):
+        if userLogin(login_email, login_password):
 
             session['isLogged'] = True
-            session['user'] = login_mail
-
-            print("Udalo sie")
-            print("Zalogowano jako: " + session['user'])
+            session['user'] = login_email
 
             return jsonify({"redirect": "/"})
         else:
@@ -75,8 +72,18 @@ def register():
             print("Hasło: " + register_password)
             print("Hasło: " + register_repeat_password)
 
-            # return jsonify({"redirect": "/"})
+        # Sprawdzenie czy hasła są identyczne
+        if register_password != register_repeat_password:
+            return jsonify({"title": "", "message": "Prosze wprowadzić identyczne hasła!"})
 
+        if userRegister(register_mail, register_password, register_repeat_password):
+
+            session['isLogged'] = True
+            session['user'] = register_mail
+
+            return jsonify({"redirect": "/"})
+        else:
+            return jsonify({"title": "", "message": "Proszę wprowadzić poprawne dane!"})
 
     return render_template("register.html")
 
