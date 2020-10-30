@@ -662,7 +662,7 @@ particlesJS("particle", {
     },
     "move": {
       "enable": true,
-      "speed": 1,
+      "speed": 0.3,
     }
   },
 });
