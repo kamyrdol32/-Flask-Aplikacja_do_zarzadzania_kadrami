@@ -9,3 +9,17 @@
 .login-box h2{
   color: var(--secondary);
 }
+
+.missing{
+  display: inline;
+  color: var(--secondary);
+  margin: 0;
+  font-size: 14px;
+}
+
+.text-action{
+  display: inline;
+  color: var(--primary) !important;
+  margin: 0;
+  font-size: 14px;
+}
