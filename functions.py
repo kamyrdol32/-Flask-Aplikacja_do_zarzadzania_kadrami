@@ -16,17 +16,21 @@ def userLogin(email, password):
             cursor.execute("SELECT COUNT(1) FROM `user` WHERE `email` = '" + email + "'")
             if cursor.fetchone()[0]:
 
-                # Pobieranie hasła
+                # Pobieranie danych
                 cursor.execute("SELECT `password`, `secret` FROM `user` WHERE `email` = '" + email + "'")
-                db = cursor.fetchall()[0]
-                password = md5(password.encode('utf-8')).hexdigest()
-                password = md5((password+db[1]).encode('utf-8')).hexdigest()
+                Data = cursor.fetchall()[0]
 
-                print(db[0])
-                print(db[1])
-                print(password)
+                # Szyfrowanie
+                password = md5(password.encode('utf-8')).hexdigest()
+                password = md5((password+Data[1]).encode('utf-8')).hexdigest()
+
+                if Type == "Development":
+                    print(Data[0])
+                    print(Data[1])
+                    print(password)
+
                 # Sprawdzanie czy hasła są sobie równe
-                if password == db[0]:
+                if password == Data[0]:
                     flash('Pomyślnie zalogowano!', 'success')
                     return True
                 else:

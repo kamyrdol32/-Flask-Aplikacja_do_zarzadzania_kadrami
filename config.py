@@ -11,6 +11,11 @@ class Config(object):
     MYSQL_DATABASE_DB = "33700168_kamyrdol"
     MYSQL_DATABASE_HOST = "serwer2077031.home.pl"
 
+    # MYSQL_DATABASE_USER = "pi"
+    # MYSQL_DATABASE_PASSWORD = "Ev12321"
+    # MYSQL_DATABASE_DB = "Kamil"
+    # MYSQL_DATABASE_HOST = "192.168.0.200"
+
     # JWT
     JWT_SECRET_KEY = '@df34FD%d^$W#%s#dsY$'
     JWT_TOKEN_LOCATION = ['cookies']
@@ -34,22 +39,3 @@ class ProductionConfig(Config):
 class DevelopmentConfig(Config):
     DEBUG = True
     SESSION_COOKIE_SECURE = False
-
-    MAIL_SERVER = "smtp.gmail.com"
-    MAIL_PORT = 465
-    MAIL_USERNAME = "kamyrdol32test@gmail.com"
-    MAIL_PASSWORD = "iqvfqchwmxycqdbk"
-    MAIL_USE_TLS = False
-    MAIL_USE_SSL = True
-
-
-class TestingConfig(Config):
-    TESTING = True
-    SESSION_COOKIE_SECURE = False
-
-    MAIL_SERVER = "smtp.gmail.com"
-    MAIL_PORT = 465
-    MAIL_USERNAME = "kamyrdol32test@gmail.com"
-    MAIL_PASSWORD = "iqvfqchwmxycqdbk"
-    MAIL_USE_TLS = False
-    MAIL_USE_SSL = True
