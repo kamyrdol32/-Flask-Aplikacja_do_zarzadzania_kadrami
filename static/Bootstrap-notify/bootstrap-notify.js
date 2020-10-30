@@ -421,7 +421,7 @@ function notify($params){
   return $.notify({
     icon: $params.icon ? $params.icon : "fas fa-exclamation-circle",
     title: $params.title ? $params.title : "Powiadomienie",
-    message: $params.message ? $params.message : " ",
+    message: $params.message ? $params.message : "Lorem Ipsium DOlor sit amet kurwa nie pamietam jak to dalej lecialo Lorem Ipsium DOlor sit amet kurwa nie pamietam jak to dalej lecialo Lorem Ipsium DOlor sit amet kurwa nie",
   },{
     element: 'body',
     position: null,
@@ -433,10 +433,8 @@ function notify($params){
       from: $params.from ? $params.from : "bottom",
       align: $params.align ? $params.align : "right",
     },
-    offset: 25,
-    spacing: 10,
     z_index: 20,
-    delay: $params.delay ? $params.delay : 12000000,
+    delay: $params.delay ? $params.delay : 5000,
     timer: 50,
     icon_type: 'class',
     template: '<div data-notify="container" class="alert" role="alert">' +

@@ -303,8 +303,59 @@ text-indent: 20px;
 }
 
 div[data-notify='container'] {
-    width: 500px;
-    max-width: calc(100vw - 30px);
-    right: 15px;
-    bottom: 15px;
+  width: 500px;
+  max-width: calc(100vw - 30px);
+  right: 15px !important;
+  bottom: 15px !important;
+  background: rgba(0,0,0,0.45);
+  border-radius: 10px;
+}
+
+div[data-notify='container'] .progress {
+  height: 4px;
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  right: 20px;
+  border-radius: 3px;
+}
+
+div[data-notify='container'] .progress-bar {
+  background: var(--primary) !important;
+}
+
+div[data-notify='container'] > span {
+  float: left;
+  width: 70px;
+  display: block;
+  height: 70px;
+  text-align: center;
+  line-height: 70px;
+  font-size: 55px;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+div[data-notify='container'] .text {
+  margin-left: 90px;
+}
+
+div[data-notify='container'] .text span[data-notify='title'] {
+  display: block;
+  min-height: 40px;
+  line-height: 40px;
+  font-size: 21px;
+  color: var(--primary);
+}
+
+div[data-notify='container'] .text span[data-notify='message'] {
+  display: block;
+  line-height: 20px;
+  font-size: 14px;
+  color: var(--secondary);
+  margin-bottom: 25px;
+}
+
+div[data-notify='container'] button{
+  display: none;
 }
