@@ -3,6 +3,7 @@ import functools
 from flask import Flask, render_template, redirect, session, jsonify, request
 
 app = Flask(__name__)
+app.config.from_object("config.DevelopmentConfig")
 
 ### DECORATOR ###
 
@@ -29,8 +30,8 @@ def login():
     if request.method == "POST":
         login_mail = request.form.get('login_mail', "", type=str)
         login_password = request.form.get('login_password', "", type=str)
-        print(login_mail)
-        print(login_password)
+        print("Login:" + login_mail)
+        print("Hasło:" + login_password)
         if login_mail == "admin" and login_password == "admin":
 
             session['isLogged'] = True
