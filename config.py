@@ -35,7 +35,21 @@ class DevelopmentConfig(Config):
     DEBUG = True
     SESSION_COOKIE_SECURE = False
 
+    MAIL_SERVER = "smtp.gmail.com"
+    MAIL_PORT = 465
+    MAIL_USERNAME = "kamyrdol32test@gmail.com"
+    MAIL_PASSWORD = "iqvfqchwmxycqdbk"
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
+
 
 class TestingConfig(Config):
     TESTING = True
     SESSION_COOKIE_SECURE = False
+
+    MAIL_SERVER = "smtp.gmail.com"
+    MAIL_PORT = 465
+    MAIL_USERNAME = "kamyrdol32test@gmail.com"
+    MAIL_PASSWORD = "iqvfqchwmxycqdbk"
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
