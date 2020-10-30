@@ -415,3 +415,37 @@
 }));
 
 
+function notify($params){
+  if(typeof($params) == "undefined") $params = {};
+
+  return $.notify({
+    icon: $params.icon ? $params.icon : "fas fa-exclamation-circle",
+    title: $params.title ? $params.title : "Powiadomienie",
+    message: $params.message ? $params.message : " ",
+  },{
+    element: 'body',
+    position: null,
+    type: $params.type ? $params.type : "danger",
+    allow_dismiss: true,
+    newest_on_top: $params.top ? true : false,
+    showProgressbar: true,
+    placement: {
+      from: $params.from ? $params.from : "bottom",
+      align: $params.align ? $params.align : "right",
+    },
+    offset: 25,
+    spacing: 10,
+    z_index: 20,
+    delay: $params.delay ? $params.delay : 12000,
+    timer: 50,
+    icon_type: 'class',
+    template: '<div data-notify="container" class="alert" role="alert">' +
+      '<span data-notify="icon"></span> ' +
+      '<div class="text"><span data-notify="title">{1}</span><span data-notify="message">{2}</span></div>' +
+      '<div class="progress" data-notify="progressbar">' +
+        '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+      '</div>' +
+      '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+    '</div>'
+  });
+}

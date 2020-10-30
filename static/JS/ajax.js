@@ -31,7 +31,7 @@ function findParentForm($element){
           type: $method,
         }).done(function(data){
           if(data['message']){
-            // notify(data);
+            notify(data);
             console.log(data);
           } else if (data['redirect']) {
             window.location = data['redirect'];
