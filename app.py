@@ -5,8 +5,10 @@ import functools
 from flaskext.mysql import MySQL
 from flask import Flask, render_template, redirect, session, jsonify, request, flash
 
+Type = "Development"
+
 app = Flask(__name__)
-app.config.from_object("config.TestingConfig")
+app.config.from_object("config." + Type + "Config")
 
 mysql = MySQL()
 mysql.init_app(app)
@@ -41,8 +43,9 @@ def login():
         login_mail = request.form.get('login_mail', "", type=str)
         login_password = request.form.get('login_password', "", type=str)
 
-        # print("Login: " + login_mail)
-        # print("Hasło: " + login_password)
+        if Type == "Development":
+            print("Login: " + login_mail)
+            print("Hasło: " + login_password)
 
         if userLogin(login_mail, login_password):
 
