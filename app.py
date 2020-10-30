@@ -6,7 +6,7 @@ from flaskext.mysql import MySQL
 from flask import Flask, render_template, redirect, session, jsonify, request, flash
 
 app = Flask(__name__)
-app.config.from_object("config.DevelopmentConfig")
+app.config.from_object("config.TestingConfig")
 
 mysql = MySQL()
 mysql.init_app(app)
