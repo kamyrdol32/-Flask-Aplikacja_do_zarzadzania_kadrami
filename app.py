@@ -1,9 +1,15 @@
+from functions import *
+
 import functools
 
-from flask import Flask, render_template, redirect, session, jsonify, request
+from flaskext.mysql import MySQL
+from flask import Flask, render_template, redirect, session, jsonify, request, flash
 
 app = Flask(__name__)
-app.config.from_object("config.DevelopmentConfig")
+app.config.from_object("config.TestingConfig")
+
+mysql = MySQL()
+mysql.init_app(app)
 
 ### DECORATOR ###
 
@@ -16,25 +22,35 @@ def protected(func):
 
     return secure_function
 
-### INDEX ###
+####################
+### INDEX
+####################
 
 @app.route('/')
 @protected
 def index():
     return render_template("index.html")
 
-### LOGOWANIE I REJESTRACJA ###
+####################
+### Login & Register
+####################
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == "POST":
         login_mail = request.form.get('login_mail', "", type=str)
         login_password = request.form.get('login_password', "", type=str)
-        print("Login: " + login_mail)
-        print("Hasło: " + login_password)
-        if login_mail == "admin" and login_password == "admin":
-            session['isLogged'] = True
 
+        # print("Login: " + login_mail)
+        # print("Hasło: " + login_password)
+
+        if userLogin(login_mail, login_password):
+
+            session['isLogged'] = True
+            session['user'] = login_mail
+
+            print("Udalo sie")
+            print("Zalogowano jako: " + session['user'])
 
             return jsonify({"redirect": "/"})
         else:
