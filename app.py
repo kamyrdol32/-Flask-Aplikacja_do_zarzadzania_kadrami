@@ -75,8 +75,7 @@ def register():
             print("Hasło: " + register_password)
             print("Hasło: " + register_repeat_password)
 
-
-            return jsonify({"redirect": "/"})
+            # return jsonify({"redirect": "/"})
 
 
     return render_template("register.html")
