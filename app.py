@@ -62,8 +62,23 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/register')
+@app.route('/register', methods=['POST', 'GET'])
 def register():
+    if request.method == "POST":
+
+        register_mail = request.form.get('register_mail', "", type=str)
+        register_password = request.form.get('register_password', "", type=str)
+        register_repeat_password = request.form.get('register_repeat_password', "", type=str)
+
+        if Type == "Development":
+            print("Login: " + register_mail)
+            print("Hasło: " + register_password)
+            print("Hasło: " + register_repeat_password)
+
+
+            return jsonify({"redirect": "/"})
+
+
     return render_template("register.html")
 
 
