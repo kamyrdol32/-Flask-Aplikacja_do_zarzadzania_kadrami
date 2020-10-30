@@ -30,8 +30,8 @@ def login():
     if request.method == "POST":
         login_mail = request.form.get('login_mail', "", type=str)
         login_password = request.form.get('login_password', "", type=str)
-        print("Login:" + login_mail)
-        print("Hasło:" + login_password)
+        print("Login: " + login_mail)
+        print("Hasło: " + login_password)
         if login_mail == "admin" and login_password == "admin":
 
             session['isLogged'] = True
