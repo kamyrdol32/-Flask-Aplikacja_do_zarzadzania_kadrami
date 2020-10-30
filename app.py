@@ -33,9 +33,8 @@ def login():
         print("Login: " + login_mail)
         print("Hasło: " + login_password)
         if login_mail == "admin" and login_password == "admin":
-
             session['isLogged'] = True
-            print("Udalo sie")
+
 
             return jsonify({"redirect": "/"})
         else:
