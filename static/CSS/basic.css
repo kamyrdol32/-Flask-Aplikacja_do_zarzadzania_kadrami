@@ -301,3 +301,10 @@ text-indent: 20px;
   height: 84vh;
   margin-top: 8vh;
 }
+
+div[data-notify='container'] {
+    width: 500px;
+    max-width: calc(100vw - 30px);
+    right: 15px;
+    bottom: 15px;
+}

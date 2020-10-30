@@ -436,7 +436,7 @@ function notify($params){
     offset: 25,
     spacing: 10,
     z_index: 20,
-    delay: $params.delay ? $params.delay : 12000,
+    delay: $params.delay ? $params.delay : 12000000,
     timer: 50,
     icon_type: 'class',
     template: '<div data-notify="container" class="alert" role="alert">' +
