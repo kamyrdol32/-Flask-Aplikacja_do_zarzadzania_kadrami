@@ -73,6 +73,7 @@ body::before {
   transform: rotate(-8deg);
   box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 7px 0px;
   border: 2px solid black;
+  transition-duration: 0.3s;
 }
 
 body::after {
@@ -86,6 +87,17 @@ body::after {
   transform: rotate(-8deg);
   box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 7px 0px;
   border: 2px solid black;
+  transition-duration: 0.3s;
+}
+
+body.content-hovered::before{
+  bottom: -35vh;
+  transition-duration: 0.3s;
+}
+
+body.content-hovered::after{
+  top: -35vh;
+  transition-duration: 0.3s;
 }
 
 *:focus {
