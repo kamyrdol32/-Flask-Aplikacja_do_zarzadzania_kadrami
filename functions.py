@@ -56,9 +56,14 @@ def userRegister(register_mail, register_password, register_repeat_password):
             cursor.execute("SELECT COUNT(1) FROM `user` WHERE `email` = '" + register_mail + "'")
             if not cursor.fetchone()[0]:
 
+                generatedPassword = passwordGenerator()
+
+                # Szyfrowanie
+                register_password = md5(register_password.encode('utf-8')).hexdigest()
+                register_password = md5((register_password+generatedPassword).encode('utf-8')).hexdigest()
+
                 # Dodanie do bazy MySQL
-                to_MySQL = (str(register_mail), str(register_password), passwordGenerator(), 1, 1)
-                print(to_MySQL)
+                to_MySQL = (str(register_mail), str(register_password), generatedPassword, 1, 1)
                 cursor.execute("INSERT INTO user (email, password, secret, type, status) VALUES (%s, %s, %s, %s, %s)", to_MySQL)
                 connection.commit()
 

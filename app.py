@@ -43,10 +43,12 @@ def login():
         login_email = request.form.get('login_mail', "", type=str)
         login_password = request.form.get('login_password', "", type=str)
 
+        # Development
         if Type == "Development":
             print("Login: " + login_email)
             print("Hasło: " + login_password)
 
+        # Logowanie
         if userLogin(login_email, login_password):
 
             session['isLogged'] = True
@@ -67,6 +69,7 @@ def register():
         register_password = request.form.get('register_password', "", type=str)
         register_repeat_password = request.form.get('register_repeat_password', "", type=str)
 
+        # Development
         if Type == "Development":
             print("Login: " + register_mail)
             print("Hasło: " + register_password)
@@ -76,6 +79,7 @@ def register():
         if register_password != register_repeat_password:
             return jsonify({"title": "", "message": "Prosze wprowadzić identyczne hasła!"})
 
+        # Rejestracja
         if userRegister(register_mail, register_password, register_repeat_password):
 
             session['isLogged'] = True
