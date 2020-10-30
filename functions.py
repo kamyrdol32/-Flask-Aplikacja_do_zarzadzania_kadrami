@@ -13,15 +13,20 @@ def userLogin(email, password):
             cursor = connection.cursor()
 
             # Sprawdzanie czy istnieje użytkownik
-            cursor.execute("SELECT COUNT(1) FROM Users WHERE Mail = '" + email + "'")
+            cursor.execute("SELECT COUNT(1) FROM `user` WHERE `email` = '" + email + "'")
             if cursor.fetchone()[0]:
 
                 # Pobieranie hasła
-                cursor.execute("SELECT Password FROM Users WHERE Mail = '" + email + "'")
-                mysql_password = cursor.fetchone()[0]
+                cursor.execute("SELECT `password`, `secret` FROM `user` WHERE `email` = '" + email + "'")
+                db = cursor.fetchall()[0]
+                password = md5(password.encode('utf-8')).hexdigest()
+                password = md5((password+db[1]).encode('utf-8')).hexdigest()
 
+                print(db[0])
+                print(db[1])
+                print(password)
                 # Sprawdzanie czy hasła są sobie równe
-                if md5(password.encode('utf-8')).hexdigest() == mysql_password:
+                if password == db[0]:
                     flash('Pomyślnie zalogowano!', 'success')
                     return True
                 else:
