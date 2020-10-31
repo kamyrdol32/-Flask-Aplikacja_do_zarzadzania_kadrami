@@ -1,1 +1,1 @@
-# Official_V3
+# Aplikacja do zarządzania kadrami
