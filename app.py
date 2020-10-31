@@ -3,7 +3,7 @@ from functions import *
 import functools
 
 from flaskext.mysql import MySQL
-from flask import Flask, render_template, redirect, session, jsonify, request, flash
+from flask import Flask, render_template, redirect, session, jsonify, request
 
 Type = "Development"
 
@@ -124,6 +124,28 @@ def company_list():
 @app.route('/company/workers')
 def company_workers():
     return render_template("company_workers.html")
+
+####################
+### Account
+####################
+
+@app.route('/account/')
+def account():
+    return render_template("account.html")
+
+
+@app.route('/account/password')
+def account_password():
+    return render_template("account_password.html")
+
+####################
+### Messages
+####################
+
+@app.route('/messages')
+def messages():
+    return render_template("messages.html")
+
 
 
 if __name__ == '__main__':
