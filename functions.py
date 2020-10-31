@@ -15,11 +15,11 @@ def userLogin(login_email, login_password):
             cursor = connection.cursor()
 
             # Sprawdzanie czy istnieje użytkownik
-            cursor.execute("SELECT COUNT(1) FROM `user` WHERE `email` = '" + login_email + "'")
+            cursor.execute("SELECT COUNT(1) FROM `Users` WHERE `Mail` = '" + login_email + "'")
             if cursor.fetchone()[0]:
 
                 # Pobieranie danych
-                cursor.execute("SELECT `password`, `secret` FROM `user` WHERE `email` = '" + login_email + "'")
+                cursor.execute("SELECT `Password`, `Secret_Key` FROM `Users` WHERE `Mail` = '" + login_email + "'")
                 Data = cursor.fetchall()[0]
 
                 # Szyfrowanie
@@ -53,7 +53,7 @@ def userRegister(register_mail, register_password, register_repeat_password):
             cursor = connection.cursor()
 
             # Sprawdzanie czy istnieje użytkownik
-            cursor.execute("SELECT COUNT(1) FROM `user` WHERE `email` = '" + register_mail + "'")
+            cursor.execute("SELECT COUNT(1) FROM `Users` WHERE `Mail` = '" + register_mail + "'")
             if not cursor.fetchone()[0]:
 
                 generatedPassword = passwordGenerator()
@@ -64,7 +64,7 @@ def userRegister(register_mail, register_password, register_repeat_password):
 
                 # Dodanie do bazy MySQL
                 to_MySQL = (str(register_mail), str(register_password), generatedPassword, 1, 1)
-                cursor.execute("INSERT INTO user (email, password, secret, type, status) VALUES (%s, %s, %s, %s, %s)", to_MySQL)
+                cursor.execute("INSERT INTO Users (Mail, Password, Secret_Key, Type, Status) VALUES (%s, %s, %s, %s, %s)", to_MySQL)
                 connection.commit()
 
                 return True

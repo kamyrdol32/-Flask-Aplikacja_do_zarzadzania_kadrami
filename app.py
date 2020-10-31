@@ -75,6 +75,10 @@ def register():
             print("Hasło: " + register_password)
             print("Hasło: " + register_repeat_password)
 
+        # Regex
+        if not checkMail(register_mail):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawny adres E-Mail!"})
+
         # Sprawdzenie czy hasła są identyczne
         if register_password != register_repeat_password:
             return jsonify({"title": "", "message": "Prosze wprowadzić identyczne hasła!"})
