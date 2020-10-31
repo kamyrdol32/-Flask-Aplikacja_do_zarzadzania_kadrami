@@ -5,11 +5,18 @@ import functools
 from flaskext.mysql import MySQL
 from flask import Flask, render_template, redirect, session, jsonify, request
 
-Type = "Development"
+####################
+### CONFIG & DECORATOS
+####################
 
+
+Type = "Development" # Production or Development
+
+# Pobieranie config'a z pliku config.py
 app = Flask(__name__)
 app.config.from_object("config." + Type + "Config")
 
+# Aktywowanie modułu MySQL
 mysql = MySQL()
 mysql.init_app(app)
 

@@ -3,7 +3,7 @@ class Config(object):
     TESTING = False
     SECRET_KEY = "DFGs34fdvgss#$dsfd%EF#3245SD%#%E^%$^&$#S@#TY#Y&"
 
-    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = False
 
     # MYSQL
     MYSQL_DATABASE_USER = "33700168_kamyrdol"
@@ -38,4 +38,3 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SESSION_COOKIE_SECURE = False
