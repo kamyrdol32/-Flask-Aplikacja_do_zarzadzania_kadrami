@@ -40,94 +40,48 @@
   <div id="content" class="{% if not session["isLogged"] %} justify-content-center align-items-center {% endif %}">
     {% if session["isLogged"] %}
     <div class="container d-block mx-auto content-container">
-      <div class="menu col-3 h-100 border-classic">
-        <!-- Kokpit -->
-        <a class="menu-item" href="#">
-          <div class="menu-icon">
-            <i class="fas fa-home"></i>
+      <div class="row menu">
+        <nav class="navbar navbar-expand-md w-100">
+          <a class="navbar-brand" href="/"><i class="fas fa-home"></i> Strona główna</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="Firma" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="far fa-building"></i> Firma
+                  <i class="fas fa-caret-down"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="Firma">
+                  <a class="dropdown-item" href="#"><i class="fas fa-table"></i> Dane firmy</a>
+                  <a class="dropdown-item" href="#"><i class="fas fa-users"></i> Lista pracowników</a>
+                  <a class="dropdown-item" href="#"><i class="fas fa-file-alt"></i> Wnioski urlopowe</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-comments"></i> Komunikator</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="Moje" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-user"></i> Moje dane
+                  <i class="fas fa-caret-down"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="Moje">
+                  <a class="dropdown-item" href="#"><i class="fas fa-th-list"></i> Podsumowanie</a>
+                  <a class="dropdown-item" href="#"><i class="fas fa-key"></i> Dane logowania</a>
+                </div>
+              </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link last" href="/logout"><i class="fas fa-sign-out-alt"></i> Wyloguj</a>
+              </li>
+            </ul>
           </div>
-          <div class="menu-text">
-            <p>Kokpit</p>
-          </div></a>
-
-        <!-- Firma -->
-        <a class="menu-item separator" onclick="coll('firma', event)">
-          <div class="menu-icon">
-            <i class="far fa-building"></i>
-          </div>
-          <div class="menu-text">
-            <p>Firma</p>
-          </div></a>
-          <div class="collapse" collapse="firma">
-            <a class="menu-item" href="#">
-              <div class="menu-icon">
-                <i class="fas fa-table"></i>
-              </div>
-              <div class="menu-text">
-                <p>Dane firmy</p>
-              </div></a>
-            <a class="menu-item" href="#">
-              <div class="menu-icon">
-                <i class="fas fa-users"></i>
-              </div>
-              <div class="menu-text">
-                <p>Lista pracowników</p>
-              </div></a>
-            <a class="menu-item" href="#">
-              <div class="menu-icon">
-                <i class="fas fa-file-alt"></i>
-              </div>
-              <div class="menu-text">
-                <p>Wnioski urlopowe</p>
-              </div></a>
-          </div>
-
-        <!-- Komunikator -->
-        <a class="menu-item" href="#">
-          <div class="menu-icon">
-            <i class="fas fa-comments"></i>
-          </div>
-          <div class="menu-text">
-            <p>Komunikator</p>
-          </div></a>
-
-        <!-- Moje dane -->
-        <a class="menu-item" onclick="coll('dane', event)">
-          <div class="menu-icon">
-            <i class="fas fa-user"></i>
-          </div>
-          <div class="menu-text">
-            <p>Moje dane</p>
-          </div></a>
-
-          <div class="collapse" collapse="dane">
-            <a class="menu-item" href="#">
-              <div class="menu-icon">
-                <i class="fas fa-th-list"></i>
-              </div>
-              <div class="menu-text">
-                <p>Podsumowanie</p>
-              </div></a>
-            <a class="menu-item" href="#">
-              <div class="menu-icon">
-                <i class="fas fa-key"></i>
-              </div>
-              <div class="menu-text">
-                <p>Dane logowania</p>
-              </div></a>
-          </div>
-
-        <!-- Wyloguj -->
-        <a class="menu-item separator" href="/logout">
-          <div class="menu-icon">
-            <i class="fas fa-sign-out-alt"></i>
-          </div>
-          <div class="menu-text">
-            <p>Wyloguj</p>
-          </div></a>
-
+        </nav>
       </div>
-      <div class="col-9">
+      <div class="row">
 
       </div>
     </div>
