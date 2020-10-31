@@ -309,7 +309,7 @@ div[data-notify='container'] button {
 }
 
 .navbar {
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.45);
   border-radius: 10px;
   padding: 0;
 }
@@ -413,4 +413,11 @@ div[data-notify='container'] button {
     transition-duration: 0.3s;
 
   }
+}
+
+.row.content{
+  margin-top: 1.5rem;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.45);
+  min-height: 300px;
 }
