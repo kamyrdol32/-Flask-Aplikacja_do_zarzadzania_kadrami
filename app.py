@@ -34,7 +34,7 @@ def index():
     return render_template("index.html")
 
 ####################
-### Login & Register
+### Login & Register & Logout
 ####################
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -100,6 +100,30 @@ def register():
 def logout():
     session.pop('isLogged', None)
     return redirect("/")
+
+####################
+### Company
+####################
+
+@app.route('/company')
+def company():
+    return render_template("company.html")
+
+
+@app.route('/company/add')
+@protected
+def company_add():
+    return render_template("company_add.html")
+
+
+@app.route('/company/list')
+def company_list():
+    return render_template("company_list.html")
+
+
+@app.route('/company/workers')
+def company_workers():
+    return render_template("company_workers.html")
 
 
 if __name__ == '__main__':
