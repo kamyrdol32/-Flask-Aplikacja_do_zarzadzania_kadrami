@@ -6,11 +6,6 @@ class Config(object):
     SESSION_COOKIE_SECURE = False
 
     # MYSQL
-    # MYSQL_DATABASE_USER = "33700168_kamyrdol"
-    # MYSQL_DATABASE_PASSWORD = "dupadupadupa"
-    # MYSQL_DATABASE_DB = "33700168_kamyrdol"
-    # MYSQL_DATABASE_HOST = "serwer2077031.home.pl"
-
     MYSQL_DATABASE_USER = "pi"
     MYSQL_DATABASE_PASSWORD = "Ev12321"
     MYSQL_DATABASE_DB = "Kamil"
