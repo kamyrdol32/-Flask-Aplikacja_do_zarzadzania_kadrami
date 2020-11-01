@@ -76,3 +76,22 @@ def userRegister(register_mail, register_password, register_repeat_password):
         except Exception as Error:
             print("registerLogin - MySQL Error")
             print("Error: " + str(Error))
+
+
+####################
+### Others
+####################
+
+def getStates():
+    try:
+        connection = mysql.connect()
+        cursor = connection.cursor()
+        cursor.execute("SELECT `Name` FROM States")
+        States = cursor.fetchall()
+        cursor.close()
+
+        return States
+
+    except Exception as Error:
+        print("getStates - Error")
+        print("Error: " + str(Error))
