@@ -154,12 +154,12 @@ body::after {
 }
 
 body.content-hovered::before {
-  bottom: -35vh;
+  bottom: -37vh;
   transition-duration: 0.3s;
 }
 
 body.content-hovered::after {
-  top: -35vh;
+  top: -37vh;
   transition-duration: 0.3s;
 }
 
@@ -173,7 +173,7 @@ hr {
   border-top: 1px solid rgba(255, 255, 255, .3);
 }
 
-input {
+input,select {
   display: block;
   width: 100%;
   height: calc(1.5em + .75rem + 2px);
@@ -202,7 +202,7 @@ textarea{
   resize: none;
 }
 
-input::placeholder, textarea::placeholder {
+input::placeholder, textarea::placeholder{
   color: var(--secondary) !important;
 }
 
