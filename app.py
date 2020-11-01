@@ -82,7 +82,7 @@ def register():
             print("Hasło: " + register_password)
             print("Hasło: " + register_repeat_password)
 
-        # Regex
+        # Weryfikacja danych
         if not checkMail(register_mail):
             return jsonify({"title": "", "message": "Prosze wprowadzić poprawny adres E-Mail!"})
 
