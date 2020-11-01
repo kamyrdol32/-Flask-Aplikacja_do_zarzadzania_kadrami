@@ -83,12 +83,12 @@
         </nav>
       </div>
       <div class="row content">
-
+        {% block content %}{% endblock %}
       </div>
     </div>
     {% else %}
 
-    {% block content %}{% endblock %}
+    {{ self.content() }}
 
     {% endif %}
   </div>

@@ -48,6 +48,69 @@ a, a:focus, a:hover, a:active {
   border-radius: 10px;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #ECB72D;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ECB72D;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #ECB72D;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-track:hover {
+  background: rgba(255,255,255,0.3);
+}
+::-webkit-scrollbar-track:active {
+  background: rgba(255,255,255,0.3);
+}
+
+h2, .h2{
+  font-size: 22px;
+}
+
+
+h3, .h3{
+  font-size: 18px;
+}
+
+p, span{
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #content {
   display: flex;
   height: 100vh;
@@ -114,18 +177,33 @@ input {
   display: block;
   width: 100%;
   height: calc(1.5em + .75rem + 2px);
-  padding: .375rem .75rem;
+  padding: 0;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: white;
-  background: transparent;
-  border-radius: 0;
-  border: 0;
+  color: var(--secondary) !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  border: 0 !important;
 }
 
-input::placeholder {
-  color: var(--secondary);
+textarea{
+  display: block;
+  width: 100%;
+  height: calc(1.5em + .75rem + 2px) !important;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--secondary) !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  border: 0 !important;
+  resize: none;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--secondary) !important;
 }
 
 input.password-like {
@@ -146,8 +224,9 @@ input.password-like::placeholder {
   content: " ";
   display: block;
   position: absolute;
-  left: 0;
+  left: 1rem;
   width: 100%;
+  max-width: calc(100% - 2rem);
   bottom: -2px;
   height: 2px;
   background: var(--secondary);
@@ -160,8 +239,9 @@ input.password-like::placeholder {
   content: " ";
   display: block;
   position: absolute;
-  left: 0;
+  left: 1rem;
   width: 60px;
+  max-width: calc(100% - 2rem);
   bottom: -2px;
   height: 2px;
   background: var(--primary);
@@ -170,21 +250,23 @@ input.password-like::placeholder {
   z-index: 3;
 }
 
-.form-group:hover::before, .form-group:active::before {
+.form-group:hover::before, .form-group:active::before,
+.form-group:active::before, .form-group:active::before,
+.form-group:focus::before, .form-group:focus::before,
+.form-group:focus-within::before, .form-group:focus-within::before {
   width: 100%;
   transition-duration: 0.3s;
   transition-delay: 0.1s;
 }
 
 .btn.btn-own {
-  width: 47%;
-  border: 2px solid var(--secondary);
   color: var(--secondary);
   border-radius: 25px;
   position: relative;
   overflow: hidden;
-  font-weight: bold;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 3px 2px;
+  font-weight: 500;
+  box-shadow: inset 0 0 0 2px var(--primary), rgba(0, 0, 0, 0.3) 0px 0px 3px 2px;
+  padding: 7px 50px;
 }
 
 .btn.btn-own span {
@@ -192,33 +274,31 @@ input.password-like::placeholder {
   z-index: 3;
   color: white;
   text-shadow: grey 0px 0px 2px;
-  letter-spacing: .5px;
+  letter-spacing: 1.5px;
 }
 
 .btn.btn-own:hover {
-  border: 2px solid var(--primary);
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 3px 2px;
+  box-shadow: inset 0 0 0 2px var(--primary), rgba(0, 0, 0, 0.5) 0px 0px 3px 2px;
 }
 
 .btn.btn-own::before {
   content: " ";
-  width: 200%;
+  width: 110%;
   display: block;
-  height: 200%;
+  height: 110%;
   background: var(--primary);
   position: absolute;
-  top: -24%;
+  top: -5%;
   bottom: 0;
-  left: -207%;
+  left: -115%;
   right: 0;
   z-index: 1;
-  transform: rotate(-11deg);
-  transition-duration: 0.6s;
+  transition-duration: 0.3s;
 }
 
 .btn.btn-own:hover::before {
-  left: -50%;
-  transition-duration: 0.6s;
+  left: -5%;
+  transition-duration: 0.3s;
 }
 
 #particle {
@@ -419,5 +499,25 @@ div[data-notify='container'] button {
   margin-top: 1.5rem;
   border-radius: 10px;
   background: rgba(0,0,0,0.45);
-  min-height: 300px;
+  color: var(--secondary);
+  height: calc(100% - 45px - 1.5rem);
+  overflow: auto;
+}
+
+.hovered{
+  position: relative;
+  margin-bottom: 1.5rem;
+
+}
+
+.hovered::after{
+  content: " ";
+  display: block;
+  position: absolute;
+  left: 1rem;
+  bottom: 0;
+  height: 1px;
+  width: 150px;
+  background: var(--secondary);
+  opacity: 0.3;
 }
