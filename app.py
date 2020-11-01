@@ -104,6 +104,7 @@ def register():
 
 
 @app.route('/logout')
+@protected
 def logout():
     session.pop('isLogged', None)
     return redirect("/")
@@ -113,22 +114,26 @@ def logout():
 ####################
 
 @app.route('/company')
+@protected
 def company():
     return render_template("company.html")
 
 
-@app.route('/company/add')
+@app.route('/company/add', methods=['POST', 'GET'])
 @protected
 def company_add():
+    print(getStates())
     return render_template("company_add.html")
 
 
 @app.route('/company/list')
+@protected
 def company_list():
     return render_template("company_list.html")
 
 
 @app.route('/company/workers')
+@protected
 def company_workers():
     return render_template("company_workers.html")
 
@@ -137,11 +142,13 @@ def company_workers():
 ####################
 
 @app.route('/account/')
+@protected
 def account():
     return render_template("account.html")
 
 
 @app.route('/account/password')
+@protected
 def account_password():
     return render_template("account_password.html")
 
@@ -150,6 +157,7 @@ def account_password():
 ####################
 
 @app.route('/messages')
+@protected
 def messages():
     return render_template("messages.html")
 
