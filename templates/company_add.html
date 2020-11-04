@@ -10,7 +10,7 @@
 <!-- Content -->
 {% block content %}
   <div class="col-10 offset-1 p-0 mt-3">
-    <h2>Dodaj firmę</h2>
+    <h2 class="mt-2rem">Dodaj firmę</h2>
     <p>Witaj w kreatorze dodawania firme.<br>Proszę uzupełnić wszystkie niezbędne parametry a następnie zatwierdzić proces dodawania firmy do systemu korzystając z przycisku "Dodaj firmę" znajdującego się na dole formularza.</p>
   </div>
   <div class="col-10 offset-1 p-0">
@@ -27,9 +27,6 @@
         </div>
         <div class="form-group col-3 offset-1">
           <input type="text" class="form-control" id="company_add_regon" placeholder="Regon">
-        </div>
-        <div class="form-group col-12">
-          <textarea type="text" class="form-control" id="company_add_des" placeholder="Opis firmy"></textarea>
         </div>
       </div>
       <div class="row mt-4">
@@ -49,7 +46,6 @@
         </div>
         <div class="form-group col-3 offset-1">
             <select class="custom-select" id="company_add_state">
-              <option value="10" selected>Województwo...</option>
                 {% for Date in States %}
                     <option value={{ Date[0] }}>{{ Date[1] }}</option>
                 {% endfor %}
