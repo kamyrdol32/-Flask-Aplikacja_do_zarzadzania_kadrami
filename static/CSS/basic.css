@@ -76,7 +76,6 @@ a, a:focus, a:hover, a:active {
 ::-webkit-scrollbar-track:active {
   background: rgba(255,255,255,0.3);
 }
-
 .mt-2rem{
   margin-top: 2rem !important;
 }
