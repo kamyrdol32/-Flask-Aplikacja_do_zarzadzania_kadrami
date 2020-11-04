@@ -123,11 +123,9 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
             # Rozłączenie z bazą MySQL
             cursor.close()
 
-            print("1")
-
         # Error Log
         except Exception as Error:
-            print("registerLogin - MySQL Error")
+            print("companyRegister - MySQL Error")
             print("Error: " + str(Error))
 
 
@@ -145,6 +143,40 @@ def checkCompany(company_add_nip, company_add_regon):
     cursor.execute("SELECT COUNT(1) FROM `Companies_Data` WHERE `Regon` = '" + company_add_regon + "'")
     if cursor.fetchone()[0]:
         return True
+
+
+def getUserCompaniesName(userID):
+    if userID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT Company_ID FROM Companies_Workers WHERE `User_ID` = '" + str(userID) + "'")
+            Companies = cursor.fetchall()
+
+            Table = []
+
+            for ID in Companies:
+                cursor.execute("SELECT ID, Company_Name FROM Companies WHERE `ID` = '" + str(ID[0]) + "'")
+                CompaniesName = cursor.fetchone()
+                Table.append(CompaniesName)
+
+            # Development
+            if Type == "Development":
+                print(Table)
+
+            return Table
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+        # Error Log
+        except Exception as Error:
+            print("getUserCompanies - MySQL Error")
+            print("Error: " + str(Error))
+
+
 
 ####################
 ### Others

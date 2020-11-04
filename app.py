@@ -158,7 +158,10 @@ def company_add():
 @app.route('/company/list')
 @protected
 def company_list():
-    return render_template("company_list.html")
+
+
+
+    return render_template("company_list.html", CompaniesName=getUserCompaniesName(session['ID']))
 
 
 @app.route('/company/workers')
