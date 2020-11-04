@@ -15,10 +15,9 @@
       </div>
       <div class="col-4 mt-2rem form-group">
         <select id="current_company">
-          <option value="1">Firma 1</option>
-          <option value="2">Firma 2</option>
-          <option value="3">Firma 3</option>
-          <option value="4">Firma 4</option>
+            {% for Date in CompaniesName %}
+                <option value={{ Date[0] }}>{{ Date[1] }}</option>
+            {% endfor %}
         </select>
       </div>
     </div>

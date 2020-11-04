@@ -3,7 +3,7 @@ from functions import *
 import functools
 
 from flaskext.mysql import MySQL
-from flask import Flask, render_template, redirect, session, jsonify, request
+from flask import Flask, render_template, redirect, session, jsonify, request, url_for
 
 ####################
 ### CONFIG & DECORATOS
@@ -31,14 +31,22 @@ def protected(func):
 
     return secure_function
 
-@app.route('/get', methods=['GET'])
-def getID():
-    function = request.args.get('function', default="0", type=str)
-    value = request.args.get('value', default="0", type=str)
+# @app.route('/get', methods=['GET'])
+# def getID():
+#     function = request.args.get('function', default="0", type=str)
+#     value = request.args.get('value', default="0", type=str)
+#
+#     # Development
+#     if Type == "Development":
+#         print("Function: " + function)
+#         print("Value: " + value)
+#
+#     if str(function) == "Companies_SelectedID":
+#         session['Companies_SelectedID'] = value
+#         print("1")
+#         return redirect('company/list')
 
-    if str(function) == "Companies_SelectedID":
-        session['Companies_SelectedID'] = value
-        return redirect("/company_list")
+
 
 ####################
 ### INDEX
@@ -148,17 +156,20 @@ def company_add():
             return jsonify({"title": "", "message": "Podany NIP/Regon jest juz zarejstrowany!"})
 
         if companyRegister(getUserID(session['user']), company_add_name, company_add_nip, company_add_regon, company_add_street, company_add_city, company_add_zip, company_add_state):
-            print("Udalo sie")
-            # return jsonify({"redirect": "/"})
+            return jsonify({"redirect": "/"})
 
 
     return render_template("company_add.html", States=getStates())
 
 
 @app.route('/company/list')
+@app.route('/company/list/<int:id>')
 @protected
-def company_list():
-    return render_template("company_list.html")
+def company_list(id=False):
+
+    print(id)
+
+    return render_template("company_list.html", CompaniesName=getUserCompaniesName(session['ID']))
 
 
 @app.route('/company/workers')
