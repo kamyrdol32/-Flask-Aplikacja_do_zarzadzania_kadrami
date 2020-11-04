@@ -1,0 +1,18 @@
+p.company-title{
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+p.company-value {
+    font-size: 16px;
+    margin-bottom: 1rem;
+}
+
+p.company-street, p.company-owner{
+  font-size: 16px;
+}
+
+p.company-desc{
+  font-size: 12px;
+  max-width: 500px;
+}
