@@ -99,6 +99,39 @@ def userRegister(register_mail, register_password, register_repeat_password):
 ### Companies
 ####################
 
+def getUserCompaniesName(userID):
+    if userID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT Company_ID FROM Companies_Workers WHERE `User_ID` = '" + str(userID) + "'")
+            Companies = cursor.fetchall()
+
+            Table = []
+
+            for ID in Companies:
+                cursor.execute("SELECT ID, Company_Name FROM Companies WHERE `ID` = '" + str(ID[0]) + "'")
+                CompaniesName = cursor.fetchone()
+                print(CompaniesName)
+                Table.append(CompaniesName)
+
+            # Development
+            if Type == "Development":
+                print(Table)
+
+            return Table
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+        # Error Log
+        except Exception as Error:
+            print("getUserCompanies - MySQL Error")
+            print("Error: " + str(Error))
+
+
 def companyRegister(userID, company_add_name, company_add_nip, company_add_regon, company_add_street, company_add_city, company_add_zip, company_add_state):
     if userID and company_add_name and company_add_nip and company_add_regon and company_add_street and company_add_city and company_add_zip and company_add_state:
         try:
@@ -145,38 +178,79 @@ def checkCompany(company_add_nip, company_add_regon):
         return True
 
 
-def getUserCompaniesName(userID):
-    if userID:
+def getCompanyData(CompanyID):
+    if CompanyID:
         try:
             # Łączność z MYSQL
             connection = mysql.connect()
             cursor = connection.cursor()
 
-            cursor.execute("SELECT Company_ID FROM Companies_Workers WHERE `User_ID` = '" + str(userID) + "'")
-            Companies = cursor.fetchall()
-
-            Table = []
-
-            for ID in Companies:
-                cursor.execute("SELECT ID, Company_Name FROM Companies WHERE `ID` = '" + str(ID[0]) + "'")
-                CompaniesName = cursor.fetchone()
-                Table.append(CompaniesName)
+            cursor.execute("SELECT Name, NIP, Regon, State, City, Street, Code FROM Companies_Data WHERE `Company_ID` = '" + str(CompanyID) + "'")
+            CompaniesData = cursor.fetchone()
 
             # Development
             if Type == "Development":
-                print(Table)
+                print(CompaniesData)
 
-            return Table
+            return CompaniesData
 
             # Rozłączenie z bazą MySQL
             cursor.close()
 
         # Error Log
         except Exception as Error:
-            print("getUserCompanies - MySQL Error")
+            print("getCompanyData - MySQL Error")
             print("Error: " + str(Error))
 
 
+def getUserData(UserID):
+    if UserID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT Name, Surname, Birth_Date, Phone_Number, State, City, Street, Zip_Code FROM Users_Data WHERE `User_ID` = '" + str(UserID) + "'")
+            UserData = cursor.fetchone()
+
+            # Development
+            if Type == "Development":
+                print("UserData: " + str(UserData))
+
+            return UserData
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+        # Error Log
+        except Exception as Error:
+            print("getUserData - MySQL Error")
+            print("Error: " + str(Error))
+
+
+def getOwnerID(CompanyID):
+    if CompanyID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT Owner_ID FROM Companies WHERE `ID` = '" + str(CompanyID) + "'")
+            OwnerID = cursor.fetchone()[0]
+
+            # Development
+            if Type == "Development":
+                print("OwnerID: " + str(OwnerID))
+
+            return OwnerID
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+        # Error Log
+        except Exception as Error:
+            print("getOwnerID - MySQL Error")
+            print("Error: " + str(Error))
 
 ####################
 ### Others

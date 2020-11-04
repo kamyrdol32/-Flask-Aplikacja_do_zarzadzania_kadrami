@@ -163,13 +163,16 @@ def company_add():
 
 
 @app.route('/company/list')
-@app.route('/company/list/<int:id>')
+@app.route('/company/list/<int:ID>')
 @protected
-def company_list(id=False):
+def company_list(ID=False):
 
-    print(id)
+    Companies = getUserCompaniesName(session['ID'])
 
-    return render_template("company_list.html", CompaniesName=getUserCompaniesName(session['ID']))
+    if not ID and Companies:
+        ID = Companies[0][0]
+
+    return render_template("company_list.html", SelectedID=ID, CompaniesNames=Companies, CompaniesData=getCompanyData(ID), States=getStates(), OwnerData=getUserData(getOwnerID(ID)))
 
 
 @app.route('/company/workers')
