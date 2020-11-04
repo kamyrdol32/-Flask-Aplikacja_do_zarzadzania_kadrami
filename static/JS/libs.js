@@ -15,4 +15,9 @@ $(document).ready(function(){
     $("body").removeClass("content-hovered");
   })
 
+
+  $("select").select2({
+    minimumResultsForSearch: -1,
+  });
+
 })
