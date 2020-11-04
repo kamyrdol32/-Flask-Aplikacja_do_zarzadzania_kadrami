@@ -57,20 +57,20 @@ def index():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == "POST" and request.form["action"] == "/login":
-        login_email = request.form.get('login_mail', "", type=str)
+        login_mail = request.form.get('login_mail', "", type=str)
         login_password = request.form.get('login_password', "", type=str)
 
         # Development
         if Type == "Development":
-            print("Login: " + login_email)
+            print("Login: " + login_mail)
             print("Hasło: " + login_password)
 
         # Logowanie
-        if userLogin(login_email, login_password):
+        if userLogin(login_mail, login_password):
 
             session['isLogged'] = True
-            session['user'] = login_email
-            session['ID'] = getUserID(login_email)
+            session['user'] = login_mail
+            session['ID'] = getUserID(login_mail)
 
             return jsonify({"redirect": "/"})
         else:
@@ -106,6 +106,7 @@ def register():
 
             session['isLogged'] = True
             session['user'] = register_mail
+            session['ID'] = getUserID(register_mail)
 
             return jsonify({"redirect": "/"})
         else:
@@ -143,8 +144,13 @@ def company_add():
         company_add_zip = request.form['company_add_zip']
         company_add_state = request.form['company_add_state']
 
-        print(company_add_city)
-        print(company_add_state)
+        if checkCompany(company_add_nip, company_add_regon):
+            return jsonify({"title": "", "message": "Podany NIP/Regon jest juz zarejstrowany!"})
+
+        if companyRegister(getUserID(session['user']), company_add_name, company_add_nip, company_add_regon, company_add_street, company_add_city, company_add_zip, company_add_state):
+            print("Udalo sie")
+            # return jsonify({"redirect": "/"})
+
 
     return render_template("company_add.html", States=getStates())
 
