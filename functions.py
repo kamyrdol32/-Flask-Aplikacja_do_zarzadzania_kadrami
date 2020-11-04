@@ -111,7 +111,7 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
             cursor.execute("INSERT INTO Companies (Company_Name, Owner_ID) VALUES (%s, %s)", to_MySQL)
             connection.commit()
 
-            cursor.execute("SELECT ID FROM Companies WHERE Company_Name = '" + str(company_add_name) + "'")
+            cursor.execute("SELECT ID FROM Companies ORDER BY ID DESC LIMIT 1")
             ID = cursor.fetchone()[0]
 
             to_MySQL = (ID, company_add_name, company_add_nip, company_add_regon, company_add_state, company_add_city, company_add_street, company_add_zip)
