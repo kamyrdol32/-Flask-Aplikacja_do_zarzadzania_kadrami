@@ -23,7 +23,7 @@ $(document).ready(function(){
   $("#current_company").on("change", function(e){
     $val = $("#current_company").val();
 
-    window.location = window.location.pathname+"?id="+$val;
+    window.location = window.location.pathname+"/"+$val;
   })
 
 })
