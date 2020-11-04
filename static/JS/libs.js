@@ -20,4 +20,10 @@ $(document).ready(function(){
     minimumResultsForSearch: -1,
   });
 
+  $("#current_company").on("change", function(e){
+    $val = $("#current_company").val();
+
+    window.location = window.location.pathname+"?id="+$val;
+  })
+
 })
