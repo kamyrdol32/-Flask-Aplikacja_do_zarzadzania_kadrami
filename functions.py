@@ -3,23 +3,41 @@ from others import *
 
 from hashlib import md5
 
+
+def getUserID(mail):
+    if mail:
+        try:
+            connection = mysql.connect()
+            cursor = connection.cursor()
+            cursor.execute("SELECT ID FROM Users WHERE Mail = '" + str(mail) + "'")
+            ID = cursor.fetchone()
+            cursor.close()
+
+            return ID[0]
+
+        except Exception as Error:
+            print("getUserID - Error")
+            print("Error: " + str(Error))
+    else:
+        print("getUserID - Missing value")
+
 ####################
 ### Login & Register
 ####################
 
-def userLogin(login_email, login_password):
-    if login_email and login_password:
+def userLogin(login_mail, login_password):
+    if login_mail and login_password:
         try:
             # Łączność z MYSQL
             connection = mysql.connect()
             cursor = connection.cursor()
 
             # Sprawdzanie czy istnieje użytkownik
-            cursor.execute("SELECT COUNT(1) FROM `Users` WHERE `Mail` = '" + login_email + "'")
+            cursor.execute("SELECT COUNT(1) FROM `Users` WHERE `Mail` = '" + login_mail + "'")
             if cursor.fetchone()[0]:
 
                 # Pobieranie danych
-                cursor.execute("SELECT `Password`, `Secret_Key` FROM `Users` WHERE `Mail` = '" + login_email + "'")
+                cursor.execute("SELECT `Password`, `Secret_Key` FROM `Users` WHERE `Mail` = '" + login_mail + "'")
                 Data = cursor.fetchall()[0]
 
                 # Szyfrowanie
@@ -86,7 +104,7 @@ def getStates():
     try:
         connection = mysql.connect()
         cursor = connection.cursor()
-        cursor.execute("SELECT `Name` FROM States")
+        cursor.execute("SELECT `ID`, `Name` FROM States")
         States = cursor.fetchall()
         cursor.close()
 

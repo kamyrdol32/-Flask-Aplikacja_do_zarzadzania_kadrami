@@ -31,6 +31,15 @@ def protected(func):
 
     return secure_function
 
+@app.route('/get', methods=['GET'])
+def getID():
+    function = request.args.get('function', default="0", type=str)
+    value = request.args.get('value', default="0", type=str)
+
+    if str(function) == "Companies_SelectedID":
+        session['Companies_SelectedID'] = value
+        return redirect("/company_list")
+
 ####################
 ### INDEX
 ####################
@@ -38,6 +47,7 @@ def protected(func):
 @app.route('/')
 @protected
 def index():
+
     return render_template("index.html")
 
 ####################
@@ -46,7 +56,7 @@ def index():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if request.method == "POST":
+    if request.method == "POST" and request.form["action"] == "/login":
         login_email = request.form.get('login_mail', "", type=str)
         login_password = request.form.get('login_password', "", type=str)
 
@@ -60,6 +70,7 @@ def login():
 
             session['isLogged'] = True
             session['user'] = login_email
+            session['ID'] = getUserID(login_email)
 
             return jsonify({"redirect": "/"})
         else:
@@ -70,7 +81,7 @@ def login():
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
-    if request.method == "POST":
+    if request.method == "POST" and request.form["action"] == "/register":
 
         register_mail = request.form.get('register_mail', "", type=str)
         register_password = request.form.get('register_password', "", type=str)
@@ -122,8 +133,20 @@ def company():
 @app.route('/company/add', methods=['POST', 'GET'])
 @protected
 def company_add():
-    print(getStates())
-    return render_template("company_add.html")
+    if request.method == 'POST':
+
+        company_add_name = request.form['company_add_name']
+        company_add_nip = request.form['company_add_nip']
+        company_add_regon = request.form['company_add_regon']
+        company_add_street = request.form['company_add_street']
+        company_add_city = request.form['company_add_city']
+        company_add_zip = request.form['company_add_zip']
+        company_add_state = request.form['company_add_state']
+
+        print(company_add_city)
+        print(company_add_state)
+
+    return render_template("company_add.html", States=getStates())
 
 
 @app.route('/company/list')
