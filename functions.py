@@ -95,6 +95,56 @@ def userRegister(register_mail, register_password, register_repeat_password):
             print("registerLogin - MySQL Error")
             print("Error: " + str(Error))
 
+####################
+### Companies
+####################
+
+def companyRegister(userID, company_add_name, company_add_nip, company_add_regon, company_add_street, company_add_city, company_add_zip, company_add_state):
+    if userID and company_add_name and company_add_nip and company_add_regon and company_add_street and company_add_city and company_add_zip and company_add_state:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            # Dodanie do bazy MySQL
+            to_MySQL = (str(company_add_name), int(userID))
+            cursor.execute("INSERT INTO Companies (Company_Name, Owner_ID) VALUES (%s, %s)", to_MySQL)
+            connection.commit()
+
+            cursor.execute("SELECT ID FROM Companies WHERE Company_Name = '" + str(company_add_name) + "'")
+            ID = cursor.fetchone()[0]
+
+            to_MySQL = (ID, company_add_name, company_add_nip, company_add_regon, company_add_state, company_add_city, company_add_street, company_add_zip)
+            cursor.execute("INSERT INTO Companies_Data (Company_ID, Name, NIP, Regon, State, City, Street, Code) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", to_MySQL)
+            connection.commit()
+
+            return True
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            print("1")
+
+        # Error Log
+        except Exception as Error:
+            print("registerLogin - MySQL Error")
+            print("Error: " + str(Error))
+
+
+def checkCompany(company_add_nip, company_add_regon):
+
+    # Łączność z MYSQL
+    connection = mysql.connect()
+    cursor = connection.cursor()
+
+    # Sprawdzanie czy istnieje NIP lub Regon
+    cursor.execute("SELECT COUNT(1) FROM `Companies_Data` WHERE `NIP` = '" + company_add_nip + "'")
+    if cursor.fetchone()[0]:
+        return True
+
+    cursor.execute("SELECT COUNT(1) FROM `Companies_Data` WHERE `Regon` = '" + company_add_regon + "'")
+    if cursor.fetchone()[0]:
+        return True
 
 ####################
 ### Others
