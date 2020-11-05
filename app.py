@@ -168,7 +168,7 @@ def company_list(ID=False):
 @app.route('/company/workers')
 @app.route('/company/workers/<int:ID>')
 @protected
-def company_workers(ID):
+def company_workers(ID=False):
 
     Companies = getUserCompaniesName(session['ID'])
 
