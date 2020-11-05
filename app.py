@@ -3,12 +3,11 @@ from functions import *
 import functools
 
 from flaskext.mysql import MySQL
-from flask import Flask, render_template, redirect, session, jsonify, request, url_for
+from flask import Flask, render_template, redirect, session, jsonify, request
 
 ####################
 ### CONFIG & DECORATOS
 ####################
-
 
 Type = "Development" # Production or Development
 
@@ -31,23 +30,6 @@ def protected(func):
 
     return secure_function
 
-# @app.route('/get', methods=['GET'])
-# def getID():
-#     function = request.args.get('function', default="0", type=str)
-#     value = request.args.get('value', default="0", type=str)
-#
-#     # Development
-#     if Type == "Development":
-#         print("Function: " + function)
-#         print("Value: " + value)
-#
-#     if str(function) == "Companies_SelectedID":
-#         session['Companies_SelectedID'] = value
-#         print("1")
-#         return redirect('company/list')
-
-
-
 ####################
 ### INDEX
 ####################
@@ -64,7 +46,7 @@ def index():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if request.method == "POST" and request.form["action"] == "/login":
+    if request.method == "POST":
         login_mail = request.form.get('login_mail', "", type=str)
         login_password = request.form.get('login_password', "", type=str)
 
@@ -89,7 +71,7 @@ def login():
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
-    if request.method == "POST" and request.form["action"] == "/register":
+    if request.method == "POST":
 
         register_mail = request.form.get('register_mail', "", type=str)
         register_password = request.form.get('register_password', "", type=str)
@@ -102,7 +84,7 @@ def register():
             print("Hasło: " + register_repeat_password)
 
         # Weryfikacja danych
-        if not checkMail(register_mail):
+        if not check("Mail", register_mail):
             return jsonify({"title": "", "message": "Prosze wprowadzić poprawny adres E-Mail!"})
 
         # Sprawdzenie czy hasła są identyczne
@@ -158,7 +140,6 @@ def company_add():
         if companyRegister(getUserID(session['user']), company_add_name, company_add_nip, company_add_regon, company_add_street, company_add_city, company_add_zip, company_add_state):
             return jsonify({"redirect": "/"})
 
-
     return render_template("company_add.html", States=getStates())
 
 
@@ -168,11 +149,15 @@ def company_add():
 def company_list(ID=False):
 
     Companies = getUserCompaniesName(session['ID'])
+    # print(check("Number", "+48123456789"))
 
     if not ID and Companies:
         ID = Companies[0][0]
 
-    return render_template("company_list.html", SelectedID=ID, CompaniesNames=Companies, CompaniesData=getCompanyData(ID), States=getStates(), OwnerData=getUserData(getOwnerID(ID)))
+    CompaniesData = getCompanyData(ID)
+    OwnerData = getUserData(getOwnerID(ID))
+
+    return render_template("company_list.html", SelectedID=ID, CompaniesNames=Companies, CompaniesData=CompaniesData, States=getStates(), OwnerData=OwnerData)
 
 
 @app.route('/company/workers')
@@ -207,6 +192,7 @@ def messages():
 ####################
 ### Others
 ####################
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=70)
