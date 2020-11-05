@@ -11,9 +11,9 @@
 {% block content %}
   <div class="col-10 offset-1 p-0 mt-3">
     <div class="row">
-      <div class="col-8">
+      <div class="d-none d-md-block col-md-8">
       </div>
-      <div class="col-4 mt-2rem form-group">
+      <div class="col-12 col-md-4 mt-2rem form-group">
         <select id="current_company">
             {% for Date in CompaniesNames %}
                 <option {% if SelectedID == Date[0] %} selected {% endif %} value={{ Date[0] }}>{{ Date[1] }}</option>
@@ -28,15 +28,15 @@
         <div class="col-12 hovered">
           <h3>Dane firmy</h3>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-md-6">
           <p class="company-title">Nazwa firmy:</p>
           <p class="company-value">{{ CompaniesData[0] }}</p>
         </div>
-        <div class="col-3">
+        <div class="col-12 col-md-3">
           <p class="company-title">NIP:</p>
           <p class="company-value">{{ CompaniesData[1] }}</p>
         </div>
-        <div class="col-3">
+        <div class="col-12 col-md-3">
           <p class="company-title">REGON:</p>
           <p class="company-value">{{ CompaniesData[2] }}</p>
         </div>
