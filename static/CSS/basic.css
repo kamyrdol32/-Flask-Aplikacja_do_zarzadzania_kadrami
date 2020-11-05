@@ -589,3 +589,28 @@ span.select2-container.select2-container--default.select2-container--open{
     line-height: 38px;
     height: 38px;
 }
+
+.table-responsive{
+  max-height: 45vh;
+}
+
+table{
+  margin: 0 !important;
+}
+
+table *{
+  border: 0 !important;
+}
+
+table thead tr{
+  background: rgba(255,255,255,0.2);
+  color: var(--primary);
+}
+
+table tr{
+  color: var(--secondary)
+}
+
+table tbody tr:nth-child(2n+1){
+  background: rgba(255,255,255,0.05);
+}
