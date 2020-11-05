@@ -48,7 +48,7 @@
         <div class="col-8">
           <p class="company-street">ul. {{ CompaniesData[5] }}</p>
           <p class="company-street">{{ CompaniesData[6] }} {{ CompaniesData[4] }}</p>
-          <p class="company-street">{{ States[CompaniesData[3] - 1][1] }}</p>
+          <p class="company-street">{% if CompaniesData[3] %}{{ States[CompaniesData[3] - 1][1] }}{% else %}BRAK{% endif %}</p>
         </div>
       </div>
       <div class="row mt-4">

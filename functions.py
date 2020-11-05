@@ -46,9 +46,9 @@ def userLogin(login_mail, login_password):
 
                 # Development
                 if Type == "Development":
-                    print(Data[0])
-                    print(Data[1])
-                    print(login_password)
+                    print("Login: " + Data[0])
+                    print("Hasło: " + Data[1])
+                    print("Hasło: " + login_password)
 
                 # Sprawdzanie czy hasła są sobie równe
                 if login_password == Data[0]:
@@ -114,12 +114,11 @@ def getUserCompaniesName(userID):
             for ID in Companies:
                 cursor.execute("SELECT ID, Company_Name FROM Companies WHERE `ID` = '" + str(ID[0]) + "'")
                 CompaniesName = cursor.fetchone()
-                print(CompaniesName)
                 Table.append(CompaniesName)
 
             # Development
             if Type == "Development":
-                print(Table)
+                print("getUserCompaniesName: " + str(Table))
 
             return Table
 
@@ -128,7 +127,7 @@ def getUserCompaniesName(userID):
 
         # Error Log
         except Exception as Error:
-            print("getUserCompanies - MySQL Error")
+            print("getUserCompaniesName - MySQL Error")
             print("Error: " + str(Error))
 
 
@@ -190,7 +189,7 @@ def getCompanyData(CompanyID):
 
             # Development
             if Type == "Development":
-                print(CompaniesData)
+                print("getCompanyData: " + str(CompaniesData))
 
             return CompaniesData
 
@@ -215,7 +214,7 @@ def getUserData(UserID):
 
             # Development
             if Type == "Development":
-                print("UserData: " + str(UserData))
+                print("getUserData: " + str(UserData))
 
             return UserData
 
@@ -240,7 +239,32 @@ def getOwnerID(CompanyID):
 
             # Development
             if Type == "Development":
-                print("OwnerID: " + str(OwnerID))
+                print("getOwnerID: " + str(OwnerID))
+
+            return OwnerID
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+        # Error Log
+        except Exception as Error:
+            print("getOwnerID - MySQL Error")
+            print("Error: " + str(Error))
+
+
+def getWorkersList(CompanyID):
+    if CompanyID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT ID,  FROM Companies_Workers WHERE `Company_ID` = '" + str(CompanyID) + "'")
+            OwnerID = cursor.fetchone()[0]
+
+            # Development
+            if Type == "Development":
+                print("getOwnerID: " + str(OwnerID))
 
             return OwnerID
 

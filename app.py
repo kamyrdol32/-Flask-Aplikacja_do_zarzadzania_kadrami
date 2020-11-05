@@ -149,7 +149,6 @@ def company_add():
 def company_list(ID=False):
 
     Companies = getUserCompaniesName(session['ID'])
-    # print(check("Number", "+48123456789"))
 
     if not ID and Companies:
         ID = Companies[0][0]
@@ -157,13 +156,26 @@ def company_list(ID=False):
     CompaniesData = getCompanyData(ID)
     OwnerData = getUserData(getOwnerID(ID))
 
+    if not Companies:
+        Companies = "Brak"
+        CompaniesData = ('----', '----', '----', 0, '----', '----', '')
+        OwnerData = ('----', '----', '----', "----", '----', '----', '----', '----')
+
+
     return render_template("company_list.html", SelectedID=ID, CompaniesNames=Companies, CompaniesData=CompaniesData, States=getStates(), OwnerData=OwnerData)
 
 
 @app.route('/company/workers')
+@app.route('/company/workers/<int:ID>')
 @protected
-def company_workers():
-    return render_template("company_workers.html")
+def company_workers(ID):
+
+    Companies = getUserCompaniesName(session['ID'])
+
+    if not ID and Companies:
+        ID = Companies[0][0]
+
+    return render_template("company_workers.html", CompaniesNames=Companies)
 
 ####################
 ### Account
