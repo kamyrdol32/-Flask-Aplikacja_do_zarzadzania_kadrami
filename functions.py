@@ -259,7 +259,7 @@ def getWorkersList(CompanyID):
             connection = mysql.connect()
             cursor = connection.cursor()
 
-            cursor.execute("SELECT ID,  FROM Companies_Workers WHERE `Company_ID` = '" + str(CompanyID) + "'")
+            cursor.execute("SELECT ID FROM Companies_Workers WHERE `Company_ID` = '" + str(CompanyID) + "'")
             OwnerID = cursor.fetchone()[0]
 
             # Development
