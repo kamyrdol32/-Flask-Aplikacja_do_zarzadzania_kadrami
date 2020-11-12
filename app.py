@@ -196,7 +196,7 @@ def company_workers_details(ID=False):
 @app.route('/company/workers/edit')
 @app.route('/company/workers/edit/<int:ID>')
 @protected
-def company_workers_details(ID=False):
+def company_workers_edits(ID=False):
 
     return render_template("company_workers_edits.html")
 
