@@ -20,10 +20,14 @@ $(document).ready(function(){
     minimumResultsForSearch: -1,
   });
 
-  $("#current_company").on("change", function(e){
+  $("#current_company.details").on("change", function(e){
     $val = $("#current_company").val();
-
     window.location = "/company/list/"+$val;
+  })
+
+  $("#current_company.workers").on("change", function(e){
+    $val = $("#current_company").val();
+    window.location = "/company/workers/"+$val;
   })
 
 })

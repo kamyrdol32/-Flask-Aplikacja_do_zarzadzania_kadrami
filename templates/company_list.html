@@ -14,7 +14,7 @@
       <div class="d-none d-md-block col-md-8">
       </div>
       <div class="col-12 col-md-4 mt-2rem form-group">
-        <select id="current_company">
+        <select id="current_company" class="details">
             {% for Date in CompaniesNames %}
                 <option {% if SelectedID == Date[0] %} selected {% endif %} value={{ Date[0] }}>{{ Date[1] }}</option>
             {% endfor %}
