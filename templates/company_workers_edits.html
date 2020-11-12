@@ -9,5 +9,61 @@
 
 <!-- Content -->
 {% block content %}
+<div class="col-10 offset-1 p-0">
+  <form action="/company/add" method="POST" class="mt-4 mb-3">
+    <div class="row mt-4">
+      <div class="col-12 hovered">
+        <h3>Dane pracownika</h3>
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <input type="text" class="form-control" id="company_add_name" placeholder="Imię">
+      </div>
+      <div class="form-group col-12 col-md-3 offset-md-1">
+        <input type="text" class="form-control" id="company_add_nip" placeholder="Nazwisko">
+      </div>
+      <div class="form-group col-12 col-md-3 offset-md-1">
+        <input type="text" class="form-control" id="company_add_regon" placeholder="Data urodzenia">
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-12 hovered">
+        <h3>Dane miejsca zamieszkania</h3>
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <input type="text" class="form-control" id="company_add_street" placeholder="Ulica">
+      </div>
+      <div class="form-group col-12 col-md-3 offset-md-1">
+        <input type="text" class="form-control" id="company_add_city" placeholder="Miasto">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12 col-md-3">
+        <input type="text" class="form-control" id="company_add_zip" placeholder="Kod pocztowy">
+      </div>
+      <div class="form-group col-12 col-md-3 offset-md-1">
+          <select class="custom-select" id="company_add_state">
+              {% for Date in States %}
+                  <option value={{ Date[0] }}>{{ Date[1] }}</option>
+              {% endfor %}
+          </select>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-12 hovered">
+        <h3>Dane Kontaktowe</h3>
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <input type="text" class="form-control" id="company_add_city" placeholder="Telefon">
+      </div>
+    </div>
+
+
+    <div class="row mt-4">
+      <div class="col-6">
+        <button type="submit" class="btn btn-own"><span>Dodaj firmę</span></button>
+      </div>
+    </div>
+  </form>
+</div>
 
 {% endblock %}
