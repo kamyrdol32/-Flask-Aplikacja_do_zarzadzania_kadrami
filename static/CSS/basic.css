@@ -626,3 +626,17 @@ table tbody tr:nth-child(2n+1){
   position: sticky;
   top: 0;
 }
+
+a, a i{
+  color: var(--secondary);
+  transition-duration: 0.3;
+}
+
+a:hover, a:focus, a:active, a:hover i, a:focus i, a:active i{
+  color: var(--primary) !important;
+  transition-duration: 0.3;
+}
+
+table i{
+  margin-left: 10px;
+}
