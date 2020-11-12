@@ -192,6 +192,14 @@ def company_workers_details(ID=False):
 
     return render_template("company_workers_details.html")
 
+
+@app.route('/company/workers/edit')
+@app.route('/company/workers/edit/<int:ID>')
+@protected
+def company_workers_details(ID=False):
+
+    return render_template("company_workers_edits.html")
+
 ####################
 ### Account
 ####################
