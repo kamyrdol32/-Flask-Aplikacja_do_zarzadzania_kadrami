@@ -184,6 +184,14 @@ def company_workers(ID=False):
 
     return render_template("company_workers.html", CompaniesNames=Companies, WorkersData=Workers)
 
+
+@app.route('/company/workers/details')
+@app.route('/company/workers/details/<int:ID>')
+@protected
+def company_workers_details(ID=False):
+
+    return render_template("company_workers_details.html")
+
 ####################
 ### Account
 ####################
