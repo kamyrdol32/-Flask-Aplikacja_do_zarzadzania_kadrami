@@ -153,13 +153,13 @@ def company_list(ID=False):
     if not ID and Companies:
         ID = Companies[0][0]
 
+    if not Companies:
+        return redirect("/company/add")
+
     CompaniesData = getCompanyData(ID)
     OwnerData = getUserData(getOwnerID(ID))
 
-    if not Companies:
-        Companies = "Brak"
-        CompaniesData = ('----', '----', '----', 0, '----', '----', '')
-        OwnerData = ('----', '----', '----', "----", '----', '----', '----', '----')
+
 
 
     return render_template("company_list.html", SelectedID=ID, CompaniesNames=Companies, CompaniesData=CompaniesData, States=getStates(), OwnerData=OwnerData)
@@ -175,7 +175,13 @@ def company_workers(ID=False):
     if not ID and Companies:
         ID = Companies[0][0]
 
-    return render_template("company_workers.html", CompaniesNames=Companies)
+    if not Companies:
+        return redirect("/company/add")
+
+    Workers = getWorkersList(ID)
+
+
+    return render_template("company_workers.html", CompaniesNames=Companies, WorkersData=Workers)
 
 ####################
 ### Account

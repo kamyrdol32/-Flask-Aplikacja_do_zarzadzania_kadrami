@@ -259,21 +259,32 @@ def getWorkersList(CompanyID):
             connection = mysql.connect()
             cursor = connection.cursor()
 
-            cursor.execute("SELECT ID FROM Companies_Workers WHERE `Company_ID` = '" + str(CompanyID) + "'")
-            OwnerID = cursor.fetchone()[0]
+            cursor.execute("SELECT User_ID FROM Companies_Workers WHERE `Company_ID` = '" + str(CompanyID) + "'")
+            getWorkersListID = cursor.fetchall()
 
             # Development
             if Type == "Development":
-                print("getOwnerID: " + str(OwnerID))
+                print("getWorkersListID: " + str(getWorkersListID))
 
-            return OwnerID
+            Table = []
+
+            for WorkerID in getWorkersListID:
+                Data = getUserData(WorkerID[0])
+
+                if Type == "Development":
+                    print("getWorkersListIDData: " + str(Data))
+
+                Table.append(Data)
+
+
+            return Table
 
             # Rozłączenie z bazą MySQL
             cursor.close()
 
         # Error Log
         except Exception as Error:
-            print("getOwnerID - MySQL Error")
+            print("getWorkersList - MySQL Error")
             print("Error: " + str(Error))
 
 ####################
