@@ -1,0 +1,165 @@
+.messages{
+  height: 517.273px;
+  overflow: auto;
+}
+
+.messages-bottom{
+  height: 100px;
+  overflow: hidden;
+}
+
+.message-tile{
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  background: #343434;
+  padding: 15px 25px 5px;
+  max-width: 70%;
+  min-width: 50%;
+}
+
+.message.from .message-tile{
+  border-radius: 15px 15px 15px 0;
+  margin-left: 25px;
+  margin-right: auto;
+  position: relative;
+  z-index: 3;
+
+}
+
+.message.to .message-tile{
+  border-radius: 15px 15px 0 15px;
+  margin-right: 25px;
+  margin-left: auto;
+  position: relative;
+  z-index: 3;
+}
+
+.message .arrow{
+  background: #343434;
+  height: 50px;
+  display: block;
+  width: 50px;
+  position: absolute;
+  left: 4px;
+  bottom: 0;
+  transform: skew(-45deg);
+  z-index: -1;
+}
+
+.message.to .arrow{
+  right: 4px;
+  left: unset;
+  transform: skew(45deg);
+}
+
+span.message{
+  font-size: 14px;
+  line-height: 15px !important;
+  display: block;
+}
+
+span.date{
+  display: block;
+  font-size: 8px;
+  opacity: 0.8;
+  margin-top: 5px;
+  text-align: right;
+}
+
+textarea{
+  margin-top: .5rem;
+  border-top: 2px solid #343434 !important;
+  height: 70px !important;
+  width: calc(100% - 70px);
+  padding: 5px 10px;
+  line-height: 18px;
+  font-size: 14px;
+}
+
+textarea::placeholder{
+  opacity: 0.2;
+  font-size: 14px;
+}
+
+.btn-message{
+  display: block;
+  height: 70px;
+  width: 70px;
+  float: right;
+  top: -70px;
+  position: relative;
+  padding: 10px;
+}
+
+.btn-message i{
+  cursor: pointer;
+  transition-duration: 0.3s;
+  border-radius: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  display: block;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 25px;
+}
+
+.btn-message i::before{
+  display: block;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  line-height: 51px;
+  left: -3px;
+  position: relative;
+}
+
+.contact-list{
+  overflow: auto;
+}
+
+.contact-tile{
+  background: #343434;
+  padding: 10px;
+  position: relative;
+  margin-bottom: 0.5rem;
+  height: 60px;
+}
+
+.contact-tile p{
+  display: block;
+  margin: 0;
+  font-size: 18px;
+  width: 80%;
+}
+
+.contact-tile span.date{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  text-align: right;
+  font-size: 10px;
+  opacity: 0.6;
+  margin: 0;
+}
+
+.contact-tile span.time{
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  text-align: right;
+  font-size: 10px;
+  opacity: 0.6;
+  margin: 0;
+}
+
+.contact-tile span.last{
+  font-size: 12px;
+  line-height: 13px;
+  display: block;
+  opacity: 0.6;
+  max-height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap !important;
+}

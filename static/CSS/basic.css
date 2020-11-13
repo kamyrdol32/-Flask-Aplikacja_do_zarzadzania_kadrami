@@ -147,7 +147,7 @@ body::before {
   width: 124vw;
   height: 34vh;
   right: -15vw;
-  bottom: -28vh;
+  bottom: -37vh;
   background: var(--primary);
   transform: rotate(-8deg);
   box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 7px 0px;
@@ -161,7 +161,7 @@ body::after {
   width: 124vw;
   height: 34vh;
   left: -15vw;
-  top: -28vh;
+  top: -37vh;
   background: var(--primary);
   transform: rotate(-8deg);
   box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 7px 0px;
@@ -169,7 +169,7 @@ body::after {
   transition-duration: 0.3s;
 }
 
-body.content-hovered::before {
+/* body.content-hovered::before {
   bottom: -37vh;
   transition-duration: 0.3s;
 }
@@ -177,7 +177,7 @@ body.content-hovered::before {
 body.content-hovered::after {
   top: -37vh;
   transition-duration: 0.3s;
-}
+} */
 
 *:focus {
   outline: 0 !important;

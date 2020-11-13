@@ -29,5 +29,17 @@ $(document).ready(function(){
     $val = $("#current_company").val();
     window.location = "/company/workers/"+$val;
   })
-
 })
+
+function resizeMessageBox(){
+  $orig = $(".contact-list").height();
+  $(".messages").height(($orig-100)+"px");
+}
+
+
+$(document).ready(function(){
+  resizeMessageBox();
+})
+$(window).on("resize", function(){
+  resizeMessageBox();
+});
