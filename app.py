@@ -173,8 +173,6 @@ def company_list(ID=False):
 #@protected
 def company_workers(ID=False):
 
-    print(ID)
-
     Companies = getUserCompaniesList(session['ID'])
 
     if not ID and Companies:
@@ -183,7 +181,7 @@ def company_workers(ID=False):
     if not Companies:
         return redirect("/company/add")
 
-    # Workers = getWorkersList(ID)
+    WorkersList = getCompanyWorkersID(ID)
 
     return render_template("company_workers.html", CompaniesNames=Companies)
 

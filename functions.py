@@ -21,6 +21,23 @@ def getUserID(mail):
     else:
         print("getUserID - Missing value")
 
+def getUserID(mail):
+    if mail:
+        try:
+            connection = mysql.connect()
+            cursor = connection.cursor()
+            cursor.execute("SELECT ID FROM Users WHERE Mail = '" + str(mail) + "'")
+            ID = cursor.fetchone()
+            cursor.close()
+
+            return ID[0]
+
+        except Exception as Error:
+            print("getUserID - Error")
+            print("Error: " + str(Error))
+    else:
+        print("getUserID - Missing value")
+
 def getCompanyName(ID):
     if ID:
         try:
@@ -279,6 +296,30 @@ def getCompanyData(companyID):
             print("getCompanyData - MySQL Error")
             print("Error: " + str(Error))
 
+def getCompanyWorkersID(companyID):
+    if companyID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT User_ID FROM Companies_Workers WHERE Company_ID = '" + str(companyID) + "'")
+            WorkersList = cursor.fetchall()
+
+            # Development
+            if Type == "Development":
+                print("getCompanyWorkersID: " + str(WorkersList))
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            # Rozłączenie z bazą MySQL
+            return WorkersList
+
+        # Error Log
+        except Exception as Error:
+            print("getCompanyWorkersID - MySQL Error")
+            print("Error: " + str(Error))
 
 ####################
 ### Others
