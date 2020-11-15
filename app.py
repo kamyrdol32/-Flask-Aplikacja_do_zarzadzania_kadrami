@@ -52,8 +52,8 @@ def login():
 
         # Development
         if Type == "Development":
-            print("Login: " + login_mail)
-            print("Hasło: " + login_password)
+            print("Logowanie Login: " + login_mail)
+            print("Logowanie Hasło: " + login_password)
 
         # Logowanie
         if userLogin(login_mail, login_password):
@@ -79,9 +79,9 @@ def register():
 
         # Development
         if Type == "Development":
-            print("Login: " + register_mail)
-            print("Hasło: " + register_password)
-            print("Hasło: " + register_repeat_password)
+            print("Rejestracaja Login: " + register_mail)
+            print("Rejestracaja Hasło: " + register_password)
+            print("Rejestracaja Hasło: " + register_repeat_password)
 
         # Weryfikacja danych
         if not check("Mail", register_mail):
@@ -106,7 +106,7 @@ def register():
 
 
 @app.route('/logout')
-@protected
+#@protected
 def logout():
     session.pop('isLogged', None)
     return redirect("/")
@@ -116,7 +116,7 @@ def logout():
 ####################
 
 @app.route('/company')
-@protected
+#@protected
 def company():
     return render_template("company.html")
 
@@ -133,11 +133,13 @@ def company_add():
         company_add_city = request.form['company_add_city']
         company_add_zip = request.form['company_add_zip']
         company_add_state = request.form['company_add_state']
+        company_add_phone = request.form['company_add_phone']
+        company_add_mail = request.form['company_add_mail']
 
-        if checkCompany(company_add_nip, company_add_regon):
-            return jsonify({"title": "", "message": "Podany NIP/Regon jest juz zarejstrowany!"})
+        if checkCompany(company_add_name, company_add_nip, company_add_regon):
+            return jsonify({"title": "", "message": "Podana firma jest już w rejestrze lub podany NIP/Regon jest juz zarejstrowany!"})
 
-        if companyRegister(getUserID(session['user']), company_add_name, company_add_nip, company_add_regon, company_add_street, company_add_city, company_add_zip, company_add_state):
+        if companyRegister(getUserID(session['user']), company_add_name, company_add_nip, company_add_regon, company_add_street, company_add_city, company_add_zip, company_add_state, company_add_phone, company_add_mail):
             return jsonify({"redirect": "/"})
 
     return render_template("company_add.html", States=getStates())
@@ -145,34 +147,35 @@ def company_add():
 
 @app.route('/company/list')
 @app.route('/company/list/<int:ID>')
-@protected
+#@protected
 def company_list(ID=False):
 
-    Companies = getUserCompaniesName(session['ID'])
+    CompaniesList = getUserCompaniesList(session['ID'])
 
-    if not ID and Companies:
-        ID = Companies[0][0]
+    if not ID and CompaniesList:
+        ID = CompaniesList[0][0]
 
-    if not Companies:
+    if not CompaniesList:
         return redirect("/company/add")
 
     CompaniesData = getCompanyData(ID)
-    OwnerData = getUserData(getOwnerID(ID))
+    # OwnerData = getUserData(getOwnerID(ID))
 
 
 
 
-    return render_template("company_list.html", SelectedID=ID, CompaniesNames=Companies, CompaniesData=CompaniesData, States=getStates(), OwnerData=OwnerData)
+    # return render_template("index.html")
+    return render_template("company_list.html", SelectedID=ID, CompaniesList=CompaniesList, CompaniesData=CompaniesData)
 
 
 @app.route('/company/workers')
 @app.route('/company/workers/<int:ID>')
-@protected
+#@protected
 def company_workers(ID=False):
 
     print(ID)
 
-    Companies = getUserCompaniesName(session['ID'])
+    Companies = getUserCompaniesList(session['ID'])
 
     if not ID and Companies:
         ID = Companies[0][0]
@@ -180,14 +183,14 @@ def company_workers(ID=False):
     if not Companies:
         return redirect("/company/add")
 
-    Workers = getWorkersList(ID)
+    # Workers = getWorkersList(ID)
 
-    return render_template("company_workers.html", CompaniesNames=Companies, WorkersData=Workers)
+    return render_template("company_workers.html", CompaniesNames=Companies)
 
 
 @app.route('/company/workers/details')
 @app.route('/company/workers/details/<int:ID>')
-@protected
+#@protected
 def company_workers_details(ID=False):
 
     return render_template("company_workers_details.html")
@@ -195,7 +198,7 @@ def company_workers_details(ID=False):
 
 @app.route('/company/workers/edit')
 @app.route('/company/workers/edit/<int:ID>')
-@protected
+#@protected
 def company_workers_edits(ID=False):
 
     return render_template("company_workers_edits.html")
@@ -205,13 +208,13 @@ def company_workers_edits(ID=False):
 ####################
 
 @app.route('/account/')
-@protected
+#@protected
 def account():
     return render_template("account.html")
 
 
 @app.route('/account/password')
-@protected
+#@protected
 def account_password():
     return render_template("account_password.html")
 
@@ -220,8 +223,9 @@ def account_password():
 ####################
 
 @app.route('/messages')
-@protected
-def messages():
+@app.route('/messages/<int:ID>')
+#@protected
+def messages(ID=False):
     return render_template("messages.html")
 
 ####################
