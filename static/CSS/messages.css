@@ -123,7 +123,9 @@ textarea::placeholder{
   padding: 10px;
   position: relative;
   margin-bottom: 0.5rem;
+  margin-right: 2rem;
   height: 60px;
+  border-right: 3px solid var(--primary);
 }
 
 .contact-tile p{

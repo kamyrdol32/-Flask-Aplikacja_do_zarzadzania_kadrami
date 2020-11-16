@@ -3,7 +3,7 @@ from functions import *
 import functools
 
 from flaskext.mysql import MySQL
-from flask import Flask, render_template, redirect, session, jsonify, request
+from flask import Flask, render_template, redirect, session, jsonify, request, flash
 
 ####################
 ### CONFIG & DECORATOS
@@ -84,8 +84,8 @@ def register():
             print("Rejestracaja Hasło: " + register_repeat_password)
 
         # Weryfikacja danych
-        if not check("Mail", register_mail):
-            return jsonify({"title": "", "message": "Prosze wprowadzić poprawny adres E-Mail!"})
+        # if not check("Mail", register_mail):
+        #     return jsonify({"title": "", "message": "Prosze wprowadzić poprawny adres E-Mail!"})
 
         # Sprawdzenie czy hasła są identyczne
         if register_password != register_repeat_password:
@@ -147,7 +147,7 @@ def company_add():
 
 @app.route('/company/list')
 @app.route('/company/list/<int:ID>')
-#@protected
+@protected
 def company_list(ID=False):
 
     CompaniesList = getUserCompaniesList(session['ID'])
@@ -159,18 +159,13 @@ def company_list(ID=False):
         return redirect("/company/add")
 
     CompaniesData = getCompanyData(ID)
-    # OwnerData = getUserData(getOwnerID(ID))
 
-
-
-
-    # return render_template("index.html")
     return render_template("company_list.html", SelectedID=ID, CompaniesList=CompaniesList, CompaniesData=CompaniesData)
 
 
 @app.route('/company/workers')
 @app.route('/company/workers/<int:ID>')
-#@protected
+@protected
 def company_workers(ID=False):
 
     Companies = getUserCompaniesList(session['ID'])
@@ -181,17 +176,52 @@ def company_workers(ID=False):
     if not Companies:
         return redirect("/company/add")
 
-    WorkersList = getCompanyWorkersID(ID)
 
-    return render_template("company_workers.html", CompaniesNames=Companies)
+    UsersData = []
+
+    WorkersList = getCompanyWorkersID(ID)
+    for WorkerID in WorkersList:
+
+        print("ID: " + str(ID))
+        print("WorkerID: " + str(WorkerID[0]))
+
+        # Pobieranie danych dotyczących pracownika
+        UserData = getUserData(WorkerID[0])
+        UserCompanyData = getCompanyUserData(ID, WorkerID[0])
+
+        User = []
+
+        for Data in UserData:
+            User.append(Data)
+
+        for Data in UserCompanyData:
+            User.append(Data)
+
+        # Tworznie 2D tabeli
+        UsersData.append(User)
+
+    print(UsersData)
+
+    return render_template("company_workers.html", SelectedID=ID, CompaniesNames=Companies, UsersData=UsersData)
 
 
 @app.route('/company/workers/details')
 @app.route('/company/workers/details/<int:ID>')
-#@protected
+@protected
 def company_workers_details(ID=False):
 
-    return render_template("company_workers_details.html")
+    Companies = getUserCompaniesList(session['ID'])
+
+    if not ID and Companies:
+        ID = Companies[0][0]
+
+    if not Companies:
+        return redirect("/company/add")
+
+    # Pobieranie danych dotyczących pracownika
+    UserData = getUserData(ID)
+
+    return render_template("company_workers_details.html", UserData=UserData)
 
 
 @app.route('/company/workers/edit')
@@ -200,6 +230,11 @@ def company_workers_details(ID=False):
 def company_workers_edits(ID=False):
 
     return render_template("company_workers_edits.html")
+
+@app.route('/company/vacation/')
+#@protected
+def company_workers_vacations():
+    return render_template("company_workers_vacations.html")
 
 ####################
 ### Account

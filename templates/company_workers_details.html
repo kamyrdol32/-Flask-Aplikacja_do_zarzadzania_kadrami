@@ -19,15 +19,15 @@
       </div>
       <div class="col-12 col-md-6">
         <p class="company-title">Imię:</p>
-        <p class="company-value">Adolf</p>
+        <p class="company-value">{{ UserData[2] }}</p>
       </div>
       <div class="col-12 col-md-3">
         <p class="company-title">Nazwisko:</p>
-        <p class="company-value">Hitler</p>
+        <p class="company-value">{{ UserData[3] }}</p>
       </div>
       <div class="col-12 col-md-3">
         <p class="company-title">Data urodzenia:</p>
-        <p class="company-value">01.01.2000</p>
+        <p class="company-value">{{ UserData[5] }}</p>
       </div>
     </div>
     <div class="row mt-4">
@@ -35,9 +35,9 @@
         <h3>Miejsce zamieszkania</h3>
       </div>
       <div class="col-8">
-        <p class="company-street">ul. Kowalskiego</p>
-        <p class="company-street">asdasdasd</p>
-        <p class="company-street">asdasdasd</p>
+        <p class="company-street">ul. {{ UserData[7] }}</p>
+        <p class="company-street">{{ UserData[8] }} {{ UserData[9] }}</p>
+        <p class="company-street">{{ UserData[10] }}</p>
       </div>
     </div>
     <div class="row mt-4">
@@ -46,7 +46,11 @@
       </div>
       <div class="col-8">
         <p class="company-owner">Telefon komórkowy</p>
-        <p class="company-owner">+48 </p>
+        <p class="company-owner">{{ UserData[6] }}</p>
+      </div>
+      <div class="col-8">
+        <p class="company-owner">E-Mail</p>
+        <p class="company-owner">{{ UserData[1] }}</p>
       </div>
     </div>
 

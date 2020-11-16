@@ -9,7 +9,7 @@ def getUserID(mail):
         try:
             connection = mysql.connect()
             cursor = connection.cursor()
-            cursor.execute("SELECT ID FROM Users WHERE Mail = '" + str(mail) + "'")
+            cursor.execute("SELECT ID FROM Authorization WHERE Mail = '" + str(mail) + "'")
             ID = cursor.fetchone()
             cursor.close()
 
@@ -21,22 +21,49 @@ def getUserID(mail):
     else:
         print("getUserID - Missing value")
 
-def getUserID(mail):
-    if mail:
+def getUserData(ID):
+    if ID:
         try:
             connection = mysql.connect()
             cursor = connection.cursor()
-            cursor.execute("SELECT ID FROM Users WHERE Mail = '" + str(mail) + "'")
-            ID = cursor.fetchone()
+            cursor.execute("SELECT * FROM Users WHERE ID = '" + str(ID) + "'")
+            UserData = cursor.fetchone()
             cursor.close()
 
-            return ID[0]
+            # Development
+            if Type == "Development":
+                print("getUserData: " + str(UserData))
+
+            return UserData
 
         except Exception as Error:
-            print("getUserID - Error")
+            print("getUserData - Error")
             print("Error: " + str(Error))
     else:
-        print("getUserID - Missing value")
+        print("getUserData - Missing value")
+
+def getCompanyUserData(companyID, userID):
+    if companyID and userID:
+        try:
+            companyName = getCompanyName(companyID)
+
+            connection = mysql.connect()
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM " + str(companyName) + '_Users'" WHERE ID = '" + str(userID) + "'")
+            UserData = cursor.fetchone()
+            cursor.close()
+
+            # Development
+            if Type == "Development":
+                print("getCompanyUserData: " + str(UserData))
+
+            return UserData
+
+        except Exception as Error:
+            print("getCompanyUserData - Error")
+            print("Error: " + str(Error))
+    else:
+        print("getCompanyUserData - Missing value")
 
 def getCompanyName(ID):
     if ID:
@@ -67,11 +94,11 @@ def userLogin(login_mail, login_password):
             cursor = connection.cursor()
 
             # Sprawdzanie czy istnieje użytkownik
-            cursor.execute("SELECT COUNT(1) FROM `Users` WHERE `Mail` = '" + login_mail + "'")
+            cursor.execute("SELECT COUNT(1) FROM `Authorization` WHERE `Mail` = '" + login_mail + "'")
             if cursor.fetchone()[0]:
 
                 # Pobieranie danych
-                cursor.execute("SELECT `Password`, `Secret_Key` FROM `Users` WHERE `Mail` = '" + login_mail + "'")
+                cursor.execute("SELECT `Password`, `Secret_Key` FROM `Authorization` WHERE `Mail` = '" + login_mail + "'")
                 Data = cursor.fetchall()[0]
 
                 # Szyfrowanie
@@ -102,7 +129,7 @@ def userRegister(register_mail, register_password, register_repeat_password):
             cursor = connection.cursor()
 
             # Sprawdzanie czy istnieje użytkownik
-            cursor.execute("SELECT COUNT(1) FROM `Users` WHERE `Mail` = '" + register_mail + "'")
+            cursor.execute("SELECT COUNT(1) FROM `Authorization` WHERE `Mail` = '" + register_mail + "'")
             if not cursor.fetchone()[0]:
                 generatedPassword = passwordGenerator()
 
@@ -112,7 +139,14 @@ def userRegister(register_mail, register_password, register_repeat_password):
 
                 # Dodanie do bazy MySQL
                 to_MySQL = (str(register_mail), str(register_password), generatedPassword)
-                cursor.execute("INSERT INTO Users (Mail, Password, Secret_Key) VALUES (%s, %s, %s)", to_MySQL)
+                cursor.execute("INSERT INTO Authorization (Mail, Password, Secret_Key) VALUES (%s, %s, %s)", to_MySQL)
+                connection.commit()
+
+                ID = getUserID(str(register_mail))
+
+                # Dodanie do bazy MySQL
+                to_MySQL = (ID, str(register_mail))
+                cursor.execute("INSERT INTO Users (ID, Mail) VALUES (%s, %s)", to_MySQL)
                 connection.commit()
 
                 return True
@@ -140,17 +174,7 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
             # Tworzenie tabel
             cursor.execute("CREATE TABLE " + str(company_add_name) + '_Users'"("
                                                                      "ID INT(16) UNSIGNED PRIMARY KEY, "
-                                                                     "Mail VARCHAR(128) NULL DEFAULT NULL, "
-                                                                     "Name VARCHAR(128) NULL DEFAULT NULL, "
-                                                                     "Surname VARCHAR(128) NULL DEFAULT NULL, "
-                                                                     "PESEL INT(11) NULL DEFAULT NULL, "
                                                                      "Position VARCHAR(128) NULL DEFAULT NULL, "
-                                                                     "Birth_date DATE NULL DEFAULT NULL,"
-                                                                     "Phone_number VARCHAR(15) NULL DEFAULT NULL, "
-                                                                     "Address VARCHAR(128) NULL DEFAULT NULL, "
-                                                                     "City VARCHAR(128) NULL DEFAULT NULL, "
-                                                                     "State VARCHAR(128) NULL DEFAULT NULL, "
-                                                                     "Code VARCHAR(6) NULL DEFAULT NULL, "
                                                                      "Salary INT(64) NULL DEFAULT NULL"
                                                                      ")")
 
@@ -172,6 +196,7 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
                                                                      "Sender_ID INT(16) NOT NULL, "
                                                                      "Recipient_ID INT(16) NOT NULL, "
                                                                      "Message TEXT NOT NULL, "
+                                                                     "Seen BOOLEAN NOT NULL DEFAULT FALSE, "
                                                                      "Time TIMESTAMP NOT NULL "
                                                                      ")")
 
@@ -199,7 +224,7 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
             connection.commit()
 
             # Pobranie Mail'a
-            cursor.execute("SELECT Mail FROM Users WHERE ID = '" + str(userID) + "'")
+            cursor.execute("SELECT Mail FROM Authorization WHERE ID = '" + str(userID) + "'")
             userMail = cursor.fetchone()[0]
 
             # Dodanie do bazy "_Permissions"
@@ -210,8 +235,8 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
             connection.commit()
 
             # Dodanie do bazy "_Users"
-            to_MySQL = (userID, userMail, "Owner")
-            cursor.execute("INSERT INTO " + str(company_add_name) + '_Users'" (ID, Mail, Position) VALUES (%s, %s, %s)",
+            to_MySQL = (userID, "Owner")
+            cursor.execute("INSERT INTO " + str(company_add_name) + '_Users'" (ID, Position) VALUES (%s, %s)",
                            to_MySQL)
             connection.commit()
 
