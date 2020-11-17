@@ -165,3 +165,9 @@ textarea::placeholder{
   text-overflow: ellipsis;
   white-space: nowrap !important;
 }
+
+@media screen and (max-width: 768px){
+  .contact-list{
+    max-height: 300px;
+  }
+}
