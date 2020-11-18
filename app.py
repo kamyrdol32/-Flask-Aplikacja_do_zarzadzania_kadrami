@@ -236,6 +236,13 @@ def company_workers_edits(ID=False):
     return render_template("company_workers_edits.html")
 
 
+@app.route('/company/workers/add')
+@protected
+def company_workers_add():
+
+    return render_template("company_workers_add.html")
+
+
 @app.route('/company/vacation/')
 @protected
 def company_workers_vacations():
@@ -264,6 +271,9 @@ def account_password():
 @app.route('/messages/<int:ID>')
 @protected
 def messages(ID=False):
+    if request.method == "POST":
+        message = request.form.get('login_mail', "", type=str)
+
 
     IDs = getMessagesListUsersID(session['ID']) or False
     if IDs:
