@@ -12,39 +12,32 @@
 <div class="col-12 pl-3 pr-3 pt-3 pb-3 h-100">
   <div class="row h-100 m-0">
     <div class="col-12 col-md-4 p-0 h-100 contact-list">
-      <div class="contact-tile">
-        <p>Kamil Żegleń</p>
-        <span class="date">06.07.1942</span>
-        <span class="time">21:34</span>
-        <span class="last">Tutaj wiadomość...</span>
-      </div>
-      <div class="contact-tile">
-        <p>Pan Testowy</p>
-        <span class="date">06.07.1942</span>
-        <span class="time">20:15</span>
-        <span class="last">Tutaj wiadomość...</span>
-      </div>
+        {% for Date in Table %}
+          <div class="contact-tile">
+            <p>{{ Date[0] }} {{ Date[1] }}</p>
+            <span class="date">{{ Date[3] }}</span>
+            <span class="time">{{ Date[4] }}</span>
+            <span class="last">{{ Date[2] }}</span>
+          </div>
+        {% endfor %}
+
 
     </div>
     <div class="col-12 col-md-8">
-      <div class="messages">
-        <div class="message from" message-id="1">
-          <div class="message-tile">
-            <span class="message">Wiadomość testowa</span>
-            <span class="date">12:12 · Wyświetlono</span>
-            <p class='arrow'></p>
-          </div>
+        <div class="messages">
+            {% if Messages %}
+                {% for Data in Messages %}
+{#                    <div class="message from" message-id="1">#}
+                    <div class="{% if ID == Data[1] %} message to {% else %} message from {% endif %}" message-id="{{ Data[0] }}">
+                        <div class="message-tile">
+                            <span class="message">{{ Data[3] }}</span>
+                            <span class="date">{{ Data[5] }} · Wyświetlono</span>
+                            <p class='arrow'></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
-        <div class="message to" message-id="1">
-          <div class="message-tile">
-            <span class="message">Wiadomość testowa</span>
-            <span class="date">12:12 · Wyświetlono</span>
-            <p class='arrow'></p>
-          </div>
-        </div>
-
-
-      </div>
       <div class="messages-bottom">
         <textarea placeholder="Wiadomość..." name="name" rows="8" cols="80"></textarea>
         <a class="btn-message" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></a>

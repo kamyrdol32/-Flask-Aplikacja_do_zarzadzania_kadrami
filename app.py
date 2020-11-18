@@ -3,7 +3,7 @@ from functions import *
 import functools
 
 from flaskext.mysql import MySQL
-from flask import Flask, render_template, redirect, session, jsonify, request, flash
+from flask import Flask, render_template, redirect, session, jsonify, request
 
 ####################
 ### CONFIG & DECORATOS
@@ -77,6 +77,9 @@ def register():
         register_password = request.form.get('register_password', "", type=str)
         register_repeat_password = request.form.get('register_repeat_password', "", type=str)
 
+        register_firstname = request.form.get('register_firstname', "", type=str)
+        register_lastname = request.form.get('register_lastname', "", type=str)
+
         # Development
         if Type == "Development":
             print("Rejestracaja Login: " + register_mail)
@@ -92,7 +95,7 @@ def register():
             return jsonify({"title": "", "message": "Prosze wprowadzić identyczne hasła!"})
 
         # Rejestracja
-        if userRegister(register_mail, register_password, register_repeat_password):
+        if userRegister(register_mail, register_password, register_repeat_password, register_firstname, register_lastname):
 
             session['isLogged'] = True
             session['user'] = register_mail
@@ -106,9 +109,11 @@ def register():
 
 
 @app.route('/logout')
-#@protected
+@protected
 def logout():
     session.pop('isLogged', None)
+    session.pop('user', None)
+    session.pop('ID', None)
     return redirect("/")
 
 ####################
@@ -116,7 +121,7 @@ def logout():
 ####################
 
 @app.route('/company')
-#@protected
+@protected
 def company():
     return render_template("company.html")
 
@@ -176,7 +181,6 @@ def company_workers(ID=False):
     if not Companies:
         return redirect("/company/add")
 
-
     UsersData = []
 
     WorkersList = getCompanyWorkersID(ID)
@@ -202,7 +206,7 @@ def company_workers(ID=False):
 
     print(UsersData)
 
-    return render_template("company_workers.html", SelectedID=ID, CompaniesNames=Companies, UsersData=UsersData)
+    return render_template("company_workers.html", UserID=session['ID'], SelectedID=ID, CompaniesNames=Companies, UsersData=UsersData)
 
 
 @app.route('/company/workers/details')
@@ -226,13 +230,14 @@ def company_workers_details(ID=False):
 
 @app.route('/company/workers/edit')
 @app.route('/company/workers/edit/<int:ID>')
-#@protected
+@protected
 def company_workers_edits(ID=False):
 
     return render_template("company_workers_edits.html")
 
+
 @app.route('/company/vacation/')
-#@protected
+@protected
 def company_workers_vacations():
     return render_template("company_workers_vacations.html")
 
@@ -241,13 +246,13 @@ def company_workers_vacations():
 ####################
 
 @app.route('/account/')
-#@protected
+@protected
 def account():
     return render_template("account.html")
 
 
 @app.route('/account/password')
-#@protected
+@protected
 def account_password():
     return render_template("account_password.html")
 
@@ -257,9 +262,30 @@ def account_password():
 
 @app.route('/messages')
 @app.route('/messages/<int:ID>')
-#@protected
+@protected
 def messages(ID=False):
-    return render_template("messages.html")
+
+    IDs = getMessagesListUsersID(session['ID']) or False
+    if IDs:
+        NameSurname = getMessagesBasicData(session['ID'], IDs)
+        LatestMessages = getLatestMessages(session['ID'], IDs)
+
+        Table = []
+
+        for key, NR in enumerate(IDs):
+
+            Data = [NameSurname[key][0], NameSurname[key][1], LatestMessages[key][0], LatestMessages[key][1], LatestMessages[key][2]]
+
+            Table.append(Data)
+
+        if ID:
+            Messages = getMessages(session['ID'], ID)
+
+            return render_template("messages.html", Table=Table, ID=session['ID'], Messages=Messages)
+        else:
+            return render_template("messages.html", Table=Table)
+    else:
+        return jsonify({"title": "", "message": "Nie posiadasz żadnych wiadomości!"}) # Naprawic
 
 ####################
 ### Others

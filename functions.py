@@ -121,8 +121,8 @@ def userLogin(login_mail, login_password):
             print("userLogin - MySQL Error")
             print("Error: " + str(Error))
 
-def userRegister(register_mail, register_password, register_repeat_password):
-    if register_mail and register_password and register_repeat_password:
+def userRegister(register_mail, register_password, register_repeat_password, register_firstname, register_lastname):
+    if register_mail and register_password and register_repeat_password and register_firstname and register_lastname:
         try:
             # Łączność z MYSQL
             connection = mysql.connect()
@@ -145,8 +145,8 @@ def userRegister(register_mail, register_password, register_repeat_password):
                 ID = getUserID(str(register_mail))
 
                 # Dodanie do bazy MySQL
-                to_MySQL = (ID, str(register_mail))
-                cursor.execute("INSERT INTO Users (ID, Mail) VALUES (%s, %s)", to_MySQL)
+                to_MySQL = (ID, str(register_mail), str(register_firstname), str(register_lastname))
+                cursor.execute("INSERT INTO Users (ID, Mail, Name, Surname) VALUES (%s, %s, %s, %s)", to_MySQL)
                 connection.commit()
 
                 return True
@@ -189,15 +189,6 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
                                                                      "Add_Position BOOLEAN NOT NULL DEFAULT FALSE, "
                                                                      "Remove_Position BOOLEAN NOT NULL DEFAULT FALSE, "
                                                                      "Modify_Position BOOLEAN NOT NULL DEFAULT FALSE "
-                                                                     ")")
-
-            cursor.execute("CREATE TABLE " + str(company_add_name) + '_Messages'"("
-                                                                     "ID INT(16) UNSIGNED AUTO_INCREMENT PRIMARY KEY, "
-                                                                     "Sender_ID INT(16) NOT NULL, "
-                                                                     "Recipient_ID INT(16) NOT NULL, "
-                                                                     "Message TEXT NOT NULL, "
-                                                                     "Seen BOOLEAN NOT NULL DEFAULT FALSE, "
-                                                                     "Time TIMESTAMP NOT NULL "
                                                                      ")")
 
             # Pobranie State po ID
@@ -344,6 +335,142 @@ def getCompanyWorkersID(companyID):
         # Error Log
         except Exception as Error:
             print("getCompanyWorkersID - MySQL Error")
+            print("Error: " + str(Error))
+
+####################
+### Messages
+####################
+
+def getMessagesListUsersID(userID):
+    if userID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT Recipient_ID, Sender_ID FROM Messages WHERE Recipient_ID = '" + str(userID) + "' OR Sender_ID = '" + str(userID) + "' GROUP BY Recipient_ID")
+            MessagesList = cursor.fetchall()
+
+            # cursor.execute("SELECT * FROM Messages WHERE Recipient_ID = '" + str(userID) + "' OR Sender_ID = '" + str(userID) + "' GROUP BY Sender_ID ORDER BY ID DESC")
+            # MessagesList2 = cursor.fetchall()
+            # MessagesList.append(MessagesList2)
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            Data = []
+
+            # Tworzenie tabeli
+            for X in MessagesList:
+                Data.append(X[0])
+                Data.append(X[1])
+
+            # Usuwanie duplikatow & Usuwanie własnego ID
+            Data = list(dict.fromkeys(Data))
+            Data.remove(userID)
+
+            # Development
+            if Type == "Development":
+                print("getMessagesListUsersID: " + str(Data))
+
+            return Data
+
+        # Error Log
+        except Exception as Error:
+            print("getMessagesListUsersID - MySQL Error")
+            print("Error: " + str(Error))
+
+def getMessagesBasicData(UserID, OthersIDs):
+    if UserID and OthersIDs:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            Table = []
+
+            for ID in OthersIDs:
+                cursor.execute("SELECT Name, Surname FROM Users WHERE ID = '" + str(ID) + "'")
+                UserData = cursor.fetchone()
+
+                Data = []
+
+                Data.append(UserData[0])
+                Data.append(UserData[1])
+
+                Table.append(Data)
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            # Development
+            if Type == "Development":
+                print("getMessagesBasicData: " + str(Table))
+
+            return Table
+
+        # Error Log
+        except Exception as Error:
+            print("getMessagesBasicData - MySQL Error")
+            print("Error: " + str(Error))
+
+def getLatestMessages(UserID, OthersIDs):
+    if UserID and OthersIDs:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            Table = []
+
+            for OtherID in OthersIDs:
+
+                Data = []
+
+                cursor.execute("SELECT Message, CAST(Time AS DATE), CAST(Time AS TIME) FROM Messages WHERE (Sender_ID = '" + str(UserID) + "' AND Recipient_ID = '" + str(OtherID) + "') OR (Sender_ID = '" + str(OtherID) + "' AND Recipient_ID = '" + str(UserID) + "') ORDER BY Time DESC LIMIT 1")
+                Message = cursor.fetchone()
+                Data.append(Message[0])
+                Data.append(Message[1])
+                Data.append(Message[2])
+
+                Table.append(Data)
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            # Development
+            if Type == "Development":
+                print("getLatestMessages: " + str(Table))
+
+            return Table
+
+        # Error Log
+        except Exception as Error:
+            print("getLatestMessages - MySQL Error")
+            print("Error: " + str(Error))
+
+def getMessages(UserID, OtherID):
+    if UserID and OtherID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT ID, Sender_ID, Recipient_ID, Message, CAST(Time AS DATE), CAST(Time AS TIME) FROM Messages WHERE (Sender_ID = '" + str(UserID) + "' AND Recipient_ID = '" + str(OtherID) + "') OR (Sender_ID = '" + str(OtherID) + "' AND Recipient_ID = '" + str(UserID) + "') ORDER BY Time")
+            Messages = cursor.fetchall()
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            # Development  SELECT Sender_ID, Recipient_ID, Message, CAST(Time AS DATE), CAST(Time AS TIME) FROM Messages WHERE (Sender_ID = 1 AND Recipient_ID = 2) OR (Sender_ID = 2 AND Recipient_ID = 1) ORDER BY Time DESC
+            if Type == "Development":
+                print("getMessages: " + str(Messages))
+
+            return Messages
+
+        # Error Log
+        except Exception as Error:
+            print("getMessages - MySQL Error")
             print("Error: " + str(Error))
 
 ####################
