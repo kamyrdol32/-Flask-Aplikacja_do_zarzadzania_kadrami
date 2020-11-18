@@ -3,7 +3,7 @@ from functions import *
 import functools
 
 from flaskext.mysql import MySQL
-from flask import Flask, render_template, redirect, session, jsonify, request
+from flask import Flask, render_template, redirect, session, jsonify, request, flash
 
 ####################
 ### CONFIG & DECORATOS
