@@ -232,14 +232,12 @@ def company_workers_details(ID=False):
 @app.route('/company/workers/edit/<int:ID>')
 @protected
 def company_workers_edits(ID=False):
-
     return render_template("company_workers_edits.html")
 
 
 @app.route('/company/workers/add')
 @protected
 def company_workers_add():
-
     return render_template("company_workers_add.html")
 
 
@@ -267,12 +265,15 @@ def account_password():
 ### Messages
 ####################
 
-@app.route('/messages')
-@app.route('/messages/<int:ID>')
+@app.route('/messages', methods=['POST', 'GET'])
+@app.route('/messages/<int:ID>', methods=['POST', 'GET'])
 @protected
 def messages(ID=False):
-    if request.method == "POST":
-        message = request.form.get('login_mail', "", type=str)
+    if request.method == "POST" and ID:
+
+        messages_message = request.form.get('message', "", type=str)
+
+        sendMessage(session['ID'], ID, messages_message)
 
 
     IDs = getMessagesListUsersID(session['ID']) or False

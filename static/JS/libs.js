@@ -11,7 +11,7 @@ function resizeMessageBox(){
 
 function sendMessage(){
   $.ajax({
-    url: "/messages",
+    url: "/messages/2",
     data: {'message': $("#message").val()},
     type: "POST",
   }).done(function(data){
