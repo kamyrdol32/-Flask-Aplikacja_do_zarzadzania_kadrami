@@ -115,7 +115,7 @@
     {% if messages %}
       $(document).ready(function(){
         {% for message in messages %}
-            notify({'title': "Chuj dupa nie ma tytułu", 'message': '{{ message }}', 'delay': 120000})
+            notify({'title': "Powiadomienie", 'message': '{{ message }}', 'delay': 5000})
         {% endfor %}
       })
     {% endif %}

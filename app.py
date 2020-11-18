@@ -145,6 +145,7 @@ def company_add():
             return jsonify({"title": "", "message": "Podana firma jest już w rejestrze lub podany NIP/Regon jest juz zarejstrowany!"})
 
         if companyRegister(getUserID(session['user']), company_add_name, company_add_nip, company_add_regon, company_add_street, company_add_city, company_add_zip, company_add_state, company_add_phone, company_add_mail):
+            flash("Firma została zarejestrowana!")
             return jsonify({"redirect": "/"})
 
     return render_template("company_add.html", States=getStates())
@@ -259,8 +260,6 @@ def account():
 @app.route('/account/password')
 @protected
 def account_password():
-    flash("Proszę wprowadzić poprawne dane!")
-
     return render_template("account_password.html")\
 
 
