@@ -274,9 +274,7 @@ def messages(ID=False):
         messages_message = request.form.get('message', "", type=str)
 
         if sendMessage(session['ID'], ID, messages_message):
-
             return jsonify({"sendMessage": "true"})
-
 
     IDs = getMessagesListUsersID(session['ID']) or False
     if IDs:
@@ -286,9 +284,7 @@ def messages(ID=False):
         Table = []
 
         for key, NR in enumerate(IDs):
-
             Data = [NameSurname[key][0], NameSurname[key][1], NameSurname[key][2], LatestMessages[key][0], LatestMessages[key][1], LatestMessages[key][2]]
-
             Table.append(Data)
 
         if ID:
