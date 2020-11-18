@@ -641,3 +641,7 @@ a:hover, a:focus, a:active, a:hover i, a:focus i, a:active i{
 table i{
   margin-left: 10px;
 }
+
+.row.content > div:nth-of-type(1) {
+    margin-top: 3.5rem;
+}
