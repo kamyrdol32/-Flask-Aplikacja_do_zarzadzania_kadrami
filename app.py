@@ -275,6 +275,8 @@ def messages(ID=False):
 
         sendMessage(session['ID'], ID, messages_message)
 
+        return jsonify({"sendMessage": "true"})
+
 
     IDs = getMessagesListUsersID(session['ID']) or False
     if IDs:
