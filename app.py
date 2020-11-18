@@ -238,7 +238,7 @@ def company_workers_edits(ID=False):
 
 @app.route('/company/workers/add')
 @protected
-def company_workers_edits():
+def company_workers_add():
 
     return render_template("company_workers_add.html")
 
