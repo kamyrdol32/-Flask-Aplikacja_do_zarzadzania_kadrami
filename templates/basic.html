@@ -115,7 +115,7 @@
     {% if messages %}
       $(document).ready(function(){
         {% for message in messages %}
-            console.log("{{ message }}");
+            notify({'title': "Chuj dupa nie ma tytułu", 'message': '{{ message }}'})
         {% endfor %}
       })
     {% endif %}
