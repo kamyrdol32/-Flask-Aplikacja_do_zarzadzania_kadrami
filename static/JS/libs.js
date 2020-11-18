@@ -4,6 +4,13 @@ function coll($type, $event){
   $collapse = $("div.collapse[collapse='"+$type+"']").collapse('toggle');
 }
 
+function resizeMessageBox(){
+  $orig = $(".contact-list").height();
+  $(".messages").height(($orig-100)+"px");
+}
+
+
+
 
 
 $(document).ready(function(){
@@ -29,17 +36,18 @@ $(document).ready(function(){
     $val = $("#current_company").val();
     window.location = "/company/workers/"+$val;
   })
-})
 
-function resizeMessageBox(){
-  $orig = $(".contact-list").height();
-  $(".messages").height(($orig-100)+"px");
-}
+  $(".contact-tile").on("click", function(e){
+    $e = $(e.target);
+    $id = $e.attr("user-id");
 
+    window.location = "/messages?id="+$id;
+  });
 
-$(document).ready(function(){
   resizeMessageBox();
 })
+
+
 $(window).on("resize", function(){
   resizeMessageBox();
 });
