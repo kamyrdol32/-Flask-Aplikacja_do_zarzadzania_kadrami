@@ -115,7 +115,7 @@
     {% if messages %}
       $(document).ready(function(){
         {% for message in messages %}
-            console.log("{{ message }}");
+            console.log(JSON.parse("{{ message }}"));
         {% endfor %}
       })
     {% endif %}
