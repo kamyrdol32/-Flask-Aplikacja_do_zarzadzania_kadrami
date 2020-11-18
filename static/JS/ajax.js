@@ -13,7 +13,6 @@ function findParentForm($element){
       $($form).find('input[type="submit"], button[type="submit"]').on("click", function($e){
         $e.preventDefault();
         $form = findParentForm($e.target);
-        console.log($form);
 
         $url = $($form).attr("action");
         $method = $($form).attr("method");

@@ -24,3 +24,10 @@
   margin: 0;
   font-size: 14px;
 }
+
+
+.form-group::before,
+.form-group::after{
+  left: 0;
+  max-width: 100%;
+}

@@ -10,8 +10,11 @@ function resizeMessageBox(){
 }
 
 function sendMessage(){
+  $id = window.location.href.split("/");
+  $id = $id[$id.length-1];
+
   $.ajax({
-    url: "/messages",
+    url: "/messages/"+$id,
     data: {'message': $("#message").val()},
     type: "POST",
   }).done(function(data){
