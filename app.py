@@ -274,7 +274,7 @@ def messages(ID=False):
 
         for key, NR in enumerate(IDs):
 
-            Data = [NameSurname[key][0], NameSurname[key][1], LatestMessages[key][0], LatestMessages[key][1], LatestMessages[key][2]]
+            Data = [NameSurname[key][0], NameSurname[key][1], NameSurname[key][2], LatestMessages[key][0], LatestMessages[key][1], LatestMessages[key][2]]
 
             Table.append(Data)
 
