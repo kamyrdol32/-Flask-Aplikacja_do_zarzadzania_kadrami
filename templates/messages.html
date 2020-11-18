@@ -13,11 +13,11 @@
   <div class="row h-100 m-0">
     <div class="col-12 col-md-4 p-0 h-100 contact-list">
         {% for Date in Table %}
-          <div class="contact-tile">
-            <p>{{ Date[0] }} {{ Date[1] }}</p>
-            <span class="date">{{ Date[3] }}</span>
-            <span class="time">{{ Date[4] }}</span>
-            <span class="last">{{ Date[2] }}</span>
+          <div class="contact-tile" user-id="{{ Date[0] }}">
+            <p>{{ Date[1] }} {{ Date[2] }}</p>
+            <span class="date">{{ Date[4] }}</span>
+            <span class="time">{{ Date[5] }}</span>
+            <span class="last">{{ Date[3] }}</span>
           </div>
         {% endfor %}
 
@@ -39,7 +39,7 @@
             {% endif %}
         </div>
       <div class="messages-bottom">
-        <textarea placeholder="Wiadomość..." name="name" rows="8" cols="80"></textarea>
+        <textarea placeholder="Wiadomość..." id="message" name="name" rows="8" cols="80"></textarea>
         <a class="btn-message" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></a>
       </div>
     </div>

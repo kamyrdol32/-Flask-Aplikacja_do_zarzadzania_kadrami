@@ -171,3 +171,7 @@ textarea::placeholder{
     max-height: 300px;
   }
 }
+
+.contact-tile > * {
+    pointer-events: none;
+}

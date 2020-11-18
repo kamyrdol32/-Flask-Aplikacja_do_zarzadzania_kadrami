@@ -9,8 +9,22 @@ function resizeMessageBox(){
   $(".messages").height(($orig-100)+"px");
 }
 
-
-
+function sendMessage(){
+  $.ajax({
+    url: "/messages",
+    data: {'message': $("#message").val()},
+    type: "POST",
+  }).done(function(data){
+    if(data['message']){
+      notify(data);
+      console.log(data);
+    } else {
+      console.log(data);
+    }
+  }).fail(function($r){
+    console.log($r.responseText);
+  });
+}
 
 
 $(document).ready(function(){
@@ -40,8 +54,7 @@ $(document).ready(function(){
   $(".contact-tile").on("click", function(e){
     $e = $(e.target);
     $id = $e.attr("user-id");
-
-    window.location = "/messages?id="+$id;
+    window.location = "/messages/"+$id;
   });
 
   resizeMessageBox();
