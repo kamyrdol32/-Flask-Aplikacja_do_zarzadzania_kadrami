@@ -390,13 +390,14 @@ def getMessagesBasicData(UserID, OthersIDs):
             Table = []
 
             for ID in OthersIDs:
-                cursor.execute("SELECT Name, Surname FROM Users WHERE ID = '" + str(ID) + "'")
+                cursor.execute("SELECT ID, Name, Surname FROM Users WHERE ID = '" + str(ID) + "'")
                 UserData = cursor.fetchone()
 
                 Data = []
 
                 Data.append(UserData[0])
                 Data.append(UserData[1])
+                Data.append(UserData[2])
 
                 Table.append(Data)
 
