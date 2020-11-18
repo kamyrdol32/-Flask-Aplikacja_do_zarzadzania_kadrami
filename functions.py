@@ -460,6 +460,11 @@ def getMessages(UserID, OtherID):
             cursor.execute("SELECT ID, Sender_ID, Recipient_ID, Message, CAST(Time AS DATE), CAST(Time AS TIME), Seen FROM Messages WHERE (Sender_ID = '" + str(UserID) + "' AND Recipient_ID = '" + str(OtherID) + "') OR (Sender_ID = '" + str(OtherID) + "' AND Recipient_ID = '" + str(UserID) + "') ORDER BY Time")
             Messages = cursor.fetchall()
 
+            cursor.execute("UPDATE Messages SET Seen = 1 WHERE Recipient_ID = '" + str(UserID) + "' AND Sender_ID = '" + str(OtherID) + "'") # UPDATE Messages SET Seen = 1 WHERE Recipient_ID = 1 AND Sender_ID = 2
+            connection.commit()
+
+
+
             # Rozłączenie z bazą MySQL
             cursor.close()
 
@@ -485,6 +490,8 @@ def sendMessage(UserID, OtherID, Message):
             to_MySQL = (str(UserID), str(OtherID), str(Message))
             cursor.execute("INSERT INTO Messages (Sender_ID, Recipient_ID, Message) VALUES (%s, %s, %s)", to_MySQL)
             connection.commit()
+
+            # UPDATE Messages SET Seen = 1 WHERE Recipient_ID = 1
 
             # Development
             if Type == "Development":
