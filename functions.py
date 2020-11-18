@@ -463,7 +463,7 @@ def getMessages(UserID, OtherID):
             # Rozłączenie z bazą MySQL
             cursor.close()
 
-            # Development  SELECT Sender_ID, Recipient_ID, Message, CAST(Time AS DATE), CAST(Time AS TIME) FROM Messages WHERE (Sender_ID = 1 AND Recipient_ID = 2) OR (Sender_ID = 2 AND Recipient_ID = 1) ORDER BY Time DESC
+            # Development
             if Type == "Development":
                 print("getMessages: " + str(Messages))
 
@@ -472,6 +472,30 @@ def getMessages(UserID, OtherID):
         # Error Log
         except Exception as Error:
             print("getMessages - MySQL Error")
+            print("Error: " + str(Error))
+
+def sendMessage(UserID, OtherID, Message):
+    if UserID and OtherID and Message:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            # Dodanie do bazy MySQL
+            to_MySQL = (str(UserID), str(OtherID), str(Message))
+            cursor.execute("INSERT INTO Messages (Sender_ID, Recipient_ID, Message) VALUES (%s, %s, %s)", to_MySQL)
+            connection.commit()
+
+            # Development
+            if Type == "Development":
+                print("sendMessage: " + str(Message))
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+        # Error Log
+        except Exception as Error:
+            print("sendMessage - MySQL Error")
             print("Error: " + str(Error))
 
 ####################
