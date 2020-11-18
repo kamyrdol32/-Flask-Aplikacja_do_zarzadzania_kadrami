@@ -259,7 +259,13 @@ def account():
 @app.route('/account/password')
 @protected
 def account_password():
-    return render_template("account_password.html")
+    return render_template("account_password.html")\
+
+
+@app.route('/account/edit')
+@protected
+def account_edit():
+    return render_template("account_edit.html")
 
 ####################
 ### Messages
