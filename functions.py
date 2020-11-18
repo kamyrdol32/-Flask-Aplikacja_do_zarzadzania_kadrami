@@ -457,7 +457,7 @@ def getMessages(UserID, OtherID):
             connection = mysql.connect()
             cursor = connection.cursor()
 
-            cursor.execute("SELECT ID, Sender_ID, Recipient_ID, Message, CAST(Time AS DATE), CAST(Time AS TIME) FROM Messages WHERE (Sender_ID = '" + str(UserID) + "' AND Recipient_ID = '" + str(OtherID) + "') OR (Sender_ID = '" + str(OtherID) + "' AND Recipient_ID = '" + str(UserID) + "') ORDER BY Time")
+            cursor.execute("SELECT ID, Sender_ID, Recipient_ID, Message, CAST(Time AS DATE), CAST(Time AS TIME), Seen FROM Messages WHERE (Sender_ID = '" + str(UserID) + "' AND Recipient_ID = '" + str(OtherID) + "') OR (Sender_ID = '" + str(OtherID) + "' AND Recipient_ID = '" + str(UserID) + "') ORDER BY Time")
             Messages = cursor.fetchall()
 
             # Rozłączenie z bazą MySQL

@@ -31,7 +31,7 @@
                     <div class="{% if ID == Data[1] %} message to {% else %} message from {% endif %}" message-id="{{ Data[0] }}">
                         <div class="message-tile">
                             <span class="message">{{ Data[3] }}</span>
-                            <span class="date">{{ Data[5] }} · Wyświetlono</span>
+                            <span class="date">{{ Data[5] }}{% if Data[6] %} · Wyświetlono{% endif %}</span>
                             <p class='arrow'></p>
                         </div>
                     </div>
