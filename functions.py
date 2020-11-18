@@ -493,6 +493,8 @@ def sendMessage(UserID, OtherID, Message):
             # Rozłączenie z bazą MySQL
             cursor.close()
 
+            return True
+
         # Error Log
         except Exception as Error:
             print("sendMessage - MySQL Error")

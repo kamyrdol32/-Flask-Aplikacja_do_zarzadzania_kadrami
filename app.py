@@ -273,9 +273,9 @@ def messages(ID=False):
 
         messages_message = request.form.get('message', "", type=str)
 
-        sendMessage(session['ID'], ID, messages_message)
+        if sendMessage(session['ID'], ID, messages_message):
 
-        return jsonify({"sendMessage": "true"})
+            return jsonify({"sendMessage": "true"})
 
 
     IDs = getMessagesListUsersID(session['ID']) or False
