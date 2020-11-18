@@ -259,7 +259,7 @@ def account():
 @app.route('/account/password')
 @protected
 def account_password():
-    flash('You were successfully logged in')
+    flash("Proszę wprowadzić poprawne dane!")
 
     return render_template("account_password.html")\
 
