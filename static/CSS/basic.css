@@ -353,6 +353,7 @@ div[data-notify='container'] {
   bottom: 15px !important;
   background: rgba(0, 0, 0, 0.45);
   border-radius: 10px;
+  z-index: 99999999 !important;
 }
 
 div[data-notify='container'] .progress {
@@ -555,7 +556,7 @@ div[data-notify='container'] button {
 }
 
 .select2-dropdown{
-  background-color: rgba(255,255,255,0.2);
+  background-color: var(--gray-dark);
   border: 0;
   border-radius: 0;
 }
