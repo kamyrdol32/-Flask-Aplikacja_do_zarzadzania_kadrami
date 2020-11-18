@@ -18,15 +18,31 @@ function sendMessage(){
     data: {'message': $("#message").val()},
     type: "POST",
   }).done(function(data){
-    if(data['message']){
-      notify(data);
-      console.log(data);
-    } else {
-      console.log(data);
-    }
+    $d = new Date();
+    $d = $d.getHours()+":"+$d.getMinutes()+":"+$d.getSeconds();
+    if(data.sendMessage) addMessage($("#message").val(), "right", $d);
   }).fail(function($r){
     console.log($r.responseText);
   });
+}
+
+function addMessage($text = "", $side = "left", $date, $seen = 0){
+
+  $html = "<div class='message "+($side == "left" ? "from" : "to")+"'>"+
+                          "<div class='message-tile'>"+
+                              "<span class='message'>"+$text+"</span>"+
+                              "<span class='date'>"+$date+" · Wysłano</span>"+
+                              "<p class='arrow'></p>"+
+                          "</div>"+
+                      "</div>";
+
+  $(".messages").append($html);
+  $height = 0;
+  $(".messages > div").each(function(){$height += $(this).outerHeight();});
+  $(".messages").stop().animate({scrollTop: $height+200}, 500, 'swing', function() {
+  });
+
+  if($side == "right") $("#message").val("");
 }
 
 
@@ -59,6 +75,10 @@ $(document).ready(function(){
     $id = $e.attr("user-id");
     window.location = "/messages/"+$id;
   });
+
+  $height = 0;
+  $(".messages > div").each(function(){$height += $(this).outerHeight();});
+  $(".messages").scrollTop($height);
 
   resizeMessageBox();
 })
