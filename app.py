@@ -29,8 +29,10 @@ def protected(func):
         if "ID" not in session:
             return redirect("/login")
         if "ID" in session:
-            if not isNameSurname(session['ID']):
+            Key = isNameSurname(session['ID'])
+            if Key:
                 print("Brak")
+                return redirect("/login/" + Key)
         return func(*args, **kwargs)
 
     return secure_function
@@ -74,9 +76,8 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/login/data')
-@protected
-def login_data():
+@app.route('/login/<string:KEY>')
+def login_data(KEY):
     return render_template("login_data.html")
 
 
@@ -87,9 +88,6 @@ def register():
         register_mail = request.form.get('register_mail', "", type=str)
         register_password = request.form.get('register_password', "", type=str)
         register_repeat_password = request.form.get('register_repeat_password', "", type=str)
-
-        register_firstname = request.form.get('register_firstname', "", type=str)
-        register_lastname = request.form.get('register_lastname', "", type=str)
 
         # Development
         if Type == "Development":
@@ -106,7 +104,7 @@ def register():
             return jsonify({"title": "", "message": "Prosze wprowadzić identyczne hasła!"})
 
         # Rejestracja
-        if userRegister(register_mail, register_password, register_repeat_password, register_firstname, register_lastname):
+        if userRegister(register_mail, register_password, register_repeat_password):
 
             session['isLogged'] = True
             session['user'] = register_mail
@@ -120,7 +118,6 @@ def register():
 
 
 @app.route('/logout')
-@protected
 def logout():
     session.pop('isLogged', None)
     session.pop('user', None)

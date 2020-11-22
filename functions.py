@@ -121,8 +121,8 @@ def userLogin(login_mail, login_password):
             print("userLogin - MySQL Error")
             print("Error: " + str(Error))
 
-def userRegister(register_mail, register_password, register_repeat_password, register_firstname, register_lastname):
-    if register_mail and register_password and register_repeat_password and register_firstname and register_lastname:
+def userRegister(register_mail, register_password, register_repeat_password):
+    if register_mail and register_password and register_repeat_password:
         try:
             # Łączność z MYSQL
             connection = mysql.connect()
@@ -145,8 +145,8 @@ def userRegister(register_mail, register_password, register_repeat_password, reg
                 ID = getUserID(str(register_mail))
 
                 # Dodanie do bazy MySQL
-                to_MySQL = (ID, str(register_mail), str(register_firstname), str(register_lastname))
-                cursor.execute("INSERT INTO Users (ID, Mail, Name, Surname) VALUES (%s, %s, %s, %s)", to_MySQL)
+                to_MySQL = (ID, str(register_mail))
+                cursor.execute("INSERT INTO Users (ID, Mail) VALUES (%s, %s)", to_MySQL)
                 connection.commit()
 
                 return True
@@ -169,18 +169,22 @@ def isNameSurname(ID):
             cursor.execute("SELECT Name, Surname, Phone_number FROM Users WHERE ID = '" + str(ID) + "'")
             Data = cursor.fetchone()
 
+            cursor.execute("SELECT Secret_Key FROM Authorization WHERE ID = '" + str(ID) + "'")
+            Key = cursor.fetchone()[0]
+
             # Development
             if Type == "Development":
                 print("isNameSurname: " + str(Data))
+                print("isNameSurname Key: " + str(Key))
 
             # Rozłączenie z bazą MySQL
             cursor.close()
 
             # Return
             if Data[0] and Data[1] and Data[2]:
-                return True
-            else:
                 return False
+            else:
+                return Key
 
         # Error Log
         except Exception as Error:
@@ -242,9 +246,9 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
                            to_MySQL)
             connection.commit()
 
-            # Pobranie Mail'a
-            cursor.execute("SELECT Mail FROM Authorization WHERE ID = '" + str(userID) + "'")
-            userMail = cursor.fetchone()[0]
+            # # Pobranie Mail'a
+            # cursor.execute("SELECT Mail FROM Authorization WHERE ID = '" + str(userID) + "'")
+            # userMail = cursor.fetchone()[0]
 
             # Dodanie do bazy "_Permissions"
             to_MySQL = ("Owner", True, True, True, True, True, True, True, True)
@@ -421,11 +425,7 @@ def getMessagesBasicData(UserID, OthersIDs):
                 cursor.execute("SELECT ID, Name, Surname FROM Users WHERE ID = '" + str(ID) + "'")
                 UserData = cursor.fetchone()
 
-                Data = []
-
-                Data.append(UserData[0])
-                Data.append(UserData[1])
-                Data.append(UserData[2])
+                Data = [UserData[0], UserData[1], UserData[2]]
 
                 Table.append(Data)
 
@@ -490,8 +490,6 @@ def getMessages(UserID, OtherID):
 
             cursor.execute("UPDATE Messages SET Seen = 1 WHERE Recipient_ID = '" + str(UserID) + "' AND Sender_ID = '" + str(OtherID) + "'") # UPDATE Messages SET Seen = 1 WHERE Recipient_ID = 1 AND Sender_ID = 2
             connection.commit()
-
-
 
             # Rozłączenie z bazą MySQL
             cursor.close()
