@@ -7,7 +7,6 @@
   --secondary: #dadada;
     -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
          -moz-user-select: none; /* Old versions of Firefox */
           -ms-user-select: none; /* Internet Explorer/Edge */
               user-select: none; /* Non-prefixed version, currently
@@ -15,7 +14,7 @@
 }
 
 *:not(.password-like):not(.fas):not(.fa):not(.far):not(.fab) {
-  font-family: 'Roboto' !important;
+  font-family: 'Roboto', serif !important;
 }
 
 a, a:focus, a:hover, a:active {
@@ -66,8 +65,8 @@ a, a:focus, a:hover, a:active {
   height: 8px;
 }
 ::-webkit-scrollbar-button {
-  width: 0px;
-  height: 0px;
+  width: 0;
+  height: 0;
 }
 ::-webkit-scrollbar-thumb {
   background: #ECB72D;
@@ -150,7 +149,7 @@ body::before {
   bottom: -37vh;
   background: var(--primary);
   transform: rotate(-8deg);
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 7px 0px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 0 7px 0;
   border: 2px solid black;
   transition-duration: 0.3s;
 }
@@ -164,7 +163,7 @@ body::after {
   top: -37vh;
   background: var(--primary);
   transform: rotate(-8deg);
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 7px 0px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 0 7px 0;
   border: 2px solid black;
   transition-duration: 0.3s;
 }
@@ -223,13 +222,13 @@ input::placeholder, textarea::placeholder{
 }
 
 input.password-like {
-  font-family: 'password';
+  font-family: 'password', serif;
   letter-spacing: 4px;
 }
 
 input.password-like::placeholder {
-  font-family: 'Roboto' !important;
-  letter-spacing: 0px;
+  font-family: 'Roboto', serif !important;
+  letter-spacing: 0;
 }
 
 .form-group {
@@ -281,7 +280,7 @@ input.password-like::placeholder {
   position: relative;
   overflow: hidden;
   font-weight: 500;
-  box-shadow: inset 0 0 0 2px var(--primary), rgba(0, 0, 0, 0.3) 0px 0px 3px 2px;
+  box-shadow: inset 0 0 0 2px var(--primary), rgba(0, 0, 0, 0.3) 0 0 3px 2px;
   padding: 7px 50px;
 }
 
@@ -289,12 +288,12 @@ input.password-like::placeholder {
   position: relative;
   z-index: 3;
   color: white;
-  text-shadow: grey 0px 0px 2px;
+  text-shadow: grey 0 0 2px;
   letter-spacing: 1.5px;
 }
 
 .btn.btn-own:hover {
-  box-shadow: inset 0 0 0 2px var(--primary), rgba(0, 0, 0, 0.5) 0px 0px 3px 2px;
+  box-shadow: inset 0 0 0 2px var(--primary), rgba(0, 0, 0, 0.5) 0 0 3px 2px;
 }
 
 .btn.btn-own::before {
@@ -337,7 +336,7 @@ footer {
   color: var(--secondary);
   font-weight: bold;
   letter-spacing: 2px;
-  text-shadow: black 0px 0px 3px;
+  text-shadow: black 0 0 3px;
   max-width: calc(100vw - 30px);
 }
 
@@ -543,8 +542,8 @@ div[data-notify='container'] button {
 
 .select2-container--default .select2-selection--single {
     background: transparent;
-    border: 0px;
-    border-radius: 0px;
+    border: 0;
+    border-radius: 0;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered{
@@ -631,12 +630,12 @@ table tbody tr:nth-child(2n+1){
 
 a, a i{
   color: var(--secondary);
-  transition-duration: 0.3;
+  transition-duration: 0.3s;
 }
 
 a:hover, a:focus, a:active, a:hover i, a:focus i, a:active i{
   color: var(--primary) !important;
-  transition-duration: 0.3;
+  transition-duration: 0.3s;
 }
 
 table i{
