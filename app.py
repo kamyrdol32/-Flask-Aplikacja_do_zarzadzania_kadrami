@@ -93,7 +93,8 @@ def login_data(KEY):
         register_phone_number = request.form.get('register_phone_number', "", type=str)
         register_email = request.form.get('register_email', "", type=str)
 
-        updateUserData(session['ID'], register_name, register_surname, register_birth_data, register_PESEL, register_street, register_city, register_zip, register_state, register_phone_number, register_email)
+        if updateUserData(session['ID'], register_name, register_surname, register_birth_data, register_PESEL, register_street, register_city, register_zip, register_state, register_phone_number, register_email):
+            return jsonify({"redirect": "/"})
 
     return render_template("register_data.html", States=getStates())
 

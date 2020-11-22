@@ -198,7 +198,11 @@ def updateUserData(ID, register_name, register_surname, register_birth_data, reg
             connection = mysql.connect()
             cursor = connection.cursor()
 
-            cursor.execute("UPDATE Users SET Name = '" + str(register_name) + "', Surname = '" + str(register_surname) + "', PESEL = '" + str(register_PESEL) + "', Birth_date = '" + str(register_birth_data) + "', Phone_number = '" + str(register_surname) + "', Address = '" + str(register_street) + "', City = '" + str(register_city) + "', State = '" + str(register_state) + "', Code = '" + str(register_zip) + "'")
+            # Pobranie State po ID
+            cursor.execute("SELECT Name FROM States WHERE ID = '" + str(register_state) + "'")
+            State = cursor.fetchone()[0]
+
+            cursor.execute("UPDATE Users SET Name = '" + str(register_name) + "', Surname = '" + str(register_surname) + "', PESEL = '" + str(register_PESEL) + "', Birth_date = '" + str(register_birth_data) + "', Phone_number = '" + str(register_surname) + "', Address = '" + str(register_street) + "', City = '" + str(register_city) + "', State = '" + str(State) + "', Code = '" + str(register_zip) + "' WHERE `ID` = '" + str(ID) + "'")
             connection.commit()
 
             # Rozłączenie z bazą MySQL
