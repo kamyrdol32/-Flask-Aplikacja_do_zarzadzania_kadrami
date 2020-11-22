@@ -26,6 +26,11 @@ def protected(func):
     def secure_function(*args, **kwargs):
         if "isLogged" not in session:
             return redirect("/login")
+        if "ID" not in session:
+            return redirect("/login")
+        if "ID" in session:
+            if not isNameSurname(session['ID']):
+                print("Brak")
         return func(*args, **kwargs)
 
     return secure_function
@@ -67,6 +72,12 @@ def login():
             return jsonify({"title": "", "message": "Proszę wprowadzić poprawne dane!", "type": "danger"})
 
     return render_template("login.html")
+
+
+@app.route('/login/data')
+@protected
+def login_data():
+    return render_template("login_data.html")
 
 
 @app.route('/register', methods=['POST', 'GET'])

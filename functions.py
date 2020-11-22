@@ -159,6 +159,34 @@ def userRegister(register_mail, register_password, register_repeat_password, reg
             print("registerLogin - MySQL Error")
             print("Error: " + str(Error))
 
+def isNameSurname(ID):
+    if ID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT Name, Surname, Phone_number FROM Users WHERE ID = '" + str(ID) + "'")
+            Data = cursor.fetchone()
+
+            # Development
+            if Type == "Development":
+                print("isNameSurname: " + str(Data))
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            # Return
+            if Data[0] and Data[1] and Data[2]:
+                return True
+            else:
+                return False
+
+        # Error Log
+        except Exception as Error:
+            print("isNameSurname - MySQL Error")
+            print("Error: " + str(Error))
+
 ####################
 ### Companies
 ####################
