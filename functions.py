@@ -159,14 +159,14 @@ def userRegister(register_mail, register_password, register_repeat_password):
             print("registerLogin - MySQL Error")
             print("Error: " + str(Error))
 
-def isNameSurname(ID):
+def isData(ID):
     if ID:
         try:
             # Łączność z MYSQL
             connection = mysql.connect()
             cursor = connection.cursor()
 
-            cursor.execute("SELECT Name, Surname, Phone_number FROM Users WHERE ID = '" + str(ID) + "'")
+            cursor.execute("SELECT Name, Surname, PESEL, Birth_date, Phone_number, Address, City, State, Code FROM Users WHERE ID = '" + str(ID) + "'")
             Data = cursor.fetchone()
 
             cursor.execute("SELECT Secret_Key FROM Authorization WHERE ID = '" + str(ID) + "'")
@@ -174,8 +174,8 @@ def isNameSurname(ID):
 
             # Development
             if Type == "Development":
-                print("isNameSurname: " + str(Data))
-                print("isNameSurname Key: " + str(Key))
+                print("isData: " + str(Data))
+                print("isData Key: " + str(Key))
 
             # Rozłączenie z bazą MySQL
             cursor.close()

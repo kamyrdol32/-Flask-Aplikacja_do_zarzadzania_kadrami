@@ -29,9 +29,8 @@ def protected(func):
         if "ID" not in session:
             return redirect("/login")
         if "ID" in session:
-            Key = isNameSurname(session['ID'])
+            Key = isData(session['ID'])
             if Key:
-                print("Brak")
                 return redirect("/login/" + Key)
         return func(*args, **kwargs)
 
