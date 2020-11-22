@@ -80,6 +80,8 @@ $(document).ready(function(){
   $(".messages > div").each(function(){$height += $(this).outerHeight();});
   $(".messages").scrollTop($height);
 
+  $('.type-date').mask("0000-00-00");
+
   resizeMessageBox();
 })
 
