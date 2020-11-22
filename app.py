@@ -27,6 +27,9 @@ def protected(func):
         if "isLogged" not in session:
             flash("Odmowa dostępu!")
             return redirect("/login")
+        if "user" not in session:
+            flash("Odmowa dostępu!")
+            return redirect("/login")
         if "ID" not in session:
             flash("Odmowa dostępu!")
             return redirect("/login")

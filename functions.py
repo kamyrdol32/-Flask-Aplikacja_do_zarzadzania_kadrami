@@ -245,6 +245,16 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
                                                                      "Add_Position BOOLEAN NOT NULL DEFAULT FALSE, "
                                                                      "Remove_Position BOOLEAN NOT NULL DEFAULT FALSE, "
                                                                      "Modify_Position BOOLEAN NOT NULL DEFAULT FALSE "
+                                                                     "View_Vacations BOOLEAN NOT NULL DEFAULT FALSE "
+                                                                     "Accept_Vacations BOOLEAN NOT NULL DEFAULT FALSE "
+                                                                     ")")
+
+            cursor.execute("CREATE TABLE " + str(company_add_name) + 'Vacations'"("
+                                                                     "ID INT(16) UNSIGNED AUTO_INCREMENT PRIMARY KEY, "
+                                                                     "User_ID INT(16) NOT NULL, "
+                                                                     "Reason TEXT NOT NULL DEFAULT FALSE, "
+                                                                     "Start_Data DATE NOT NULL DEFAULT FALSE, "
+                                                                     "End_Data DATE NOT NULL DEFAULT FALSE "
                                                                      ")")
 
             # Pobranie State po ID
