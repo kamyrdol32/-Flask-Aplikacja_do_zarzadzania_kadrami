@@ -1,31 +1,31 @@
 {% extends "basic.html" %}
 
 <!-- Config -->
-{% block title %}Login Data{% endblock %}
-{% block file %}login_data{% endblock %}
+{% block title %}Register Data{% endblock %}
+{% block file %}register_data{% endblock %}
 {% block css %}
-    <link type="text/css" rel="stylesheet" href= "{{ url_for('static',filename='CSS/login_data.css') }}">
+    <link type="text/css" rel="stylesheet" href= "{{ url_for('static',filename='CSS/register_data.css') }}">
 {% endblock %}
 
 <!-- Content -->
 {% block content %}
 <div class="col-10 offset-1 p-0">
-  <form action="/company/add" method="POST" class="mt-4 mb-3">
+  <form action="/register/data" method="POST" class="mt-4 mb-3">
     <div class="row mt-4">
       <div class="col-12 hovered">
         <h3>Moje dane osobowe</h3>
       </div>
       <div class="form-group col-12 col-md-5 col-lg-3">
-        <input type="text" class="form-control" id="company_add_name" placeholder="Imię">
+        <input type="text" class="form-control" id="register_name" placeholder="Imię">
       </div>
       <div class="form-group col-12 col-md-5 offset-md-1 col-lg-3 offset-lg-1">
-        <input type="text" class="form-control" id="company_add_nip" placeholder="Nazwisko">
+        <input type="text" class="form-control" id="register_surname" placeholder="Nazwisko">
       </div>
       <div class="form-group col-12 col-md-5 col-lg-3 offset-lg-1">
-        <input type="text" class="form-control" id="company_add_regon" placeholder="Data urodzenia">
+        <input type="text" class="form-control" id="register_birth_data" placeholder="Data urodzenia">
       </div>
       <div class="form-group col-12 col-md-5 offset-md-1 col-lg-3 offset-lg-0">
-        <input type="text" class="form-control" id="company_add_pesel" placeholder="Pesel">
+        <input type="text" class="form-control" id="register_PESEL" placeholder="PESEL">
       </div>
     </div>
     <div class="row mt-4">
@@ -33,18 +33,18 @@
         <h3>Moje miejsce zamieszkania</h3>
       </div>
       <div class="form-group col-12 col-md-5 col-lg-3">
-        <input type="text" class="form-control" id="company_add_street" placeholder="Ulica">
+        <input type="text" class="form-control" id="register_street" placeholder="Ulica">
       </div>
       <div class="form-group col-12 col-md-5 offset-md-1 col-lg-3 offset-md-1">
-        <input type="text" class="form-control" id="company_add_city" placeholder="Miasto">
+        <input type="text" class="form-control" id="register_city" placeholder="Miasto">
       </div>
       <div class="form-group col-12 col-md-5 col-lg-3 offset-lg-1">
-        <input type="text" class="form-control" id="company_add_zip" placeholder="Kod pocztowy">
+        <input type="text" class="form-control" id="register_zip" placeholder="Kod pocztowy">
       </div>
     </div>
     <div class="row">
       <div class="form-group col-12 col-md-3">
-          <select class="custom-select" id="company_add_state" placeholder="Wojewodztwo">
+          <select class="custom-select" id="register_state" placeholder="Wojewodztwo">
               {% for Date in States %}
                   <option value={{ Date[0] }}>{{ Date[1] }}</option>
               {% endfor %}
@@ -56,10 +56,10 @@
         <h3>Moje dane kontaktowe</h3>
       </div>
       <div class="form-group col-12 col-md-5 col-lg-3">
-        <input type="text" class="form-control" id="company_add_city" placeholder="Telefon">
+        <input type="text" class="form-control" id="register_phone_number" placeholder="Telefon">
       </div>
       <div class="form-group col-12 col-md-5 offset-md-1 col-lg-3 offset-lg-1">
-        <input type="text" class="form-control" id="company_add_email" placeholder="Adres e-mail">
+        <input type="text" class="form-control" id="register_email" placeholder="Adres e-mail">
       </div>
     </div>
 
