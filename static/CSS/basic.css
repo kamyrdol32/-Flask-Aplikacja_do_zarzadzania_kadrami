@@ -646,3 +646,7 @@ table i{
 .row.content > div:nth-of-type(1) {
     margin-top: 3.5rem;
 }
+
+.navbar * {
+    font-size: 14px !important;
+}
