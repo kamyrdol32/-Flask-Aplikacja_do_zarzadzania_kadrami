@@ -25,13 +25,16 @@ def protected(func):
     @functools.wraps(func)
     def secure_function(*args, **kwargs):
         if "isLogged" not in session:
+            flash("Odmowa dostępu!")
             return redirect("/login")
         if "ID" not in session:
+            flash("Odmowa dostępu!")
             return redirect("/login")
         if "ID" in session:
             Key = isData(session['ID'])
             if Key:
-                return redirect("/login/" + Key)
+                flash("Proszę uzupełnic wszystkie dane osobowe!")
+                return redirect("/register/" + Key)
         return func(*args, **kwargs)
 
     return secure_function
@@ -75,9 +78,25 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/login/<string:KEY>')
+@app.route('/register/<string:KEY>', methods=['POST', 'GET'])
 def login_data(KEY):
-    return render_template("login_data.html")
+    if request.method == "POST":
+
+        register_name = request.form.get('register_name', "", type=str)
+        register_surname = request.form.get('register_surname', "", type=str)
+        register_birth_data = request.form.get('register_birth_data', "", type=str)
+        register_PESEL = request.form.get('register_PESEL', "", type=str)
+        register_street = request.form.get('register_street', "", type=str)
+        register_city = request.form.get('register_city', "", type=str)
+        register_zip = request.form.get('register_zip', "", type=str)
+        register_state = request.form.get('register_state', "", type=str)
+        register_phone_number = request.form.get('register_phone_number', "", type=str)
+        register_email = request.form.get('register_email', "", type=str)
+
+        if updateUserData(session['ID'], register_name, register_surname, register_birth_data, register_PESEL, register_street, register_city, register_zip, register_state, register_phone_number, register_email):
+            return jsonify({"redirect": "/"})
+
+    return render_template("register_data.html", States=getStates())
 
 
 @app.route('/register', methods=['POST', 'GET'])

@@ -191,6 +191,30 @@ def isData(ID):
             print("isNameSurname - MySQL Error")
             print("Error: " + str(Error))
 
+def updateUserData(ID, register_name, register_surname, register_birth_data, register_PESEL, register_street, register_city, register_zip, register_state, register_phone_number, register_email):
+    if ID and register_name and register_surname and register_birth_data and register_PESEL and register_street and register_city and register_zip and register_state and register_phone_number and register_email:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            # Pobranie State po ID
+            cursor.execute("SELECT Name FROM States WHERE ID = '" + str(register_state) + "'")
+            State = cursor.fetchone()[0]
+
+            cursor.execute("UPDATE Users SET Name = '" + str(register_name) + "', Surname = '" + str(register_surname) + "', PESEL = '" + str(register_PESEL) + "', Birth_date = '" + str(register_birth_data) + "', Phone_number = '" + str(register_surname) + "', Address = '" + str(register_street) + "', City = '" + str(register_city) + "', State = '" + str(State) + "', Code = '" + str(register_zip) + "' WHERE `ID` = '" + str(ID) + "'")
+            connection.commit()
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            return True
+
+        # Error Log
+        except Exception as Error:
+            print("updateUserData - MySQL Error")
+            print("Error: " + str(Error))
+
 ####################
 ### Companies
 ####################
