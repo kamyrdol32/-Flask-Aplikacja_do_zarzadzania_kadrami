@@ -273,6 +273,11 @@ def company_workers_add():
 def company_workers_vacations():
     return render_template("company_workers_vacations.html")
 
+@app.route('/company/vacation/add')
+@protected
+def company_workers_vacations_add():
+    return render_template("company_workers_vacations_add.html")
+
 ####################
 ### Account
 ####################
