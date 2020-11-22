@@ -198,8 +198,8 @@ def company_list(ID=False):
     return render_template("company_list.html", SelectedID=ID, CompaniesList=CompaniesList, CompaniesData=CompaniesData)
 
 
-@app.route('/company/workers')
-@app.route('/company/workers/<int:ID>')
+@app.route('/company/workers', methods=['POST', 'GET'])
+@app.route('/company/workers/<int:ID>', methods=['POST', 'GET'])
 @protected
 def company_workers(ID=False):
 
@@ -234,7 +234,11 @@ def company_workers(ID=False):
         # Tworznie 2D tabeli
         UsersData.append(User)
 
-    print(UsersData)
+    # Dodatanie nowego pracownika
+    if request.method == 'POST':
+        company_workers_mail = request.form['company_workers_mail']
+
+        addUserToCompany(getUserID(company_workers_mail), ID)
 
     return render_template("company_workers.html", UserID=session['ID'], SelectedID=ID, CompaniesNames=Companies, UsersData=UsersData)
 
@@ -263,13 +267,6 @@ def company_workers_details(ID=False):
 @protected
 def company_workers_edits(ID=False):
     return render_template("company_workers_edits.html")
-
-
-@app.route('/company/workers/add')
-@protected
-def company_workers_add():
-    return render_template("company_workers_add.html")
-
 
 @app.route('/company/vacation/')
 @protected

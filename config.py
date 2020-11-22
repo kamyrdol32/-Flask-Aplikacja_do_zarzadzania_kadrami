@@ -8,7 +8,7 @@ class Config(object):
     # MYSQL
     MYSQL_DATABASE_USER = "pi"
     MYSQL_DATABASE_PASSWORD = "Ev12321"
-    MYSQL_DATABASE_DB = "KamilNew"
+    MYSQL_DATABASE_DB = "Kamil"
     MYSQL_DATABASE_HOST = "evgaming.duckdns.org"
 
     # JWT

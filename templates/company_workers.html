@@ -27,7 +27,13 @@
       <div class="row">
         <div class="col-12 hovered">
           <h3>Pracownicy
-            <a href="/company/workers/add" name="button" class="btn btn-own float-right"><span>Dodaj pracownika</span></a>
+            <a name="button" onclick="openForm()" class="btn btn-own float-right"><span>Dodaj pracownika</span></a>
+              <div class="form-popup" id="myForm" style="display: none">
+                  <form action="/company/workers" method="POST">
+                      <input type="text" class="form-control" id="company_workers_mail" placeholder="Adres e-mail">
+                      <button type="submit" class="btn btn-own"><span>Dodaj pracownika</span></button>
+                  </form>
+                </div>
           </h3>
         </div>
         <div class="col-12">

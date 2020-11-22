@@ -403,6 +403,11 @@ def getCompanyWorkersID(companyID):
             print("getCompanyWorkersID - MySQL Error")
             print("Error: " + str(Error))
 
+def addUserToCompany(userID, companyID):
+    if userID and companyID:
+        print(userID)
+        print(companyID)
+
 ####################
 ### Messages
 ####################
