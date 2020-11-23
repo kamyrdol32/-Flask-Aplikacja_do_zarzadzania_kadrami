@@ -191,8 +191,8 @@ def isData(ID):
             print("isNameSurname - MySQL Error")
             print("Error: " + str(Error))
 
-def updateUserData(ID, register_name, register_surname, register_birth_data, register_PESEL, register_street, register_city, register_zip, register_state, register_phone_number, register_email):
-    if ID and register_name and register_surname and register_birth_data and register_PESEL and register_street and register_city and register_zip and register_state and register_phone_number and register_email:
+def updateUserData(ID, register_name, register_surname, register_birth_data, register_PESEL, register_street, register_city, register_zip, register_state, register_phone_number):
+    if ID and register_name and register_surname and register_birth_data and register_PESEL and register_street and register_city and register_zip and register_state and register_phone_number:
         try:
             # Łączność z MYSQL
             connection = mysql.connect()
@@ -282,7 +282,7 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
             cursor.execute("CREATE TABLE " + str(company_add_name) + '_Users'"("
                                                                      "ID INT(16) UNSIGNED PRIMARY KEY, "
                                                                      "Position VARCHAR(128) NULL DEFAULT NULL, "
-                                                                     "Salary INT(64) NULL DEFAULT NULL"
+                                                                     "Salary BIGINT(64) NULL DEFAULT NULL"
                                                                      ")")
 
             cursor.execute("CREATE TABLE " + str(company_add_name) + '_Permissions'"("
@@ -490,7 +490,7 @@ def addUserToCompany(name, surname, userMail, position, salary, companyID):
                 Password = passwordGenerator()
 
                 userRegister(userMail, Password, Password)
-                # sendWelcomeMail(userMail, Password, getCompanyName(companyID))
+                sendWelcomeMail(userMail, Password, getCompanyName(companyID))
 
                 userID = getUserID(userMail)
 
@@ -576,6 +576,9 @@ def updateUserCompanyData(companyID, userID, position, salary):
             # Łączność z MYSQL
             connection = mysql.connect()
             cursor = connection.cursor()
+
+            cursor.execute("SELECT Name FROM " + str(getCompanyName(companyID)) + '_Permissions'" WHERE ID = '" + str(position) + "'")
+            position = cursor.fetchone()[0]
 
             cursor.execute("UPDATE " + str(getCompanyName(companyID)) + '_Users'" SET Position = '" + str(position) + "', Salary = '" + str(salary) + "' WHERE `ID` = '" + str(userID) + "'")
             connection.commit()

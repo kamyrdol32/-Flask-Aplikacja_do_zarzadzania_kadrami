@@ -98,7 +98,7 @@ def login_data(KEY):
         register_phone_number = request.form.get('register_phone_number', "", type=str)
         register_email = request.form.get('register_email', "", type=str)
 
-        if updateUserData(session['ID'], register_name, register_surname, register_birth_data, register_PESEL, register_street, register_city, register_zip, register_state, register_phone_number, register_email):
+        if updateUserData(session['ID'], register_name, register_surname, register_birth_data, register_PESEL, register_street, register_city, register_zip, register_state, register_phone_number):
             return jsonify({"redirect": "/"})
 
     return render_template("register_data.html", States=getStates())
@@ -151,12 +151,6 @@ def logout():
 ### Company
 ####################
 
-@app.route('/company')
-@protected
-def company():
-    return render_template("company.html")
-
-
 @app.route('/company/add', methods=['POST', 'GET'])
 @protected
 def company_add():
@@ -193,6 +187,7 @@ def company_list(ID=False):
         ID = CompaniesList[0][0]
 
     if not CompaniesList:
+        flash("Nie jesteś przypisany do żadnej firmy!")
         return redirect("/company/add")
 
     CompaniesData = getCompanyData(ID)
@@ -212,6 +207,7 @@ def company_workers(ID=False):
             ID = Companies[0][0]
 
         if not Companies:
+            flash("Nie jesteś przypisany do żadnej firmy!")
             return redirect("/company/add")
 
         UsersData = []
@@ -238,24 +234,10 @@ def company_workers(ID=False):
             # Tworznie 2D tabeli
             UsersData.append(User)
 
-    # Dodatanie nowego pracownika
-
     if request.method == 'POST':
-        print(request.form['do'])
-        print(request.form['do'])
-        print(request.form['do'])
-        print(request.form['do'])
-        print(request.form['do'])
-        print(request.form['do'])
-        print(request.form['do'])
-        print(request.form['do'])
-        print(request.form['do'])
-        print(request.form['do'])
-        print(request.form['do'])
-        print(request.form['do'])
 
-
-        if request.form['company_workers_add_mail'] and request.form['company_workers_add_mail'] != "":
+        # Dodatanie nowego pracownika
+        if request.form['do'] == "add":
             company_workers_name = request.form['company_workers_add_name']
             company_workers_surname = request.form['company_workers_add_surname']
             company_workers_mail = request.form['company_workers_add_mail']
@@ -267,7 +249,7 @@ def company_workers(ID=False):
                 return jsonify({"redirect": "/company/workers"})
 
         # Edycja pracownika
-        if request.form['company_workers_edit_salary'] and request.form['company_workers_edit_salary'] != "":
+        if request.form['do'] == "edit":
             company_workers_id = request.form['company_workers_id']
             company_workers_salary = request.form['company_workers_edit_salary']
             company_workers_position = request.form['company_workers_edit_position']
@@ -290,6 +272,7 @@ def company_workers_details(companyID=False, userID=False):
         userID = Companies[0][0]
 
     if not Companies:
+        flash("Nie jesteś przypisany do żadnej firmy!")
         return redirect("/company/add")
 
     # Pobieranie danych dotyczących pracownika
@@ -341,7 +324,10 @@ def company_generator():
 @app.route('/account/')
 @protected
 def account():
-    return render_template("account.html")
+
+    UserData = getUserData(session["ID"])
+
+    return render_template("account.html", UserData=UserData)
 
 
 @app.route('/account/password', methods=['POST', 'GET'])
@@ -365,10 +351,27 @@ def account_password():
     return render_template("account_password.html")\
 
 
-@app.route('/account/edit')
+@app.route('/account/edit', methods=['POST', 'GET'])
 @protected
 def account_edit():
-    return render_template("account_edit.html")
+
+    if request.method == 'POST':
+        account_edit_name = request.form['account_edit_name']
+        account_edit_surname = request.form['account_edit_surname']
+        account_edit_birth_data = request.form['account_edit_birth_data']
+        account_edit_PESEL = request.form['account_edit_PESEL']
+        account_edit_street = request.form['account_edit_street']
+        account_edit_city = request.form['account_edit_city']
+        account_edit_zip = request.form['account_edit_zip']
+        account_edit_state = request.form['account_edit_state']
+        account_edit_phone_number = request.form['account_edit_phone_number']
+
+        if updateUserData(session["ID"], account_edit_name, account_edit_surname, account_edit_birth_data, account_edit_PESEL, account_edit_street, account_edit_city, account_edit_zip, account_edit_state, account_edit_phone_number):
+            print("Udalos ie")
+            flash("Zaaktualizowano informacje!")
+            return jsonify({"redirect": "/account"})
+
+    return render_template("account_edit.html", States=getStates())
 
 ####################
 ### Messages

@@ -17,17 +17,21 @@
       <div class="col-12 hovered">
         <h3>Moje dane</h3>
       </div>
-      <div class="col-12 col-md-6">
-        <p class="company-title">Imię:</p>
-        <p class="company-value"></p>
+      <div class="col-12 col-md-3">
+        <p class="company-title h6">Imię:</p>
+        <p class="company-value">{{ UserData[2] }}</p>
       </div>
       <div class="col-12 col-md-3">
-        <p class="company-title">Nazwisko:</p>
-        <p class="company-value"></p>
+        <p class="company-title h6">Nazwisko:</p>
+        <p class="company-value">{{ UserData[3] }}</p>
       </div>
       <div class="col-12 col-md-3">
-        <p class="company-title">Data urodzenia:</p>
-        <p class="company-value"></p>
+        <p class="company-title h6">Data urodzenia:</p>
+        <p class="company-value">{{ UserData[5] }}</p>
+      </div>
+      <div class="col-12 col-md-3">
+        <p class="company-title h6">PESEL:</p>
+        <p class="company-value">{{ UserData[4] }}</p>
       </div>
     </div>
     <div class="row mt-4">
@@ -35,22 +39,22 @@
         <h3>Miejsce zamieszkania</h3>
       </div>
       <div class="col-8">
-        <p class="company-street">ul. </p>
-        <p class="company-street"></p>
-        <p class="company-street"></p>
+        <p class="company-street">ul. {{ UserData[7] }}</p>
+        <p class="company-street">{{ UserData[8] }} {{ UserData[9] }}</p>
+        <p class="company-street">{{ UserData[10] }}</p>
       </div>
     </div>
     <div class="row mt-4">
       <div class="col-12 hovered">
         <h3>Dane kontaktowe</h3>
       </div>
-      <div class="col-8">
-        <p class="company-owner">Telefon komórkowy</p>
-        <p class="company-owner"></p>
+      <div class="col-12 col-md-4">
+        <p class="company-owner h6">Telefon komórkowy</p>
+        <p class="company-value">{{ UserData[6] }}</p>
       </div>
-      <div class="col-8">
-        <p class="company-owner">E-Mail</p>
-        <p class="company-owner"></p>
+      <div class="col-12 col-md-4">
+        <p class="company-owner h6">E-Mail</p>
+        <p class="company-value">{{ UserData[1] }}</p>
       </div>
     </div>
     <div class="row mt-4">
