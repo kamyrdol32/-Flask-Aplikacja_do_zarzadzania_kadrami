@@ -27,21 +27,7 @@
       <div class="row">
         <div class="col-12 hovered">
           <h3>Pracownicy
-{#              Popup#}
-            <a name="button" onclick="openForm()" class="btn btn-own float-right"><span>Dodaj pracownika</span></a>
-              <div class="form-popup" id="myForm" style="display: none">
-                  <form action="/company/workers/{{ SelectedID }}" method="POST">
-                      <input type="text" class="form-control" id="company_workers_mail" placeholder="Adres e-mail">
-                      <input type="number" class="form-control" id="company_workers_salary" placeholder="Wynagrodzenie">
-                      <select class="custom-select" id="company_workers_position">
-                        {% for Date in PositionsList %}
-                            <option value={{ Date[0] }}>{{ Date[1] }}</option>
-                        {% endfor %}
-                      </select>
-                      <button type="submit" class="btn btn-own"><span>Dodaj pracownika</span></button>
-                  </form>
-                </div>
-{#              END#}
+            <a name="button" onclick="$('#modal-add').modal()" class="btn btn-own float-right"><span>Dodaj pracownika</span></a>
           </h3>
         </div>
         <div class="col-12">
@@ -68,7 +54,7 @@
                       <td style="width: 10%;" class="text-right text-nowrap">
                         {% if Date[0] != session['ID'] %}<a href="/messages/{{ Date[0] }}"><i class="fas fa-paper-plane"></i></a>{% endif %}
                         <a href="/company/workers/details/{{ SelectedID }}/{{ Date[0] }}"><i class="fas fa-list-alt"></i></a>
-                        <a href="/company/workers/edit/{{ SelectedID }}/{{ Date[0] }}"><i class="fas fa-pen"></i></a>
+                        <a onclick="editModal({{ Date[0] }}, {{ SelectedID }})" ><i class="fas fa-pen"></i></a>
                         <a href="/company/workers/delete/{{ SelectedID }}/{{ Date[0] }}"><i class="fas fa-trash" style="color: #B30606"></i></a>
                       </td>
                     </tr>
@@ -80,4 +66,71 @@
       </div>
     </div>
   </div>
+
+  <div class="modal" id="modal-add" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <form action="/company/workers/{{ SelectedID }}" class="w-100" method="POST">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Dodaj pracownika do firmy</h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group col-12">
+              <input type="text" class="form-control" id="company_workers_name" placeholder="Imię">
+            </div>
+            <div class="form-group col-12">
+              <input type="text" class="form-control" id="company_workers_surname" placeholder="Nazwisko">
+            </div>
+            <div class="form-group col-12">
+              <input type="text" class="form-control" id="company_workers_mail" placeholder="Adres e-mail">
+            </div>
+            <div class="form-group col-12">
+              <input type="number" class="form-control" id="company_workers_salary" placeholder="Wynagrodzenie">
+            </div>
+            <div class="form-group col-12">
+              <select class="custom-select" id="company_workers_position">
+              {% for Date in PositionsList %}
+                <option value={{ Date[0] }}>{{ Date[1] }}</option>
+              {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-own"><span>Dodaj pracownika</span></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <div class="modal" id="modal-edit" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <form action="/company/workers/{{ SelectedID }}" class="w-100" method="POST">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edytuj do firmy</h5>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" class="form-control" id="company_workers_id">
+            <input type="hidden" class="form-control" id="company_workers_company_id">
+            <div class="form-group col-12">
+              <input type="number" class="form-control" id="company_workers_salary" placeholder="Wynagrodzenie">
+            </div>
+            <div class="form-group col-12">
+              <select class="custom-select" id="company_workers_position">
+              {% for Date in PositionsList %}
+                <option value={{ Date[0] }}>{{ Date[1] }}</option>
+              {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-own"><span>Edytuj pracownika</span></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
 {% endblock %}

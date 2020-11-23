@@ -280,7 +280,7 @@ input.password-like::placeholder {
   position: relative;
   overflow: hidden;
   font-weight: 500;
-  box-shadow: inset 0 0 0 2px var(--primary), rgba(0, 0, 0, 0.3) 0 0 3px 2px;
+  box-shadow: inset 0 0 0 2px var(--primary), rgba(0, 0, 0, 0.3) 0 0 3px 2px !important;
   padding: 7px 50px;
 }
 
@@ -596,6 +596,7 @@ span.select2-container.select2-container--default.select2-container--open{
     line-height: 38px;
     height: 38px;
     max-width: 100%;
+    width: 100% !important;
 }
 
 .table-responsive{
@@ -648,4 +649,16 @@ table i{
 
 .navbar * {
     font-size: 14px !important;
+}
+
+.modal-backdrop {
+    display: none !important;
+}
+
+.modal{
+  background: rgba(0,0,0,0.7);
+}
+
+.modal-content{
+  background-color: var(--black);
 }

@@ -89,3 +89,10 @@ $(document).ready(function(){
 $(window).on("resize", function(){
   resizeMessageBox();
 });
+
+
+function editModal($id, $firma){
+  $($("#modal-edit input[type='hidden']")[0]).val($id);
+  $($("#modal-edit input[type='hidden']")[1]).val($firma);
+  $("#modal-edit").modal();
+}
