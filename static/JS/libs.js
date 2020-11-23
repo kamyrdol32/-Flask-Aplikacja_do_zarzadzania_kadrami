@@ -31,7 +31,7 @@ function addMessage($text = "", $side = "left", $date, $seen = 0){
   $html = "<div class='message "+($side == "left" ? "from" : "to")+"'>"+
                           "<div class='message-tile'>"+
                               "<span class='message'>"+$text+"</span>"+
-                              "<span class='date'>"+$date+" · Wysłano</span>"+
+                              "<span class='date'>Teraz</span>"+
                               "<p class='arrow'></p>"+
                           "</div>"+
                       "</div>";

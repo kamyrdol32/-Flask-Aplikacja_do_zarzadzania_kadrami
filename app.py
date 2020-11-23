@@ -280,6 +280,11 @@ def company_workers_vacations():
 def company_workers_vacations_add():
     return render_template("company_workers_vacations_add.html")
 
+@app.route('/company/permissions')
+@protected
+def company_permissions():
+    return render_template("company_permissions.html")
+
 ####################
 ### Account
 ####################
@@ -331,16 +336,24 @@ def messages(ID=False):
         if sendMessage(session['ID'], ID, messages_message):
             return jsonify({"sendMessage": "true"})
 
+    # Blokada pisania do siebie
+    if session['ID'] == ID:
+        flash("Nie możesz pisać sam do siebie!")
+        return redirect("/")
+
+
     IDs = getMessagesListUsersID(session['ID']) or False
-    if IDs:
+    if IDs or ID:
         NameSurname = getMessagesBasicData(session['ID'], IDs)
         LatestMessages = getLatestMessages(session['ID'], IDs)
 
         Table = []
 
-        for key, NR in enumerate(IDs):
-            Data = [NameSurname[key][0], NameSurname[key][1], NameSurname[key][2], LatestMessages[key][0], LatestMessages[key][1], LatestMessages[key][2]]
-            Table.append(Data)
+        if IDs:
+            for key, NR in enumerate(IDs):
+                Data = [NameSurname[key][0], NameSurname[key][1], NameSurname[key][2], LatestMessages[key][0],
+                        LatestMessages[key][1], LatestMessages[key][2]]
+                Table.append(Data)
 
         if ID:
             Messages = getMessages(session['ID'], ID)
@@ -356,6 +369,10 @@ def messages(ID=False):
 ### Others
 ####################
 
+@app.route('/generator')
+@protected
+def generator():
+    return render_template("company_generator.html")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=70)
