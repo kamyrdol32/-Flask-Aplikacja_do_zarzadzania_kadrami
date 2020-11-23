@@ -239,11 +239,13 @@ def company_workers(ID=False):
 
     # Dodatanie nowego pracownika
     if request.method == 'POST':
+        company_workers_name = request.form['company_workers_name']
+        company_workers_surname = request.form['company_workers_surname']
         company_workers_mail = request.form['company_workers_mail']
         company_workers_position = request.form['company_workers_position']
         company_workers_salary = request.form['company_workers_salary']
 
-        if addUserToCompany(company_workers_mail, company_workers_position, company_workers_salary, ID):
+        if addUserToCompany(company_workers_name, company_workers_surname, company_workers_mail, company_workers_position, company_workers_salary, ID):
             flash("Pracownik został dodany!")
             return jsonify({"redirect": "/company/workers"})
 
@@ -277,7 +279,13 @@ def company_workers_details(companyID=False, userID=False):
 @protected
 def company_workers_delete(companyID=False, userID=False):
 
-    return render_template("company_workers_details.html")
+    if userID != session['ID']:
+        if deleteUserFromCompany(userID, companyID):
+            flash("Pomyślnie usunięto!")
+        return redirect("/company/workers")
+    else:
+        flash("Nie możesz usunąc samego siebie!")
+        return redirect("/company/workers")
 
 @app.route('/company/vacation/')
 @protected
@@ -355,7 +363,6 @@ def messages(ID=False):
         flash("Nie możesz pisać sam do siebie!")
         return redirect("/")
 
-
     IDs = getMessagesListUsersID(session['ID']) or False
     if IDs or ID:
         NameSurname = getMessagesBasicData(session['ID'], IDs)
@@ -382,6 +389,7 @@ def messages(ID=False):
 ####################
 ### Others
 ####################
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=70)

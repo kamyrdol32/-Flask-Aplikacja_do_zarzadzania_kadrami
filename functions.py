@@ -434,7 +434,7 @@ def getCompanyWorkersID(companyID):
             connection = mysql.connect()
             cursor = connection.cursor()
 
-            cursor.execute("SELECT User_ID FROM Companies_Workers WHERE Company_ID = '" + str(companyID) + "'")
+            cursor.execute("SELECT User_ID FROM Companies_Workers WHERE Company_ID = '" + str(companyID) + "' ORDER BY User_ID")
             WorkersList = cursor.fetchall()
 
             # Development
@@ -452,7 +452,7 @@ def getCompanyWorkersID(companyID):
             print("getCompanyWorkersID - MySQL Error")
             print("Error: " + str(Error))
 
-def addUserToCompany(userMail, position, salary, companyID):
+def addUserToCompany(name, surname, userMail, position, salary, companyID):
     if userMail and companyID:
         try:
             # Łączność z MYSQL
@@ -500,6 +500,10 @@ def addUserToCompany(userMail, position, salary, companyID):
                                to_MySQL)
                 connection.commit()
 
+                # Wpisanie Imie & Nazwisko
+                cursor.execute("UPDATE Users SET Name = '" + str(name) + "', Surname = '" + str(surname) + "' WHERE Mail = '" + str(userMail) + "'")
+                connection.commit()
+
                 to_MySQL = (str(userID), str(position), str(salary))
                 cursor.execute("INSERT INTO " + str(getCompanyName(companyID)) + '_Users'" (ID, Position, Salary) VALUES (%s, %s, %s)",
                                to_MySQL)
@@ -515,9 +519,29 @@ def addUserToCompany(userMail, position, salary, companyID):
             print("addUserToCompany - MySQL Error")
             print("Error: " + str(Error))
 
-# def deleteUserFromCompany(userID, companyID):
-#     if userID and companyID:
+def deleteUserFromCompany(userID, companyID):
+    if userID and companyID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
 
+            # Usuwanie z MySQL
+            cursor.execute("DELETE FROM Companies_Workers WHERE  User_ID = '" + str(userID) + "' AND  Company_ID = '" + str(companyID) + "'")
+            connection.commit()
+
+            cursor.execute("DELETE FROM " + str(getCompanyName(companyID)) + '_Users'" WHERE  ID = '" + str(userID) + "'")
+            connection.commit()
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            return True
+
+            # Error Log
+        except Exception as Error:
+            print("deleteUserFromCompany - MySQL Error")
+            print("Error: " + str(Error))
 
 def getCompanyPositionsList(companyID):
     if companyID:
