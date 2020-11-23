@@ -452,12 +452,16 @@ def getCompanyWorkersID(companyID):
             print("getCompanyWorkersID - MySQL Error")
             print("Error: " + str(Error))
 
-def addUserToCompany(userMail, companyID):
+def addUserToCompany(userMail, position, salary, companyID):
     if userMail and companyID:
         try:
             # Łączność z MYSQL
             connection = mysql.connect()
             cursor = connection.cursor()
+
+            # Pobieranie nazwy stanowiska
+            cursor.execute("SELECT `Name` FROM " + str(getCompanyName(companyID)) + '_Permissions'" WHERE `ID` = '" + str(position) + "'")
+            position = cursor.fetchone()[0]
 
             # Sprawdzanie czy istnieje użytkownik
             cursor.execute("SELECT COUNT(1) FROM `Authorization` WHERE `Mail` = '" + userMail + "'")
@@ -476,6 +480,11 @@ def addUserToCompany(userMail, companyID):
                     cursor.execute("INSERT INTO Companies_Workers (User_ID, Company_Name, Company_ID) VALUES (%s, %s, %s)", to_MySQL)
                     connection.commit()
 
+                    to_MySQL = (str(userID), str(position), str(salary))
+                    cursor.execute("INSERT INTO " + str(getCompanyName(companyID)) + '_Users'" (ID, Position, Salary) VALUES (%s, %s, %s)",
+                                   to_MySQL)
+                    connection.commit()
+
             # Brak konta
             else:
                 Password = passwordGenerator()
@@ -491,17 +500,46 @@ def addUserToCompany(userMail, companyID):
                                to_MySQL)
                 connection.commit()
 
-                to_MySQL = (str(userID), "Pracownik")
-                cursor.execute("INSERT INTO " + str(getCompanyName(companyID)) + '_Users'" (ID, Position) VALUES (%s, %s)",
+                to_MySQL = (str(userID), str(position), str(salary))
+                cursor.execute("INSERT INTO " + str(getCompanyName(companyID)) + '_Users'" (ID, Position, Salary) VALUES (%s, %s, %s)",
                                to_MySQL)
                 connection.commit()
 
             # Rozłączenie z bazą MySQL
             cursor.close()
 
+            return True
+
         # Error Log
         except Exception as Error:
             print("addUserToCompany - MySQL Error")
+            print("Error: " + str(Error))
+
+def getCompanyPositionsList(companyID):
+    if companyID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            companyName = getCompanyName(companyID)
+
+            cursor.execute("SELECT ID, Name FROM " + str(companyName) + '_Permissions'"")
+            Positions = cursor.fetchall()
+
+            # Development
+            if Type == "Development":
+                print("getCompanyPositionsList: " + str(Positions))
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            # Rozłączenie z bazą MySQL
+            return Positions
+
+        # Error Log
+        except Exception as Error:
+            print("getCompanyPositionsList - MySQL Error")
             print("Error: " + str(Error))
 
 ####################
@@ -671,6 +709,22 @@ def sendMessage(UserID, OtherID, Message):
 ####################
 ### Others
 ####################
+
+def bruttoToNetto(salary):
+    try:
+        netto = float(salary / 1.23)
+        netto = round(netto, 2)
+
+        # Development
+        if Type == "Development":
+            print("bruttoToNetto: " + str(netto))
+
+        return netto
+
+    # Error Log
+    except Exception as Error:
+        print("bruttoToNetto - MySQL Error")
+        print("Error: " + str(Error))
 
 def getStates():
     try:

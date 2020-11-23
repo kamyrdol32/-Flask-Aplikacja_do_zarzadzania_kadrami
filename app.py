@@ -224,6 +224,7 @@ def company_workers(ID=False):
         # Pobieranie danych dotyczących pracownika
         UserData = getUserData(WorkerID[0])
         UserCompanyData = getCompanyUserData(ID, WorkerID[0])
+        PositionsList = getCompanyPositionsList(ID)
 
         User = []
 
@@ -239,36 +240,37 @@ def company_workers(ID=False):
     # Dodatanie nowego pracownika
     if request.method == 'POST':
         company_workers_mail = request.form['company_workers_mail']
+        company_workers_position = request.form['company_workers_position']
+        company_workers_salary = request.form['company_workers_salary']
 
-        addUserToCompany(company_workers_mail, ID)
+        if addUserToCompany(company_workers_mail, company_workers_position, company_workers_salary, ID):
+            flash("Pracownik został dodany!")
+            return jsonify({"redirect": "/company/workers"})
 
-    return render_template("company_workers.html", UserID=session['ID'], SelectedID=ID, CompaniesNames=Companies, UsersData=UsersData)
+    return render_template("company_workers.html", UserID=session['ID'], SelectedID=ID, CompaniesNames=Companies, UsersData=UsersData, PositionsList=PositionsList)
 
 
 @app.route('/company/workers/details')
-@app.route('/company/workers/details/<int:ID>')
+@app.route('/company/workers/details/<int:companyID>/<int:userID>')
 @protected
-def company_workers_details(ID=False):
+def company_workers_details(companyID=False, userID=False):
 
     Companies = getUserCompaniesList(session['ID'])
 
-    if not ID and Companies:
-        ID = Companies[0][0]
+    if not userID and Companies:
+        userID = Companies[0][0]
 
     if not Companies:
         return redirect("/company/add")
 
     # Pobieranie danych dotyczących pracownika
-    UserData = getUserData(ID)
+    UserData = getUserData(userID)
+    UserCompanyData = getCompanyUserData(companyID, userID)
 
-    return render_template("company_workers_details.html", UserData=UserData)
+    print(UserCompanyData)
+    Netto = bruttoToNetto(UserCompanyData[2])
 
-
-@app.route('/company/workers/edit')
-@app.route('/company/workers/edit/<int:ID>')
-@protected
-def company_workers_edits(ID=False):
-    return render_template("company_workers_edits.html")
+    return render_template("company_workers_details.html", UserData=UserData, UserCompanyData=UserCompanyData, Netto=Netto)
 
 @app.route('/company/vacation/')
 @protected
@@ -284,6 +286,11 @@ def company_workers_vacations_add():
 @protected
 def company_permissions():
     return render_template("company_permissions.html")
+
+@app.route('/company/generator')
+@protected
+def company_generator():
+    return render_template("company_generator.html")
 
 ####################
 ### Account
@@ -368,11 +375,6 @@ def messages(ID=False):
 ####################
 ### Others
 ####################
-
-@app.route('/generator')
-@protected
-def generator():
-    return render_template("company_generator.html")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=70)

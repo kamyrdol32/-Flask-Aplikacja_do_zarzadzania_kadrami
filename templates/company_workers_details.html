@@ -17,16 +17,16 @@
       <div class="col-12 hovered">
         <h3>Dane pracownika</h3>
       </div>
-      <div class="col-12 col-md-6">
-        <p class="company-title">Imię:</p>
+      <div class="col-12 col-md-4">
+        <p class="company-title h6">Imię:</p>
         <p class="company-value">{{ UserData[2] }}</p>
       </div>
-      <div class="col-12 col-md-3">
-        <p class="company-title">Nazwisko:</p>
+      <div class="col-12 col-md-4">
+        <p class="company-title h6">Nazwisko:</p>
         <p class="company-value">{{ UserData[3] }}</p>
       </div>
-      <div class="col-12 col-md-3">
-        <p class="company-title">Data urodzenia:</p>
+      <div class="col-12 col-md-4">
+        <p class="company-title h6">Data urodzenia:</p>
         <p class="company-value">{{ UserData[5] }}</p>
       </div>
     </div>
@@ -44,13 +44,26 @@
       <div class="col-12 hovered">
         <h3>Dane kontaktowe</h3>
       </div>
-      <div class="col-8">
-        <p class="company-owner">Telefon komórkowy</p>
-        <p class="company-owner">{{ UserData[6] }}</p>
+      <div class="col-12 col-md-4">
+        <p class="company-owner h6">Telefon komórkowy</p>
+        <p class="company-value">{{ UserData[6] }}</p>
       </div>
-      <div class="col-8">
-        <p class="company-owner">E-Mail</p>
-        <p class="company-owner">{{ UserData[1] }}</p>
+      <div class="col-12 col-md-4">
+        <p class="company-owner h6">E-Mail</p>
+        <p class="company-value">{{ UserData[1] }}</p>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-12 hovered">
+        <h3>Wynagrodzenie</h3>
+      </div>
+      <div class="col-12 col-md-4">
+        <p class="company-owner h6">Dochód brutto:</p>
+        <p class="company-owner">{{ UserCompanyData[2] }} PLN</p>
+      </div>
+      <div class="col-12 col-md-4">
+        <p class="company-owner h6">Dochód netto:</p>
+        <p class="company-owner">{{ Netto }} PLN</p>
       </div>
     </div>
 
