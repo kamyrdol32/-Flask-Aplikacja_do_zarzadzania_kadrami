@@ -515,6 +515,10 @@ def addUserToCompany(userMail, position, salary, companyID):
             print("addUserToCompany - MySQL Error")
             print("Error: " + str(Error))
 
+# def deleteUserFromCompany(userID, companyID):
+#     if userID and companyID:
+
+
 def getCompanyPositionsList(companyID):
     if companyID:
         try:

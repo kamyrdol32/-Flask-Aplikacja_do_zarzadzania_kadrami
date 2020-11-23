@@ -272,6 +272,13 @@ def company_workers_details(companyID=False, userID=False):
 
     return render_template("company_workers_details.html", UserData=UserData, UserCompanyData=UserCompanyData, Netto=Netto)
 
+@app.route('/company/workers/delete')
+@app.route('/company/workers/delete/<int:companyID>/<int:userID>')
+@protected
+def company_workers_delete(companyID=False, userID=False):
+
+    return render_template("company_workers_details.html")
+
 @app.route('/company/vacation/')
 @protected
 def company_workers_vacations():
