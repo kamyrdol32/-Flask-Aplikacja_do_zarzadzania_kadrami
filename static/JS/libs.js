@@ -92,7 +92,7 @@ $(window).on("resize", function(){
 
 
 function editModal($id, $firma){
-  $($("#modal-edit input[type='hidden']")[0]).val($id);
-  $($("#modal-edit input[type='hidden']")[1]).val($firma);
+  $($("#modal-edit input[type='hidden']")[1]).val($id);
+  $($("#modal-edit input[type='hidden']")[2]).val($firma);
   $("#modal-edit").modal();
 }

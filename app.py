@@ -205,42 +205,56 @@ def company_list(ID=False):
 @protected
 def company_workers(ID=False):
 
-    Companies = getUserCompaniesList(session['ID'])
+    if request.method == 'GET':
+        Companies = getUserCompaniesList(session['ID'])
 
-    if not ID and Companies:
-        ID = Companies[0][0]
+        if not ID and Companies:
+            ID = Companies[0][0]
 
-    if not Companies:
-        return redirect("/company/add")
+        if not Companies:
+            return redirect("/company/add")
 
-    UsersData = []
+        UsersData = []
 
-    WorkersList = getCompanyWorkersID(ID)
-    for WorkerID in WorkersList:
+        WorkersList = getCompanyWorkersID(ID)
+        for WorkerID in WorkersList:
 
-        print("ID: " + str(ID))
-        print("WorkerID: " + str(WorkerID[0]))
+            print("ID: " + str(ID))
+            print("WorkerID: " + str(WorkerID[0]))
 
-        # Pobieranie danych dotyczących pracownika
-        UserData = getUserData(WorkerID[0])
-        UserCompanyData = getCompanyUserData(ID, WorkerID[0])
-        PositionsList = getCompanyPositionsList(ID)
+            # Pobieranie danych dotyczących pracownika
+            UserData = getUserData(WorkerID[0])
+            UserCompanyData = getCompanyUserData(ID, WorkerID[0])
+            PositionsList = getCompanyPositionsList(ID)
 
-        User = []
+            User = []
 
-        for Data in UserData:
-            User.append(Data)
+            for Data in UserData:
+                User.append(Data)
 
-        for Data in UserCompanyData:
-            User.append(Data)
+            for Data in UserCompanyData:
+                User.append(Data)
 
-        # Tworznie 2D tabeli
-        UsersData.append(User)
+            # Tworznie 2D tabeli
+            UsersData.append(User)
 
+    # Dodatanie nowego pracownika
 
     if request.method == 'POST':
+        print(request.form['do'])
+        print(request.form['do'])
+        print(request.form['do'])
+        print(request.form['do'])
+        print(request.form['do'])
+        print(request.form['do'])
+        print(request.form['do'])
+        print(request.form['do'])
+        print(request.form['do'])
+        print(request.form['do'])
+        print(request.form['do'])
+        print(request.form['do'])
 
-        # Dodatanie nowego pracownika
+
         if request.form['company_workers_add_mail'] and request.form['company_workers_add_mail'] != "":
             company_workers_name = request.form['company_workers_add_name']
             company_workers_surname = request.form['company_workers_add_surname']
