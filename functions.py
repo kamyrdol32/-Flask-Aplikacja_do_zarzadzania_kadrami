@@ -181,7 +181,7 @@ def isData(ID):
             cursor.close()
 
             # Return
-            if Data[0] and Data[1] and Data[2]:
+            if Data[0] and Data[1] and Data[2] and Data[3] and Data[4] and Data[5] and Data[6] and Data[7] and Data[8]:
                 return False
             else:
                 return Key
@@ -202,13 +202,64 @@ def updateUserData(ID, register_name, register_surname, register_birth_data, reg
             cursor.execute("SELECT Name FROM States WHERE ID = '" + str(register_state) + "'")
             State = cursor.fetchone()[0]
 
-            cursor.execute("UPDATE Users SET Name = '" + str(register_name) + "', Surname = '" + str(register_surname) + "', PESEL = '" + str(register_PESEL) + "', Birth_date = '" + str(register_birth_data) + "', Phone_number = '" + str(register_surname) + "', Address = '" + str(register_street) + "', City = '" + str(register_city) + "', State = '" + str(State) + "', Code = '" + str(register_zip) + "' WHERE `ID` = '" + str(ID) + "'")
+            cursor.execute("UPDATE Users SET Name = '" + str(register_name) + "', Surname = '" + str(register_surname) + "', PESEL = '" + str(register_PESEL) + "', Birth_date = '" + str(register_birth_data) + "', Phone_number = '" + str(register_phone_number) + "', Address = '" + str(register_street) + "', City = '" + str(register_city) + "', State = '" + str(State) + "', Code = '" + str(register_zip) + "' WHERE `ID` = '" + str(ID) + "'")
             connection.commit()
 
             # Rozłączenie z bazą MySQL
             cursor.close()
 
             return True
+
+        # Error Log
+        except Exception as Error:
+            print("updateUserData - MySQL Error")
+            print("Error: " + str(Error))
+
+def changePassword(userID, password_old, password_new):
+    if userID and password_old and password_new:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            # Pobieranie danych
+            cursor.execute("SELECT `Password`, `Secret_Key` FROM `Authorization` WHERE `ID` = '" + str(userID) + "'")
+            Data = cursor.fetchall()[0]
+
+            # Szyfrowanie
+            password_old = md5(password_old.encode('utf-8')).hexdigest()
+            password_old = md5((password_old + Data[1]).encode('utf-8')).hexdigest()
+
+            # Development
+            if Type == "Development":
+                print("Stare hasło zaszyfrowane: " + password_old)
+
+            # Sprawdzanie czy hasła są sobie równe
+            if password_old == Data[0]:
+
+                generatedPassword = passwordGenerator()
+
+                # Szyfrowanie
+                password_new = md5(password_new.encode('utf-8')).hexdigest()
+                password_new = md5((password_new + generatedPassword).encode('utf-8')).hexdigest()
+
+                # Development
+                if Type == "Development":
+                    print("Nowe hasło zaszyfrowane: " + password_new)
+
+                cursor.execute("UPDATE Authorization SET Password = '" + str(password_new) + "', Secret_Key = '" + str(generatedPassword) + "' WHERE `ID` = '" + str(userID) + "'")
+                connection.commit()
+
+                # Rozłączenie z bazą MySQL
+                cursor.close()
+
+                return True
+
+            else:
+                # Rozłączenie z bazą MySQL
+                cursor.close()
+
+                return False
 
         # Error Log
         except Exception as Error:
@@ -244,17 +295,9 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
                                                                      "View_Position BOOLEAN NOT NULL DEFAULT FALSE, "
                                                                      "Add_Position BOOLEAN NOT NULL DEFAULT FALSE, "
                                                                      "Remove_Position BOOLEAN NOT NULL DEFAULT FALSE, "
-                                                                     "Modify_Position BOOLEAN NOT NULL DEFAULT FALSE "
-                                                                     "View_Vacations BOOLEAN NOT NULL DEFAULT FALSE "
+                                                                     "Modify_Position BOOLEAN NOT NULL DEFAULT FALSE, "
+                                                                     "View_Vacations BOOLEAN NOT NULL DEFAULT FALSE, "
                                                                      "Accept_Vacations BOOLEAN NOT NULL DEFAULT FALSE "
-                                                                     ")")
-
-            cursor.execute("CREATE TABLE " + str(company_add_name) + 'Vacations'"("
-                                                                     "ID INT(16) UNSIGNED AUTO_INCREMENT PRIMARY KEY, "
-                                                                     "User_ID INT(16) NOT NULL, "
-                                                                     "Reason TEXT NOT NULL DEFAULT FALSE, "
-                                                                     "Start_Data DATE NOT NULL DEFAULT FALSE, "
-                                                                     "End_Data DATE NOT NULL DEFAULT FALSE "
                                                                      ")")
 
             # Pobranie State po ID
@@ -286,6 +329,12 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
 
             # Dodanie do bazy "_Permissions"
             to_MySQL = ("Owner", True, True, True, True, True, True, True, True)
+            cursor.execute("INSERT INTO " + str(
+                company_add_name) + '_Permissions'" (Name, View_User, Add_User, Remove_User, Modify_User, View_Position, Add_Position, Remove_Position, Modify_Position) VALUES (%s, %r, %r, %r, %r, %r, %r, %r, %r)",
+                           to_MySQL)
+            connection.commit()
+
+            to_MySQL = ("Pracownik", False, False, False, False, False, False, False, False)
             cursor.execute("INSERT INTO " + str(
                 company_add_name) + '_Permissions'" (Name, View_User, Add_User, Remove_User, Modify_User, View_Position, Add_Position, Remove_Position, Modify_Position) VALUES (%s, %r, %r, %r, %r, %r, %r, %r, %r)",
                            to_MySQL)
@@ -403,10 +452,57 @@ def getCompanyWorkersID(companyID):
             print("getCompanyWorkersID - MySQL Error")
             print("Error: " + str(Error))
 
-def addUserToCompany(userID, companyID):
-    if userID and companyID:
-        print(userID)
-        print(companyID)
+def addUserToCompany(userMail, companyID):
+    if userMail and companyID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            # Sprawdzanie czy istnieje użytkownik
+            cursor.execute("SELECT COUNT(1) FROM `Authorization` WHERE `Mail` = '" + userMail + "'")
+            if cursor.fetchone()[0]:
+
+                # Pobieranie danych
+                cursor.execute("SELECT `ID` FROM `Authorization` WHERE `Mail` = '" + userMail + "'")
+                userID = cursor.fetchone()[0]
+
+                # Sprawdzanie czy istnieje użytkownik
+                cursor.execute("SELECT COUNT(1) FROM `Companies_Workers` WHERE `User_ID` = '" + str(userID) + "' AND `Company_ID` = '" + str(companyID) + "'")
+                if not cursor.fetchone()[0]:
+
+                    # Przypisywanie do firmy
+                    to_MySQL = (str(userID), str(getCompanyName(companyID)), str(companyID))
+                    cursor.execute("INSERT INTO Companies_Workers (User_ID, Company_Name, Company_ID) VALUES (%s, %s, %s)", to_MySQL)
+                    connection.commit()
+
+            # Brak konta
+            else:
+                Password = passwordGenerator()
+
+                userRegister(userMail, Password, Password)
+                # sendWelcomeMail(userMail, Password, getCompanyName(companyID))
+
+                userID = getUserID(userMail)
+
+                # Przypisywanie do firmy
+                to_MySQL = (str(userID), str(getCompanyName(companyID)), str(companyID))
+                cursor.execute("INSERT INTO Companies_Workers (User_ID, Company_Name, Company_ID) VALUES (%s, %s, %s)",
+                               to_MySQL)
+                connection.commit()
+
+                to_MySQL = (str(userID), "Pracownik")
+                cursor.execute("INSERT INTO " + str(getCompanyName(companyID)) + '_Users'" (ID, Position) VALUES (%s, %s)",
+                               to_MySQL)
+                connection.commit()
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+        # Error Log
+        except Exception as Error:
+            print("addUserToCompany - MySQL Error")
+            print("Error: " + str(Error))
 
 ####################
 ### Messages

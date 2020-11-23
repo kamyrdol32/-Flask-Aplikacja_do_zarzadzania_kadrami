@@ -3,6 +3,7 @@ from functions import *
 import functools
 
 from flaskext.mysql import MySQL
+from flask_mail import Mail, Message
 from flask import Flask, render_template, redirect, session, jsonify, request, flash
 
 ####################
@@ -15,9 +16,10 @@ Type = "Development" # Production or Development
 app = Flask(__name__)
 app.config.from_object("config." + Type + "Config")
 
-# Aktywowanie modułu MySQL
+# Aktywowanie modułu MySQL & Mail
 mysql = MySQL()
 mysql.init_app(app)
+mail = Mail(app)
 
 ### DECORATOR ###
 
@@ -175,7 +177,7 @@ def company_add():
 
         if companyRegister(getUserID(session['user']), company_add_name, company_add_nip, company_add_regon, company_add_street, company_add_city, company_add_zip, company_add_state, company_add_phone, company_add_mail):
             flash("Firma została zarejestrowana!")
-            return jsonify({"redirect": "/"})
+            return jsonify({"redirect": "/company/list"})
 
     return render_template("company_add.html", States=getStates())
 
@@ -238,7 +240,7 @@ def company_workers(ID=False):
     if request.method == 'POST':
         company_workers_mail = request.form['company_workers_mail']
 
-        addUserToCompany(getUserID(company_workers_mail), ID)
+        addUserToCompany(company_workers_mail, ID)
 
     return render_template("company_workers.html", UserID=session['ID'], SelectedID=ID, CompaniesNames=Companies, UsersData=UsersData)
 
@@ -288,9 +290,24 @@ def account():
     return render_template("account.html")
 
 
-@app.route('/account/password')
+@app.route('/account/password', methods=['POST', 'GET'])
 @protected
 def account_password():
+
+    if request.method == 'POST':
+        password_old = request.form['password_old']
+        password_new = request.form['password_new']
+        password_new_repeat = request.form['password_new_repeat']
+
+        if password_new == password_new_repeat:
+            if changePassword(session['ID'], password_old, password_new):
+                flash("Hasło zostało zmienione!")
+                return jsonify({"redirect": "/logout"})
+            else:
+                return jsonify({"title": "", "message": "Bład, sprawdz czy zostały wpisane poprawne dane!", "type": "danger"})
+        else:
+            return jsonify({"title": "", "message": "Hasła muszą być identyczne!", "type": "danger"})
+
     return render_template("account_password.html")\
 
 
@@ -332,7 +349,8 @@ def messages(ID=False):
         else:
             return render_template("messages.html", Table=Table)
     else:
-        return jsonify({"title": "", "message": "Nie posiadasz żadnych wiadomości!"}) # Naprawic
+        flash("Nie posiadasz żadnych wiadomości!")
+        return redirect("/")
 
 ####################
 ### Others

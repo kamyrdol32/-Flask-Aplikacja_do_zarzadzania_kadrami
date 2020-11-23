@@ -29,7 +29,7 @@
           <h3>Pracownicy
             <a name="button" onclick="openForm()" class="btn btn-own float-right"><span>Dodaj pracownika</span></a>
               <div class="form-popup" id="myForm" style="display: none">
-                  <form action="/company/workers" method="POST">
+                  <form action="/company/workers/{{ SelectedID }}" method="POST">
                       <input type="text" class="form-control" id="company_workers_mail" placeholder="Adres e-mail">
                       <button type="submit" class="btn btn-own"><span>Dodaj pracownika</span></button>
                   </form>
