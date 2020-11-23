@@ -238,16 +238,28 @@ def company_workers(ID=False):
         UsersData.append(User)
 
     # Dodatanie nowego pracownika
-    if request.method == 'POST':
-        company_workers_name = request.form['company_workers_name']
-        company_workers_surname = request.form['company_workers_surname']
-        company_workers_mail = request.form['company_workers_mail']
-        company_workers_position = request.form['company_workers_position']
-        company_workers_salary = request.form['company_workers_salary']
 
-        if addUserToCompany(company_workers_name, company_workers_surname, company_workers_mail, company_workers_position, company_workers_salary, ID):
-            flash("Pracownik został dodany!")
-            return jsonify({"redirect": "/company/workers"})
+    if request.method == 'POST':
+        if request.form['company_workers_add_mail'] and request.form['company_workers_add_mail'] != "":
+            company_workers_name = request.form['company_workers_add_name']
+            company_workers_surname = request.form['company_workers_add_surname']
+            company_workers_mail = request.form['company_workers_add_mail']
+            company_workers_position = request.form['company_workers_add_position']
+            company_workers_salary = request.form['company_workers_add_salary']
+
+            if addUserToCompany(company_workers_name, company_workers_surname, company_workers_mail, company_workers_position, company_workers_salary, ID):
+                flash("Pracownik został dodany!")
+                return jsonify({"redirect": "/company/workers"})
+
+        # Edycja pracownika
+        if request.form['company_workers_edit_salary'] and request.form['company_workers_edit_salary'] != "":
+            company_workers_id = request.form['company_workers_id']
+            company_workers_salary = request.form['company_workers_edit_salary']
+            company_workers_position = request.form['company_workers_edit_position']
+
+            if updateUserCompanyData(ID, company_workers_id, company_workers_position, company_workers_salary):
+                flash("Udało sie!")
+                return jsonify({"redirect": "/company/workers"})
 
     return render_template("company_workers.html", UserID=session['ID'], SelectedID=ID, CompaniesNames=Companies, UsersData=UsersData, PositionsList=PositionsList)
 

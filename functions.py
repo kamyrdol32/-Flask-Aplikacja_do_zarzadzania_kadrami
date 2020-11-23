@@ -570,6 +570,26 @@ def getCompanyPositionsList(companyID):
             print("getCompanyPositionsList - MySQL Error")
             print("Error: " + str(Error))
 
+def updateUserCompanyData(companyID, userID, position, salary):
+    if companyID and userID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("UPDATE " + str(getCompanyName(companyID)) + '_Users'" SET Position = '" + str(position) + "', Salary = '" + str(salary) + "' WHERE `ID` = '" + str(userID) + "'")
+            connection.commit()
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            return True
+
+        # Error Log
+        except Exception as Error:
+            print("updateUserCompanyData - MySQL Error")
+            print("Error: " + str(Error))
+
 ####################
 ### Messages
 ####################

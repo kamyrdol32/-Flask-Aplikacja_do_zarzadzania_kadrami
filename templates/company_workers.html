@@ -75,20 +75,21 @@
             <h5 class="modal-title">Dodaj pracownika do firmy</h5>
           </div>
           <div class="modal-body">
+            <input type="hidden" class="form-control" id="do" value="add">
             <div class="form-group col-12">
-              <input type="text" class="form-control" id="company_workers_name" placeholder="Imię">
+              <input type="text" class="form-control" id="company_workers_add_name" placeholder="Imię">
             </div>
             <div class="form-group col-12">
-              <input type="text" class="form-control" id="company_workers_surname" placeholder="Nazwisko">
+              <input type="text" class="form-control" id="company_workers_add_surname" placeholder="Nazwisko">
             </div>
             <div class="form-group col-12">
-              <input type="text" class="form-control" id="company_workers_mail" placeholder="Adres e-mail">
+              <input type="text" class="form-control" id="company_workers_add_mail" placeholder="Adres e-mail">
             </div>
             <div class="form-group col-12">
-              <input type="number" class="form-control" id="company_workers_salary" placeholder="Wynagrodzenie">
+              <input type="number" class="form-control" id="company_workers_add_salary" placeholder="Wynagrodzenie">
             </div>
             <div class="form-group col-12">
-              <select class="custom-select" id="company_workers_position">
+              <select class="custom-select" id="company_workers_add_position">
               {% for Date in PositionsList %}
                 <option value={{ Date[0] }}>{{ Date[1] }}</option>
               {% endfor %}
@@ -112,13 +113,14 @@
             <h5 class="modal-title">Edytuj do firmy</h5>
           </div>
           <div class="modal-body">
+            <input type="hidden" class="form-control" id="do" value="edit">
             <input type="hidden" class="form-control" id="company_workers_id">
             <input type="hidden" class="form-control" id="company_workers_company_id">
             <div class="form-group col-12">
-              <input type="number" class="form-control" id="company_workers_salary" placeholder="Wynagrodzenie">
+              <input type="number" class="form-control" id="company_workers_edit_salary" placeholder="Wynagrodzenie">
             </div>
             <div class="form-group col-12">
-              <select class="custom-select" id="company_workers_position">
+              <select class="custom-select" id="company_workers_edit_position">
               {% for Date in PositionsList %}
                 <option value={{ Date[0] }}>{{ Date[1] }}</option>
               {% endfor %}
