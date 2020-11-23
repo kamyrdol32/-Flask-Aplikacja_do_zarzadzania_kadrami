@@ -188,7 +188,7 @@ def company_list(ID=False):
 
     if not CompaniesList:
         flash("Nie jesteś przypisany do żadnej firmy!")
-        return redirect("/company/add")
+        return redirect("/")
 
     CompaniesData = getCompanyData(ID)
 
@@ -208,7 +208,7 @@ def company_workers(ID=False):
 
         if not Companies:
             flash("Nie jesteś przypisany do żadnej firmy!")
-            return redirect("/company/add")
+            return redirect("/")
 
         UsersData = []
 
@@ -273,7 +273,7 @@ def company_workers_details(companyID=False, userID=False):
 
     if not Companies:
         flash("Nie jesteś przypisany do żadnej firmy!")
-        return redirect("/company/add")
+        return redirect("/")
 
     # Pobieranie danych dotyczących pracownika
     UserData = getUserData(userID)
