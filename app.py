@@ -237,9 +237,10 @@ def company_workers(ID=False):
         # Tworznie 2D tabeli
         UsersData.append(User)
 
-    # Dodatanie nowego pracownika
 
     if request.method == 'POST':
+
+        # Dodatanie nowego pracownika
         if request.form['company_workers_add_mail'] and request.form['company_workers_add_mail'] != "":
             company_workers_name = request.form['company_workers_add_name']
             company_workers_surname = request.form['company_workers_add_surname']
