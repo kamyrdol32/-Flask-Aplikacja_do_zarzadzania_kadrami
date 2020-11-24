@@ -1,3 +1,4 @@
+// Znajduje nadrzedny elemnt form dla wskazanego elementu
 function findParentForm($element){
     if($element.tagName != "FORM"){
         $element =  findParentForm($element.parentElement);
@@ -9,6 +10,7 @@ function findParentForm($element){
   $(document).ready(function(){
     $forms = $("form");
 
+    // Przekazywanie zawartości input'ow po zatwierdzeniu
     $($forms).each(function($i, $form){
       $($form).find('input[type="submit"], button[type="submit"]').on("click", function($e){
         $e.preventDefault();
@@ -23,7 +25,7 @@ function findParentForm($element){
           $data[$name] = $($input).val();
         });
 
-
+        // Notyfikacje & Przekierowanie
         $.ajax({
           url: $url,
           data: $data,

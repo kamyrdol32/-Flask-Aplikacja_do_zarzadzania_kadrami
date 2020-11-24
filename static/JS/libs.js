@@ -1,14 +1,11 @@
-function coll($type, $event){
-  $event.preventDefault();
+//
+// function coll($type, $event){
+//   $event.preventDefault();
+//
+//   $collapse = $("div.collapse[collapse='"+$type+"']").collapse('toggle');
+// }
 
-  $collapse = $("div.collapse[collapse='"+$type+"']").collapse('toggle');
-}
-
-function resizeMessageBox(){
-  $orig = $(".contact-list").height();
-  $(".messages").height(($orig-100)+"px");
-}
-
+// Wysłąnie wiadomości prywatnej
 function sendMessage(){
   $id = window.location.href.split("/");
   $id = $id[$id.length-1];
@@ -26,6 +23,7 @@ function sendMessage(){
   });
 }
 
+// Dodanie wiadomości bez odświezania strony (AJAX)
 function addMessage($text = "", $side = "left", $date, $seen = 0){
 
   $html = "<div class='message "+($side == "left" ? "from" : "to")+"'>"+
@@ -47,45 +45,66 @@ function addMessage($text = "", $side = "left", $date, $seen = 0){
 
 
 $(document).ready(function(){
-  $(".content-container").mouseover(function(){
-    $("body").addClass("content-hovered");
-  })
 
-  $(".content-container").mouseleave(function(){
-    $("body").removeClass("content-hovered");
-  })
-
-
+  // Wyłączenie wyszukiwarki w Select'ach
   $("select").select2({
     minimumResultsForSearch: -1,
   });
 
+  // Przekierowanie na odpowiedni adres po wybraniu firmy
   $("#current_company.details").on("change", function(e){
     $val = $("#current_company").val();
     window.location = "/company/list/"+$val;
   })
 
+  // Przekierowanie na odpowiedni adres po wybraniu firmy
   $("#current_company.workers").on("change", function(e){
     $val = $("#current_company").val();
     window.location = "/company/workers/"+$val;
   })
 
-  $(".contact-tile").on("click", function(e){
-    $e = $(e.target);
-    $id = $e.attr("user-id");
+  // Przekierowanie na odpowiedni adres po wybraniu firmy
+  $("#current_company.vacations").on("change", function(e){
+    $val = $("#current_company").val();
+    window.location = "/company/vacation/"+$val;
+  })
+
+  // Przekierowanie na odpowiedni adres po nadawcy/adresata
+  $(".contact-tile").on("click", function(Message){
+    $e = $(Message.target);
+    $id = $Message.attr("user-id");
     window.location = "/messages/"+$id;
   });
 
+  // Maska dotycząca daty
+  $('.type-date').mask("0000-00-00");
+
+  // Maska dotycząca NR Telefonu
+  $('.type-phone-number').mask("000000000");
+
+  // Maska dotycząca kodu pocztowego
+  $('.type-zip').mask("00-000");
+
+  // Scrollowanie do aktualnej wiadomośći PW
   $height = 0;
   $(".messages > div").each(function(){$height += $(this).outerHeight();});
   $(".messages").scrollTop($height);
 
-  $('.type-date').mask("0000-00-00");
 
+  // Zmiana wysokości MessageBox'a po załądowaniu strony
   resizeMessageBox();
 })
 
 
+
+
+  // Zmiana wysokości MessageBox'a
+function resizeMessageBox(){
+  $orig = $(".contact-list").height();
+  $(".messages").height(($orig-100)+"px");
+}
+
+  // Zmiana wysokości MessageBox'a kiedy rozmiar okna ulegnie zmianie
 $(window).on("resize", function(){
   resizeMessageBox();
 });

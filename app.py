@@ -213,15 +213,16 @@ def company_workers(ID=False):
         UsersData = []
 
         WorkersList = getCompanyWorkersID(ID)
+        PositionsList = getCompanyPositionsList(ID)
+
         for WorkerID in WorkersList:
 
             print("ID: " + str(ID))
             print("WorkerID: " + str(WorkerID[0]))
 
             # Pobieranie danych dotyczących pracownika
-            UserData = getUserData(WorkerID[0])
+            UserData = getUserBasicData(WorkerID[0])
             UserCompanyData = getCompanyUserData(ID, WorkerID[0])
-            PositionsList = getCompanyPositionsList(ID)
 
             User = []
 
@@ -233,6 +234,7 @@ def company_workers(ID=False):
 
             # Tworznie 2D tabeli
             UsersData.append(User)
+            print(UserData)
 
     if request.method == 'POST':
 
@@ -298,9 +300,45 @@ def company_workers_delete(companyID=False, userID=False):
         return redirect("/company/workers")
 
 @app.route('/company/vacation/')
+@app.route('/company/vacation/<int:companyID>')
 @protected
-def company_workers_vacations():
-    return render_template("company_workers_vacations.html")
+def company_workers_vacations(companyID=False):
+
+    Companies = getUserCompaniesList(session['ID'])
+
+    if not companyID and Companies:
+        companyID = Companies[0][0]
+
+    if not Companies:
+        flash("Nie jesteś przypisany do żadnej firmy!")
+        return redirect("/")
+
+    Table = []
+
+    Vacations = getCompanyVacations(companyID)
+    if Vacations:
+        print(Vacations)
+        for key, NR in enumerate(Vacations):
+            BasicData = getUserBasicData(NR[1])
+
+            Data = [Vacations[key][0], BasicData[1], BasicData[2], Vacations[key][2], Vacations[key][3], Vacations[key][4], Vacations[key][5]]
+            Table.append(Data)
+
+    return render_template("company_workers_vacations.html", SelectedID=companyID, CompaniesNames=Companies, Vacations=Table)
+
+@app.route('/company/vacation/accept/<int:ID>')
+@protected
+def company_workers_vacations_accept(ID):
+    if acceptVacation(ID):
+        flash("Urlop został zatwierdzony!")
+        return redirect("/company/vacation/")
+
+@app.route('/company/vacation/cancel/<int:ID>')
+@protected
+def company_workers_vacations_cancel(ID):
+    if cancelVacation(ID):
+        flash("Urlop został anulowany!")
+        return redirect("/company/vacation/")
 
 @app.route('/company/vacation/add')
 @protected
@@ -395,14 +433,14 @@ def messages(ID=False):
 
     IDs = getMessagesListUsersID(session['ID']) or False
     if IDs or ID:
-        NameSurname = getMessagesBasicData(session['ID'], IDs)
+        BasicData = getMessagesBasicData(session['ID'], IDs)
         LatestMessages = getLatestMessages(session['ID'], IDs)
 
         Table = []
 
         if IDs:
             for key, NR in enumerate(IDs):
-                Data = [NameSurname[key][0], NameSurname[key][1], NameSurname[key][2], LatestMessages[key][0],
+                Data = [BasicData[key][0], BasicData[key][1], BasicData[key][2], LatestMessages[key][0],
                         LatestMessages[key][1], LatestMessages[key][2]]
                 Table.append(Data)
 

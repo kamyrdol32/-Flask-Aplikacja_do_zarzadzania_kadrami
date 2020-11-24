@@ -14,7 +14,7 @@
     <div class="d-none d-md-block col-md-8">
     </div>
     <div class="col-12 col-md-4 mt-2rem form-group">
-      <select id="current_company" class="workers">
+      <select id="current_company" class="vacations">
           {% for Date in CompaniesNames %}
               <option {% if SelectedID == Date[0] %} selected {% endif %} value={{ Date[0] }}>{{ Date[1] }}</option>
           {% endfor %}
@@ -27,7 +27,7 @@
     <div class="row">
       <div class="col-12 hovered">
         <h3>Wnioski urlopowe
-          <a href="/company/workers/add" name="button" class="btn btn-own float-right"><span>Złóż wniosek</span></a>
+          <a href="/company/vacation/add" name="button" class="btn btn-own float-right"><span>Złóż wniosek</span></a>
         </h3>
       </div>
       <div class="col-12">
@@ -37,22 +37,30 @@
               <tr style="position: sticky; top: 0;">
                 <th style="width: 5%;" class="table-sticky text-center">#</th>
                 <th style="width: 25%;" class="table-sticky " >Imię i nazwisko</th>
-                <th style="width: 40%;" class="table-sticky " >Powód urlopu</th>
-                <th style="width: 20%;" class="table-sticky text-right" >Okres urlopu</th>
-                <th style="width: 10%;" class="table-sticky text-right">Akcje</th>
+                <th style="width: 30%;" class="table-sticky " >Powód urlopu</th>
+                <th style="width: 30%;" class="table-sticky text-right" >Okres urlopu</th>
+                <th style="width: 10%;" class="table-sticky text-right">Status</th>
               </tr>
             </thead>
             <tbody>
+                {% for Data in Vacations %}
                   <tr>
-                    <td style="width: 5%;" class="text-center">1</td>
-                    <td style="width: 25%;" class="text-nowrap" >Kamil Żegleń</td>
-                    <td style="width: 40%;" class="text-nowrap">Wakacje w Warszawie</td>
-                    <td style="width: 20%;" class="text-nowrap text-right">01.06.2021 - 01.07.2021</td>
-                    <td style="width: 10%;" class="text-right text-nowrap">
-                      <a onclick="managerVacation(1, 'accept')"><i class="fas fa-check"></i></a>
-                      <a onclick="managerVacation(1, 'deny')"><i class="fas fa-times"></i></a>
-                    </td>
+                    <td style="width: 5%;" class="text-center">{{ Data[0] }}</td>
+                    <td style="width: 25%;" class="text-nowrap" >{{ Data[1] }} {{ Data[2] }}</td>
+                    <td style="width: 30%;" class="text-nowrap">{{ Data[3]}}</td>
+                    <td style="width: 30%;" class="text-nowrap text-right">{{ Data[4] }} - {{ Data[5] }}</td>
+                    {% if Data[6] == "Accepted" %}
+                        <td style="color: green; width: 10%;" class="text-nowrap text-right">Accepted</td>
+                    {% elif Data[6] == "Canceled" %}
+                        <td style="color: red; width: 10%;" class="text-nowrap text-right">Canceled</td>
+                    {% else %}
+                        <td style="width: 10%;" class="text-right text-nowrap text-center">
+                          <a href="accept/{{ Data[0] }}"><i style="color: green !important" class="fas fa-check"></i></a>
+                          <a href="cancel/{{ Data[0] }}"><i style="color: red !important" class="fas fa-times"></i></a>
+                        </td>
+                    {% endif %}
                   </tr>
+                {% endfor %}
 
             </tbody>
           </table>

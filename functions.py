@@ -1,5 +1,6 @@
 from app import *
 from others import *
+import xlsxwriter
 
 from hashlib import md5
 
@@ -41,6 +42,27 @@ def getUserData(ID):
             print("Error: " + str(Error))
     else:
         print("getUserData - Missing value")
+
+def getUserBasicData(ID):
+    if ID:
+        try:
+            connection = mysql.connect()
+            cursor = connection.cursor()
+            cursor.execute("SELECT ID, Name, Surname, Phone_number FROM Users WHERE ID = '" + str(ID) + "'")
+            UserData = cursor.fetchone()
+            cursor.close()
+
+            # Development
+            if Type == "Development":
+                print("getUserBasicData: " + str(UserData))
+
+            return UserData
+
+        except Exception as Error:
+            print("getUserBasicData - Error")
+            print("Error: " + str(Error))
+    else:
+        print("getUserBasicData - Missing value")
 
 def getCompanyUserData(companyID, userID):
     if companyID and userID:
@@ -188,7 +210,7 @@ def isData(ID):
 
         # Error Log
         except Exception as Error:
-            print("isNameSurname - MySQL Error")
+            print("isData - MySQL Error")
             print("Error: " + str(Error))
 
 def updateUserData(ID, register_name, register_surname, register_birth_data, register_PESEL, register_street, register_city, register_zip, register_state, register_phone_number):
@@ -593,6 +615,73 @@ def updateUserCompanyData(companyID, userID, position, salary):
             print("updateUserCompanyData - MySQL Error")
             print("Error: " + str(Error))
 
+def getCompanyVacations(companyID):
+    if companyID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT ID, User_ID, Reason, Start_Data, End_Data, Accepted FROM Vacations WHERE Company_ID = '" + str(companyID) + "' ORDER BY ID")
+            Vacations = cursor.fetchall()
+
+            # Development
+            if Type == "Development":
+                print("getCompanyVacations: " + str(Vacations))
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            # Rozłączenie z bazą MySQL
+            return Vacations
+
+        # Error Log
+        except Exception as Error:
+            print("getCompanyVacations - MySQL Error")
+            print("Error: " + str(Error))
+
+def acceptVacation(vacationID):
+    if vacationID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("UPDATE Vacations SET Accepted = 'Accepted' WHERE `ID` = '" + str(vacationID) + "'")
+            connection.commit()
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            # Return
+            return True
+
+        # Error Log
+        except Exception as Error:
+            print("acceptVacation - MySQL Error")
+            print("Error: " + str(Error))
+
+def cancelVacation(vacationID):
+    if vacationID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("UPDATE Vacations SET Accepted = 'Canceled' WHERE `ID` = '" + str(vacationID) + "'")
+            connection.commit()
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            # Return
+            return True
+
+        # Error Log
+        except Exception as Error:
+            print("cancelVacation - MySQL Error")
+            print("Error: " + str(Error))
+
 ####################
 ### Messages
 ####################
@@ -790,3 +879,60 @@ def getStates():
     except Exception as Error:
         print("getStates - Error")
         print("Error: " + str(Error))
+
+def createExcelPermissions(companyID):
+    if companyID:
+        try:
+            workbook = xlsxwriter.Workbook('./upload/Permissions.xlsx')
+            worksheet = workbook.add_worksheet()
+
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            companyName = getCompanyName(companyID)
+
+            cursor.execute("SELECT * " + str(companyName) + '_Permissions'"")
+            Positions = cursor.fetchall()
+
+            # Miejsce startu
+            row = 0
+            col = 0
+
+            Names = [
+                "ID",
+                "Name",
+                "View_User ",
+                "Add_User",
+                "Remove_User",
+                "Modify_User",
+                "View_Position",
+                "Add_Position",
+                "Remove_Position",
+                "Modify_Position",
+                "View_Vacations",
+                "Accept_Vacations"
+            ]
+
+            cursor.close()
+
+            # Tworzenie opisow
+            for Name in Names:
+                worksheet.write(row, col, Name)
+                col += 1
+
+            row = 1
+            col = 0
+
+            # Wprowadzanie danych
+            for Position in Positions:
+                for Data in Position:
+                    worksheet.write(row, col, Data)
+                    col += 1
+                row += 1
+                col = 0
+
+            workbook.close()
+
+        except Exception as Error:
+            print("createExcelPermissions - Error")
+            print("Error: " + str(Error))
