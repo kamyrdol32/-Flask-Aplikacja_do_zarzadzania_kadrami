@@ -699,3 +699,63 @@ input[type=checkbox]:checked{
   max-height: 50vh;
   overflow: auto;
 }
+
+.dtp-picker-month, .dtp-header, .dtp-buttons{
+  display: none;
+}
+
+.dtp-select-month-before, .dtp-select-year-before, .dtp-select-month-after, .dtp-select-year-after{
+  font-size: 0px !important;
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-image: url('/static/Icons/chevron-left.svg');
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.dtp-select-month-after, .dtp-select-year-after{
+  transform: rotate(180deg);
+}
+
+
+.dtp div.dtp-date, .dtp div.dtp-time{
+  background: var(--black) !important;
+}
+
+.dtp-picker {
+    background: var(--lightgray);
+}
+
+.dtp table.dtp-picker-days tr > td {
+    padding: 0 !important;
+}
+
+.dtp table.dtp-picker-days tr > th {
+    background: none;
+    color: var(--primary);
+}
+
+.dtp div.dtp-actual-year{
+  color: var(--primary);
+}
+
+.dtp table.dtp-picker-days tr > td > a, .dtp .dtp-picker-time > a{
+  color: var(--secondary);
+  text-decoration: none;
+  border-radius: 50%!important;
+  letter-spacing: 1px;
+  font-size: 15px;
+  width: 40px;
+  height: 40px;
+  display: block;
+  line-height: 40px;
+  text-align: center;
+  padding: 0 !important;
+}
+
+.dtp table.dtp-picker-days tr > td > a.selected{
+  background: var(--primary) !important;
+  color: var(--secondary) !important;
+}

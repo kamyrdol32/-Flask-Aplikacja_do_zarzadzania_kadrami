@@ -21,6 +21,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static',filename='Icons/favicon.icon') }}" />
 
   <link rel="stylesheet" href="{{ url_for('static',filename='Bootstrap/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='CSS/datepicker.css') }}">
 
   <!-- Google fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -104,10 +105,13 @@
   <script src="{{ url_for('static',filename='Bootstrap/js//bootstrap.min.js') }}"></script>
   <script src="{{ url_for('static',filename='Bootstrap-notify/bootstrap-notify.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static',filename='JS/moment.js') }}"></script>
+  <script src="{{ url_for('static',filename='JS/datepicker.js') }}"></script>
   <script src="https://kit.fontawesome.com/16655103e9.js" crossorigin="anonymous"></script>
-  <script src="{{ url_for('static',filename='JS/ajax.js') }}"></script>
   <script src="{{ url_for('static',filename='JS/libs.js') }}"></script>
   <script src="{{ url_for('static',filename='JS/particles.js') }}"></script>
+
+
 
   {% block js %}
   {% endblock %}

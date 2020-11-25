@@ -120,3 +120,11 @@ function editPermission($id){
   $($("#modal-edit form")[1]).attr("action", "/company/permissions/"+$id);
   $("#modal-edit").modal();
 }
+
+$('input[date="true"]').bootstrapMaterialDatePicker({
+    clearButton: false,
+    nowButton: false,
+    time: false,
+    switchOnClick: true,
+    cancelText: "ANULUJ",
+  });
