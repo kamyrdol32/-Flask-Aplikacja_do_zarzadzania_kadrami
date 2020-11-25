@@ -235,7 +235,7 @@ input.password-like::placeholder {
   position: relative;
 }
 
-.form-group::after {
+.form-group:not(.no-underline)::after {
   content: " ";
   display: block;
   position: absolute;
@@ -250,7 +250,7 @@ input.password-like::placeholder {
   z-index: 2;
 }
 
-.form-group::before {
+.form-group:not(.no-underline)::before {
   content: " ";
   display: block;
   position: absolute;
@@ -272,6 +272,11 @@ input.password-like::placeholder {
   width: 100%;
   transition-duration: 0.3s;
   transition-delay: 0.1s;
+}
+
+.form-group.row {
+    margin: 0;
+    padding: 0;
 }
 
 .btn.btn-own {
@@ -661,4 +666,36 @@ table i{
 
 .modal-content{
   background-color: var(--black);
+}
+
+input[type=checkbox] {
+    display: block;
+    width: 20px;
+    height: 20px;
+    top: 0px;
+    position: relative;
+    appearance: none;
+    background: var(--secondary) !important;
+    border-radius: 3px !important;
+}
+
+input[type=checkbox] {
+    display: block;
+    width: 20px;
+    height: 20px;
+    top: 0px;
+    position: relative;
+    appearance: none;
+    background: var(--secondary) !important;
+    border-radius: 3px !important;
+    border: 2px solid var(--primary) !important;
+}
+
+input[type=checkbox]:checked{
+  background: var(--primary) !important;
+}
+
+.permissions-container{
+  max-height: 50vh;
+  overflow: auto;
 }
