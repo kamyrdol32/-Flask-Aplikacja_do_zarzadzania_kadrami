@@ -306,6 +306,7 @@ def company_workers_details(companyID=False, userID=False):
 
     return render_template("company_workers_details.html", UserData=UserData, UserCompanyData=UserCompanyData, Netto=Netto)
 
+
 @app.route('/company/workers/delete')
 @app.route('/company/workers/delete/<int:companyID>/<int:userID>')
 @protected
@@ -349,7 +350,8 @@ def company_workers_vacations(companyID=False):
             for key, NR in enumerate(Vacations):
                 BasicData = getUserBasicData(NR[1])
 
-                Data = [Vacations[key][0], BasicData[1], BasicData[2], Vacations[key][2], Vacations[key][3], Vacations[key][4], Vacations[key][5]]
+                Data = [Vacations[key][0], BasicData[1], BasicData[2], Vacations[key][2], Vacations[key][3],
+                            Vacations[key][4], Vacations[key][5]]
                 Table.append(Data)
 
     else:
@@ -389,15 +391,18 @@ def company_workers_vacations_cancel(companyID, userID):
         flash("Nie posiadasz uprawnień!")
         return redirect("/company/vacation/")
 
+
 @app.route('/company/vacation/add')
 @protected
 def company_workers_vacations_add():
-    return render_template("company_workers_vacations_add.html")
+    print("TEST")
+
 
 @app.route('/company/permissions')
 @protected
 def company_permissions():
     return render_template("company_permissions.html")
+
 
 @app.route('/company/generator')
 @protected
