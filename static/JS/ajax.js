@@ -22,7 +22,12 @@ function findParentForm($element){
 
         $($form).find("input, select").each(function($i, $input){
           $name = $($input).attr("id");
-          $data[$name] = $($input).val();
+          if($($input).attr("type") == "checkbox"){
+            $selected = $($input).is(":checked") ? true : false;
+            $data[$name] = $selected;
+          } else {
+            $data[$name] = $($input).val();
+          }
         });
 
         // Notyfikacje & Przekierowanie
