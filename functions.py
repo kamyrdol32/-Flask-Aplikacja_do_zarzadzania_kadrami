@@ -880,6 +880,62 @@ def getStates():
         print("getStates - Error")
         print("Error: " + str(Error))
 
+def createExcelWorkers(companyID):
+    if companyID:
+        try:
+            workbook = xlsxwriter.Workbook('./upload/Workers.xlsx')
+            worksheet = workbook.add_worksheet()
+
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            companyName = getCompanyName(companyID)
+
+            cursor.execute("SELECT * FROM Users")
+            Positions = cursor.fetchall()
+
+            # Miejsce startu
+            row = 0
+            col = 0
+
+            Names = [
+                "ID",
+                "Mail",
+                "Name ",
+                "Surname",
+                "PESEL",
+                "Birth_date",
+                "Phone_number",
+                "Address",
+                "City",
+                "State",
+                "Code"
+            ]
+
+            cursor.close()
+
+            # Tworzenie opisow
+            for Name in Names:
+                worksheet.write(row, col, Name)
+                col += 1
+
+            row = 1
+            col = 0
+
+            # Wprowadzanie danych
+            for Position in Positions:
+                for Data in Position:
+                    worksheet.write(row, col, Data)
+                    col += 1
+                row += 1
+                col = 0
+
+            workbook.close()
+
+        except Exception as Error:
+            print("createExcelWorkers - Error")
+            print("Error: " + str(Error))
+
 def createExcelPermissions(companyID):
     if companyID:
         try:
