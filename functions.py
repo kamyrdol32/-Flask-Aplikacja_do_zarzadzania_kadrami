@@ -565,33 +565,6 @@ def deleteUserFromCompany(userID, companyID):
             print("deleteUserFromCompany - MySQL Error")
             print("Error: " + str(Error))
 
-def getCompanyPositionsList(companyID):
-    if companyID:
-        try:
-            # Łączność z MYSQL
-            connection = mysql.connect()
-            cursor = connection.cursor()
-
-            companyName = getCompanyName(companyID)
-
-            cursor.execute("SELECT ID, Name FROM " + str(companyName) + '_Permissions'"")
-            Positions = cursor.fetchall()
-
-            # Development
-            if Type == "Development":
-                print("getCompanyPositionsList: " + str(Positions))
-
-            # Rozłączenie z bazą MySQL
-            cursor.close()
-
-            # Rozłączenie z bazą MySQL
-            return Positions
-
-        # Error Log
-        except Exception as Error:
-            print("getCompanyPositionsList - MySQL Error")
-            print("Error: " + str(Error))
-
 def updateUserCompanyData(companyID, userID, position, salary):
     if companyID and userID:
         try:
@@ -614,6 +587,10 @@ def updateUserCompanyData(companyID, userID, position, salary):
         except Exception as Error:
             print("updateUserCompanyData - MySQL Error")
             print("Error: " + str(Error))
+
+####################
+### Vacations
+####################
 
 def getCompanyVacations(companyID):
     if companyID:
@@ -681,6 +658,77 @@ def cancelVacation(vacationID):
         except Exception as Error:
             print("cancelVacation - MySQL Error")
             print("Error: " + str(Error))
+
+####################
+### Permissions
+####################
+
+def getUserPermission(userID, companyID, permission):
+    if userID and companyID and permission:
+        try:
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT Position FROM " + str(getCompanyName(companyID)) + '_Users'" WHERE ID = '" + str(userID) + "'")
+            Position = cursor.fetchone()
+
+            cursor.execute("SELECT " + str(permission) + " FROM " + str(getCompanyName(companyID)) + '_Permissions'" WHERE Name = '" + str(Position[0]) + "'")
+            Permission = cursor.fetchone()
+            cursor.close()
+
+            # Development
+            if Type == "Development":
+                print("getUserPermission: " + str(permission))
+                print("getUserPermission: " + str(Permission[0]))
+
+            return Permission[0]
+
+        except Exception as Error:
+            print("getUserPermission - Error")
+            print("Error: " + str(Error))
+    else:
+        print("getUserPermission - Missing value")
+
+def getCompanyPositionsList(companyID):
+    if companyID:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            companyName = getCompanyName(companyID)
+
+            cursor.execute("SELECT ID, Name FROM " + str(companyName) + '_Permissions'"")
+            Positions = cursor.fetchall()
+
+            # Development
+            if Type == "Development":
+                print("getCompanyPositionsList: " + str(Positions))
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            # Rozłączenie z bazą MySQL
+            return Positions
+
+        # Error Log
+        except Exception as Error:
+            print("getCompanyPositionsList - MySQL Error")
+            print("Error: " + str(Error))
+
+def getCompanyPermissionsList():
+    try:
+        connection = mysql.connect()
+        cursor = connection.cursor()
+        cursor.execute("SELECT `ID`, `Name`, `Description` FROM Permissions")
+        States = cursor.fetchall()
+        cursor.close()
+
+        return States
+
+    except Exception as Error:
+        print("getCompanyPermissionsList - Error")
+        print("Error: " + str(Error))
 
 ####################
 ### Messages
@@ -849,32 +897,6 @@ def sendMessage(UserID, OtherID, Message):
 ####################
 ### Others
 ####################
-
-def getUserPermission(userID, companyID, permission):
-    if userID and companyID and permission:
-        try:
-            connection = mysql.connect()
-            cursor = connection.cursor()
-
-            cursor.execute("SELECT Position FROM " + str(getCompanyName(companyID)) + '_Users'" WHERE ID = '" + str(userID) + "'")
-            Position = cursor.fetchone()
-
-            cursor.execute("SELECT " + str(permission) + " FROM " + str(getCompanyName(companyID)) + '_Permissions'" WHERE Name = '" + str(Position[0]) + "'")
-            Permission = cursor.fetchone()
-            cursor.close()
-
-            # Development
-            if Type == "Development":
-                print("getUserPermission: " + str(permission))
-                print("getUserPermission: " + str(Permission[0]))
-
-            return Permission[0]
-
-        except Exception as Error:
-            print("getUserPermission - Error")
-            print("Error: " + str(Error))
-    else:
-        print("getUserPermission - Missing value")
 
 def bruttoToNetto(salary):
     try:

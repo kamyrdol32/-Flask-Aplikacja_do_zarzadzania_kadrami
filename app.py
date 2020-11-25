@@ -196,15 +196,15 @@ def company_list(ID=False):
 
 
 @app.route('/company/workers', methods=['POST', 'GET'])
-@app.route('/company/workers/<int:ID>', methods=['POST', 'GET'])
+@app.route('/company/workers/<int:companyID>', methods=['POST', 'GET'])
 @protected
-def company_workers(ID=False):
+def company_workers(companyID=False):
 
     if request.method == 'GET':
         Companies = getUserCompaniesList(session['ID'])
 
-        if not ID and Companies:
-            ID = Companies[0][0]
+        if not companyID and Companies:
+            companyID = Companies[0][0]
 
         if not Companies:
             flash("Nie jesteś przypisany do żadnej firmy!")
@@ -212,17 +212,17 @@ def company_workers(ID=False):
 
         UsersData = []
 
-        WorkersList = getCompanyWorkersID(ID)
-        PositionsList = getCompanyPositionsList(ID)
+        WorkersList = getCompanyWorkersID(companyID)
+        PositionsList = getCompanyPositionsList(companyID)
 
         for WorkerID in WorkersList:
 
-            print("ID: " + str(ID))
+            print("ID: " + str(companyID))
             print("WorkerID: " + str(WorkerID[0]))
 
             # Pobieranie danych dotyczących pracownika
             UserData = getUserBasicData(WorkerID[0])
-            UserCompanyData = getCompanyUserData(ID, WorkerID[0])
+            UserCompanyData = getCompanyUserData(companyID, WorkerID[0])
 
             User = []
 
@@ -241,7 +241,7 @@ def company_workers(ID=False):
         # Dodatanie nowego pracownika
         if request.form['do'] == "add":
 
-            if getUserPermission(session["ID"], ID, "Add_User"):
+            if getUserPermission(session["ID"], companyID, "Add_User"):
 
                 company_workers_name = request.form['company_workers_add_name']
                 company_workers_surname = request.form['company_workers_add_surname']
@@ -249,7 +249,7 @@ def company_workers(ID=False):
                 company_workers_position = request.form['company_workers_add_position']
                 company_workers_salary = request.form['company_workers_add_salary']
 
-                if addUserToCompany(company_workers_name, company_workers_surname, company_workers_mail, company_workers_position, company_workers_salary, ID):
+                if addUserToCompany(company_workers_name, company_workers_surname, company_workers_mail, company_workers_position, company_workers_salary, companyID):
                     flash("Pracownik został dodany!")
                     return jsonify({"redirect": "/company/workers"})
 
@@ -260,13 +260,13 @@ def company_workers(ID=False):
         # Edycja pracownika
         if request.form['do'] == "edit":
 
-            if getUserPermission(session["ID"], ID, "Modify_User"):
+            if getUserPermission(session["ID"], companyID, "Modify_User"):
 
                 company_workers_id = request.form['company_workers_id']
                 company_workers_salary = request.form['company_workers_edit_salary']
                 company_workers_position = request.form['company_workers_edit_position']
 
-                if updateUserCompanyData(ID, company_workers_id, company_workers_position, company_workers_salary):
+                if updateUserCompanyData(companyID, company_workers_id, company_workers_position, company_workers_salary):
                     flash("Udało sie!")
                     return jsonify({"redirect": "/company/workers"})
 
@@ -274,7 +274,7 @@ def company_workers(ID=False):
                 flash("Nie posiadasz uprawnień!")
                 return jsonify({"redirect": "/company/workers"})
 
-    return render_template("company_workers.html", UserID=session['ID'], SelectedID=ID, CompaniesNames=Companies, UsersData=UsersData, PositionsList=PositionsList)
+    return render_template("company_workers.html", UserID=session['ID'], SelectedID=companyID, CompaniesNames=Companies, UsersData=UsersData, PositionsList=PositionsList)
 
 
 @app.route('/company/workers/details')
@@ -327,6 +327,15 @@ def company_workers_delete(companyID=False, userID=False):
         return redirect("/company/workers")
 
 
+@app.route('/company/generator')
+@protected
+def company_generator():
+    return render_template("company_generator.html")
+
+####################
+### Vacations
+####################
+
 @app.route('/company/vacation/')
 @app.route('/company/vacation/<int:companyID>')
 @protected
@@ -358,7 +367,7 @@ def company_workers_vacations(companyID=False):
         flash("Nie posiadasz uprawnień!")
         return redirect("/")
 
-    return render_template("company_workers_vacations.html", SelectedID=companyID, CompaniesNames=Companies, Vacations=Table, companyID=companyID)
+    return render_template("company_workers_vacations.html", SelectedID=companyID, CompaniesNames=Companies, Vacations=Table)
 
 
 @app.route('/company/vacation/accept/<int:companyID>/<int:userID>')
@@ -397,17 +406,54 @@ def company_workers_vacations_cancel(companyID, userID):
 def company_workers_vacations_add():
     print("TEST")
 
+####################
+### Permissions
+####################
 
-@app.route('/company/permissions')
+@app.route('/company/permissions', methods=['POST', 'GET'])
+@app.route('/company/permissions/<int:companyID>', methods=['POST', 'GET'])
 @protected
-def company_permissions():
-    return render_template("company_permissions.html")
+def company_permissions(companyID=False):
+
+    Companies = getUserCompaniesList(session['ID'])
+
+    if not companyID and Companies:
+        companyID = Companies[0][0]
+
+    if not Companies:
+        flash("Nie jesteś przypisany do żadnej firmy!")
+        return redirect("/")
+
+    if getUserPermission(session["ID"], companyID, "View_Position"):
+
+        PositionsList = getCompanyPositionsList(companyID)
+
+        PermissionsList = getCompanyPermissionsList()
+
+    else:
+        flash("Nie posiadasz uprawnień!")
+        return redirect("/")
+
+    if request.method == 'POST':
+
+        # Dodatanie nowego pracownika
+        # if request.form['do'] == "add":
+
+        if getUserPermission(session["ID"], companyID, "Add_Position"):
+
+            View_User = request.form["View_User"]
+            Add_User = request.form["Add_User"]
+            Remove_User = request.form["Remove_User"]
+            Modify_User = request.form["Modify_User"]
+            View_Position = request.form["View_Position"]
+            Add_Position = request.form["Add_Position"]
+            Remove_Position = request.form["Remove_Position"]
+            View_Vacations = request.form["View_Vacations"]
+            View_User = request.form["View_User"]
+            print(View_User)
 
 
-@app.route('/company/generator')
-@protected
-def company_generator():
-    return render_template("company_generator.html")
+    return render_template("company_permissions.html", SelectedID=companyID, CompaniesNames=Companies, PositionsList=PositionsList, PermissionsList=PermissionsList)
 
 ####################
 ### Account

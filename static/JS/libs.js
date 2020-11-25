@@ -69,6 +69,12 @@ $(document).ready(function(){
     window.location = "/company/vacation/"+$val;
   })
 
+  // Przekierowanie na odpowiedni adres po wybraniu firmy
+  $("#current_company.permissions").on("change", function(e){
+    $val = $("#current_company").val();
+    window.location = "/company/permissions/"+$val;
+  })
+
   // Przekierowanie na odpowiedni adres po nadawcy/adresata
   $(".contact-tile").on("click", function(Message){
     $e = $(Message.target);
