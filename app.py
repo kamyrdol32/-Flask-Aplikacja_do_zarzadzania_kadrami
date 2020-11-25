@@ -240,24 +240,38 @@ def company_workers(ID=False):
 
         # Dodatanie nowego pracownika
         if request.form['do'] == "add":
-            company_workers_name = request.form['company_workers_add_name']
-            company_workers_surname = request.form['company_workers_add_surname']
-            company_workers_mail = request.form['company_workers_add_mail']
-            company_workers_position = request.form['company_workers_add_position']
-            company_workers_salary = request.form['company_workers_add_salary']
 
-            if addUserToCompany(company_workers_name, company_workers_surname, company_workers_mail, company_workers_position, company_workers_salary, ID):
-                flash("Pracownik został dodany!")
+            if getUserPermission(session["ID"], ID, "Add_User"):
+
+                company_workers_name = request.form['company_workers_add_name']
+                company_workers_surname = request.form['company_workers_add_surname']
+                company_workers_mail = request.form['company_workers_add_mail']
+                company_workers_position = request.form['company_workers_add_position']
+                company_workers_salary = request.form['company_workers_add_salary']
+
+                if addUserToCompany(company_workers_name, company_workers_surname, company_workers_mail, company_workers_position, company_workers_salary, ID):
+                    flash("Pracownik został dodany!")
+                    return jsonify({"redirect": "/company/workers"})
+
+            else:
+                flash("Nie posiadasz uprawnień!")
                 return jsonify({"redirect": "/company/workers"})
 
         # Edycja pracownika
         if request.form['do'] == "edit":
-            company_workers_id = request.form['company_workers_id']
-            company_workers_salary = request.form['company_workers_edit_salary']
-            company_workers_position = request.form['company_workers_edit_position']
 
-            if updateUserCompanyData(ID, company_workers_id, company_workers_position, company_workers_salary):
-                flash("Udało sie!")
+            if getUserPermission(session["ID"], ID, "Modify_User"):
+
+                company_workers_id = request.form['company_workers_id']
+                company_workers_salary = request.form['company_workers_edit_salary']
+                company_workers_position = request.form['company_workers_edit_position']
+
+                if updateUserCompanyData(ID, company_workers_id, company_workers_position, company_workers_salary):
+                    flash("Udało sie!")
+                    return jsonify({"redirect": "/company/workers"})
+
+            else:
+                flash("Nie posiadasz uprawnień!")
                 return jsonify({"redirect": "/company/workers"})
 
     return render_template("company_workers.html", UserID=session['ID'], SelectedID=ID, CompaniesNames=Companies, UsersData=UsersData, PositionsList=PositionsList)
@@ -277,12 +291,18 @@ def company_workers_details(companyID=False, userID=False):
         flash("Nie jesteś przypisany do żadnej firmy!")
         return redirect("/")
 
-    # Pobieranie danych dotyczących pracownika
-    UserData = getUserData(userID)
-    UserCompanyData = getCompanyUserData(companyID, userID)
+    if getUserPermission(session["ID"], companyID, "View_User"):
 
-    print(UserCompanyData)
-    Netto = bruttoToNetto(UserCompanyData[2])
+        # Pobieranie danych dotyczących pracownika
+        UserData = getUserData(userID)
+        UserCompanyData = getCompanyUserData(companyID, userID)
+
+        print(UserCompanyData)
+        Netto = bruttoToNetto(UserCompanyData[2])
+
+    else:
+        flash("Nie posiadasz uprawnień!")
+        return redirect("/company/workers")
 
     return render_template("company_workers_details.html", UserData=UserData, UserCompanyData=UserCompanyData, Netto=Netto)
 
@@ -291,13 +311,20 @@ def company_workers_details(companyID=False, userID=False):
 @protected
 def company_workers_delete(companyID=False, userID=False):
 
-    if userID != session['ID']:
-        if deleteUserFromCompany(userID, companyID):
-            flash("Pomyślnie usunięto!")
-        return redirect("/company/workers")
+    if getUserPermission(session["ID"], companyID, "Remove_User"):
+
+        if userID != session['ID']:
+            if deleteUserFromCompany(userID, companyID):
+                flash("Pomyślnie usunięto!")
+            return redirect("/company/workers")
+        else:
+            flash("Nie możesz usunąc samego siebie!")
+            return redirect("/company/workers")
+
     else:
-        flash("Nie możesz usunąc samego siebie!")
+        flash("Nie posiadasz uprawnień!")
         return redirect("/company/workers")
+
 
 @app.route('/company/vacation/')
 @app.route('/company/vacation/<int:companyID>')
@@ -313,31 +340,53 @@ def company_workers_vacations(companyID=False):
         flash("Nie jesteś przypisany do żadnej firmy!")
         return redirect("/")
 
-    Table = []
+    if getUserPermission(session["ID"], companyID, "View_Vacations"):
 
-    Vacations = getCompanyVacations(companyID)
-    if Vacations:
-        print(Vacations)
-        for key, NR in enumerate(Vacations):
-            BasicData = getUserBasicData(NR[1])
+        Table = []
 
-            Data = [Vacations[key][0], BasicData[1], BasicData[2], Vacations[key][2], Vacations[key][3], Vacations[key][4], Vacations[key][5]]
-            Table.append(Data)
+        Vacations = getCompanyVacations(companyID)
+        if Vacations:
+            for key, NR in enumerate(Vacations):
+                BasicData = getUserBasicData(NR[1])
 
-    return render_template("company_workers_vacations.html", SelectedID=companyID, CompaniesNames=Companies, Vacations=Table)
+                Data = [Vacations[key][0], BasicData[1], BasicData[2], Vacations[key][2], Vacations[key][3], Vacations[key][4], Vacations[key][5]]
+                Table.append(Data)
 
-@app.route('/company/vacation/accept/<int:ID>')
+    else:
+        flash("Nie posiadasz uprawnień!")
+        return redirect("/")
+
+    return render_template("company_workers_vacations.html", SelectedID=companyID, CompaniesNames=Companies, Vacations=Table, companyID=companyID)
+
+
+@app.route('/company/vacation/accept/<int:companyID>/<int:userID>')
 @protected
-def company_workers_vacations_accept(ID):
-    if acceptVacation(ID):
-        flash("Urlop został zatwierdzony!")
+def company_workers_vacations_accept(companyID, userID):
+
+    if getUserPermission(session["ID"], companyID, "Accept_Vacations"):
+
+        if acceptVacation(userID):
+            flash("Urlop został zatwierdzony!")
+            return redirect("/company/vacation/")
+
+    else:
+        flash("Nie posiadasz uprawnień!")
         return redirect("/company/vacation/")
 
-@app.route('/company/vacation/cancel/<int:ID>')
+
+@app.route('/company/vacation/cancel/<int:companyID>/<int:userID>')
 @protected
-def company_workers_vacations_cancel(ID):
-    if cancelVacation(ID):
-        flash("Urlop został anulowany!")
+def company_workers_vacations_cancel(companyID, userID):
+
+    if getUserPermission(session["ID"], companyID, "Accept_Vacations"):
+
+        if cancelVacation(userID):
+            flash("Urlop został anulowany!")
+            return redirect("/company/vacation/")
+
+    else:
+
+        flash("Nie posiadasz uprawnień!")
         return redirect("/company/vacation/")
 
 @app.route('/company/vacation/add')

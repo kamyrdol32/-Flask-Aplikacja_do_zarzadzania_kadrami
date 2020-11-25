@@ -55,8 +55,8 @@
                         <td style="color: red; width: 10%;" class="text-nowrap text-right">Canceled</td>
                     {% else %}
                         <td style="width: 10%;" class="text-right text-nowrap text-center">
-                          <a href="accept/{{ Data[0] }}"><i style="color: green !important" class="fas fa-check"></i></a>
-                          <a href="cancel/{{ Data[0] }}"><i style="color: red !important" class="fas fa-times"></i></a>
+                          <a href="accept/{{ companyID }}/{{ Data[0] }}"><i style="color: green !important" class="fas fa-check"></i></a>
+                          <a href="cancel/{{ companyID }}/{{ Data[0] }}"><i style="color: red !important" class="fas fa-times"></i></a>
                         </td>
                     {% endif %}
                   </tr>

@@ -350,9 +350,9 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
             # userMail = cursor.fetchone()[0]
 
             # Dodanie do bazy "_Permissions"
-            to_MySQL = ("Owner", True, True, True, True, True, True, True, True)
+            to_MySQL = ("Owner", True, True, True, True, True, True, True, True, True, True)
             cursor.execute("INSERT INTO " + str(
-                company_add_name) + '_Permissions'" (Name, View_User, Add_User, Remove_User, Modify_User, View_Position, Add_Position, Remove_Position, Modify_Position) VALUES (%s, %r, %r, %r, %r, %r, %r, %r, %r)",
+                company_add_name) + '_Permissions'" (Name, View_User, Add_User, Remove_User, Modify_User, View_Position, Add_Position, Remove_Position, Modify_Position, View_Vacations, Accept_Vacations) VALUES (%s, %r, %r, %r, %r, %r, %r, %r, %r, %r, %r)",
                            to_MySQL)
             connection.commit()
 
@@ -849,6 +849,32 @@ def sendMessage(UserID, OtherID, Message):
 ####################
 ### Others
 ####################
+
+def getUserPermission(userID, companyID, permission):
+    if userID and companyID and permission:
+        try:
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            cursor.execute("SELECT Position FROM " + str(getCompanyName(companyID)) + '_Users'" WHERE ID = '" + str(userID) + "'")
+            Position = cursor.fetchone()
+
+            cursor.execute("SELECT " + str(permission) + " FROM " + str(getCompanyName(companyID)) + '_Permissions'" WHERE Name = '" + str(Position[0]) + "'")
+            Permission = cursor.fetchone()
+            cursor.close()
+
+            # Development
+            if Type == "Development":
+                print("getUserPermission: " + str(permission))
+                print("getUserPermission: " + str(Permission[0]))
+
+            return Permission[0]
+
+        except Exception as Error:
+            print("getUserPermission - Error")
+            print("Error: " + str(Error))
+    else:
+        print("getUserPermission - Missing value")
 
 def bruttoToNetto(salary):
     try:
