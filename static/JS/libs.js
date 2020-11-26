@@ -125,7 +125,7 @@ function editModal($id, $firma){
 function editPermission($id, $name){
   $($("#modal-edit form")[1]).attr("action", "/company/permissions/"+$id);
   $("#modal-edit").modal();
-  $("#Nazwa").val($name);
+  $("#nazwa").val($name);
 }
 
 $('input[date="true"]').bootstrapMaterialDatePicker({
