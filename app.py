@@ -3,8 +3,8 @@ from functions import *
 import functools
 
 from flaskext.mysql import MySQL
-from flask_mail import Mail, Message
-from flask import Flask, render_template, redirect, session, jsonify, request, flash
+from flask_mail import Mail
+from flask import Flask, render_template, redirect, session, jsonify, request, flash, send_from_directory
 
 ####################
 ### CONFIG & DECORATOS
@@ -64,6 +64,10 @@ def login():
         login_mail = request.form.get('login_mail', "", type=str)
         login_password = request.form.get('login_password', "", type=str)
 
+        # Weryfikacja danych
+        if not check("Mail", login_mail):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawny adres E-Mail!"})
+
         # Development
         if Type == "Development":
             print("Logowanie Login: " + login_mail)
@@ -85,6 +89,11 @@ def login():
 
 @app.route('/register/<string:KEY>', methods=['POST', 'GET'])
 def login_data(KEY):
+
+    # Development
+    if Type == "Development":
+        print("Register Data: " + str(KEY))
+
     if request.method == "POST":
 
         register_name = request.form.get('register_name', "", type=str)
@@ -96,7 +105,20 @@ def login_data(KEY):
         register_zip = request.form.get('register_zip', "", type=str)
         register_state = request.form.get('register_state', "", type=str)
         register_phone_number = request.form.get('register_phone_number', "", type=str)
-        register_email = request.form.get('register_email', "", type=str)
+
+        # Weryfikacja danych
+        if not check("String", register_name):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawne Imię!"})
+        if not check("String", register_surname):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawne Nazwisko!"})
+        if not check("Birth_Data", register_birth_data):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawną Datę urodzenia!"})
+        if not check("PESEL", register_PESEL):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawny PESEL!"})
+        if not check("String", register_city):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawne Miasto!"})
+        if not check("Phone_Number", register_phone_number):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawny Numer Telefonu!"})
 
         if updateUserData(session['ID'], register_name, register_surname, register_birth_data, register_PESEL, register_street, register_city, register_zip, register_state, register_phone_number):
             return jsonify({"redirect": "/"})
@@ -119,8 +141,8 @@ def register():
             print("Rejestracaja Hasło: " + register_repeat_password)
 
         # Weryfikacja danych
-        # if not check("Mail", register_mail):
-        #     return jsonify({"title": "", "message": "Prosze wprowadzić poprawny adres E-Mail!"})
+        if not check("Mail", register_mail):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawny adres E-Mail!"})
 
         # Sprawdzenie czy hasła są identyczne
         if register_password != register_repeat_password:
@@ -166,6 +188,18 @@ def company_add():
         company_add_phone = request.form['company_add_phone']
         company_add_mail = request.form['company_add_mail']
 
+        # Weryfikacja danych
+        if not check("Name", company_add_name):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawne Nazwę!"})
+        if not check("NIP", company_add_nip):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawny NIP!"})
+        if not check("REGON", company_add_regon):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawny REGON!"})
+        if not check("String", company_add_city):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawne Miasto!"})
+        if not check("Phone_Number", company_add_phone):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawne Numer Telefonu!"})
+
         if checkCompany(company_add_name, company_add_nip, company_add_regon):
             return jsonify({"title": "", "message": "Podana firma jest już w rejestrze lub podany NIP/Regon jest juz zarejstrowany!"})
 
@@ -200,41 +234,40 @@ def company_list(ID=False):
 @protected
 def company_workers(companyID=False):
 
-    if request.method == 'GET':
-        Companies = getUserCompaniesList(session['ID'])
+    Companies = getUserCompaniesList(session['ID'])
 
-        if not companyID and Companies:
-            companyID = Companies[0][0]
+    if not companyID and Companies:
+        companyID = Companies[0][0]
 
-        if not Companies:
-            flash("Nie jesteś przypisany do żadnej firmy!")
-            return redirect("/")
+    if not Companies:
+        flash("Nie jesteś przypisany do żadnej firmy!")
+        return redirect("/")
 
-        UsersData = []
+    UsersData = []
 
-        WorkersList = getCompanyWorkersID(companyID)
-        PositionsList = getCompanyPositionsList(companyID)
+    WorkersList = getCompanyWorkersID(companyID)
+    PositionsList = getCompanyPositionsList(companyID)
 
-        for WorkerID in WorkersList:
+    for WorkerID in WorkersList:
 
-            print("ID: " + str(companyID))
-            print("WorkerID: " + str(WorkerID[0]))
+        print("ID: " + str(companyID))
+        print("WorkerID: " + str(WorkerID[0]))
 
-            # Pobieranie danych dotyczących pracownika
-            UserData = getUserBasicData(WorkerID[0])
-            UserCompanyData = getCompanyUserData(companyID, WorkerID[0])
+        # Pobieranie danych dotyczących pracownika
+        UserData = getUserBasicData(WorkerID[0])
+        UserCompanyData = getCompanyUserData(companyID, WorkerID[0])
 
-            User = []
+        User = []
 
-            for Data in UserData:
-                User.append(Data)
+        for Data in UserData:
+            User.append(Data)
 
-            for Data in UserCompanyData:
-                User.append(Data)
+        for Data in UserCompanyData:
+            User.append(Data)
 
-            # Tworznie 2D tabeli
-            UsersData.append(User)
-            print(UserData)
+        # Tworznie 2D tabeli
+        UsersData.append(User)
+        print(UserData)
 
     if request.method == 'POST':
 
@@ -327,10 +360,35 @@ def company_workers_delete(companyID=False, userID=False):
         return redirect("/company/workers")
 
 
-@app.route('/company/generator')
+@app.route('/company/generator', methods=['POST', 'GET'])
+@app.route('/company/generator/<int:companyID>', methods=['POST', 'GET'])
 @protected
-def company_generator():
-    return render_template("company_generator.html")
+def company_generator(companyID=False):
+
+    Companies = getUserCompaniesList(session['ID'])
+
+    if not companyID and Companies:
+        companyID = Companies[0][0]
+
+    if not Companies:
+        flash("Nie jesteś przypisany do żadnej firmy!")
+        return redirect("/")
+
+    if request.method == 'POST':
+        Button = request.form['do']
+        if Button == "Pracownicy":
+            print("Pracownicy")
+            createExcelWorkers(companyID)
+            return send_from_directory(directory="upload", filename="Workers.xlsx")
+        elif Button == "Uprawnienia":
+            print("Uprawnienia")
+            createExcelPermissions(companyID)
+            return send_from_directory(directory="upload", filename="Permissions.xlsx", as_attachment=True)
+        else:
+            flash("ERROR!")
+            return redirect("/")
+
+    return render_template("company_generator.html", SelectedID=companyID, CompaniesNames=Companies)
 
 ####################
 ### Vacations
@@ -371,6 +429,9 @@ def company_workers_vacations(companyID=False):
         company_vacation_reason = request.form['company_vacation_reason']
         company_vacation_start = request.form['company_vacation_start']
         company_vacation_end = request.form['company_vacation_end']
+
+        if not check("String", company_vacation_reason):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawny powód!"})
 
         if addVacation(session["ID"], companyID, company_vacation_reason, company_vacation_start, company_vacation_end):
             flash("Pomyślnie dodano!")
@@ -443,8 +504,6 @@ def company_permissions(companyID=False):
 
                 if getUserPermission(session["ID"], companyID, "Add_Position"):
 
-                    print("432")
-
                     Name = request.form["company_permission_name"]
                     View_User = request.form["View_User"]
                     Add_User = request.form["Add_User"]
@@ -457,6 +516,9 @@ def company_permissions(companyID=False):
                     View_Vacations = request.form["View_Vacations"]
                     Accept_Vacations = request.form["Accept_Vacations"]
 
+                    if not check("Name", Name):
+                        return jsonify({"title": "", "message": "Prosze wprowadzić poprawną Nazwę!"})
+
                     if addRole(companyID, Name, View_User, Add_User, Remove_User, Modify_User, View_Position, Add_Position, Remove_Position, Modify_Position, View_Vacations, Accept_Vacations):
                         flash("Pomyślnie dodano!")
                         return jsonify({"redirect": "/company/permissions/" + str(companyID)})
@@ -468,13 +530,12 @@ def company_permissions(companyID=False):
                     flash("Nie posiadasz uprawnień!")
                     return jsonify({"redirect": "/company/permissions/" + str(companyID)})
 
-
             # Usuwanie nowego pracownika
             if request.form['do'] == "edit":
 
                 if getUserPermission(session["ID"], companyID, "Modify_Position"):
 
-                    Name = request.form["Nazwa"]
+                    Name = request.form["nazwa"]
                     View_User = request.form["View_User"]
                     Add_User = request.form["Add_User"]
                     Remove_User = request.form["Remove_User"]
@@ -486,17 +547,20 @@ def company_permissions(companyID=False):
                     View_Vacations = request.form["View_Vacations"]
                     Accept_Vacations = request.form["Accept_Vacations"]
 
-                    print(Name)
-                    print(Add_User)
+                    if editRole(companyID, Name, View_User, Add_User, Remove_User, Modify_User, View_Position, Add_Position, Remove_Position, Modify_Position, View_Vacations, Accept_Vacations):
+                        flash("Pomyślnie edytowano!")
+                        return jsonify({"redirect": "/company/permissions/" + str(companyID)})
+                    else:
+                        flash("Podana nazwa nie jest w rejestrze!")
+                        return jsonify({"redirect": "/company/permissions/" + str(companyID)})
 
                 else:
                     flash("Nie posiadasz uprawnień!")
                     return jsonify({"redirect": "/company/permissions/" + str(companyID)})
 
-
     else:
         flash("Nie posiadasz uprawnień!")
-        return jsonify({"redirect": "/"})
+        return redirect("/")
 
     return render_template("company_permissions.html", SelectedID=companyID, CompaniesNames=Companies, PositionsList=PositionsList, PermissionsList=PermissionsList)
 
@@ -550,6 +614,20 @@ def account_edit():
         account_edit_zip = request.form['account_edit_zip']
         account_edit_state = request.form['account_edit_state']
         account_edit_phone_number = request.form['account_edit_phone_number']
+
+        # Weryfikacja danych
+        if not check("String", account_edit_name):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawne Imię!"})
+        if not check("String", account_edit_surname):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawne Nazwisko!"})
+        if not check("Birth_Data", account_edit_birth_data):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawną Datę urodzenia!"})
+        if not check("PESEL", account_edit_PESEL):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawny PESEL!"})
+        if not check("String", account_edit_city):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawne Miasto!"})
+        if not check("Phone_Number", account_edit_phone_number):
+            return jsonify({"title": "", "message": "Prosze wprowadzić poprawny Numer Telefonu!"})
 
         if updateUserData(session["ID"], account_edit_name, account_edit_surname, account_edit_birth_data, account_edit_PESEL, account_edit_street, account_edit_city, account_edit_zip, account_edit_state, account_edit_phone_number):
             print("Udalos ie")
@@ -608,4 +686,3 @@ def messages(ID=False):
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=70)
-

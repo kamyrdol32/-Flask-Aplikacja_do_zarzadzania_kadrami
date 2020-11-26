@@ -48,8 +48,10 @@
                     <td style="width: 30%;" class="text-nowrap">{{ Data[1] }}</td>
                     <td style="width: 55%;" class="text-center text-nowrap"></td>
                     <td style="width: 10%;" class="text-right text-nowrap">
-                      <a onclick="editPermission({{ SelectedID }}, '{{ Data[1] }}')" ><i class="fas fa-pen"></i></a>
-                      <a onclick="deletePermission()" ><i class="fas fa-trash" style="color: #B30606"></i></a>
+                        {% if Data[1] != "Owner" and Data[1] != "Pracownik" %}
+                          <a onclick="editPermission({{ SelectedID }}, '{{ Data[1] }}')" ><i class="fas fa-pen"></i></a>
+{#                          <a onclick="deletePermission()" ><i class="fas fa-trash" style="color: #B30606"></i></a>#}
+                        {% endif %}
                     </td>
                   </tr>
                 {% endfor %}
@@ -80,7 +82,7 @@
                     <input type="checkbox" name="{{ DATA[1] }}" id="{{ DATA[1] }}">
                   </div>
                   <div class="col-11">
-                    <label class="form-check-label" for="{{ DATA[1] }}">{{ DATA[1] }} - {{ DATA[2] }}</label>
+                    <label class="form-check-label" for="{{ DATA[1] }}"><b>{{ DATA[1] }}</b> - {{ DATA[2] }}</label>
                   </div>
                 </div>
               {% endfor %}
@@ -101,7 +103,7 @@
       <input type="hidden" class="form-control" id="nazwa" value="">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Edycja stanowiska NAZWA</h5>
+          <h5 class="modal-title">Edycja stanowiska</h5>
         </div>
         <div class="modal-body">
           <input type="hidden" class="form-control" id="do" value="edit">
@@ -112,7 +114,7 @@
                     <input type="checkbox" name="{{ DATA[1] }}" id="{{ DATA[1] }}">
                   </div>
                   <div class="col-11">
-                    <label class="form-check-label" for="{{ DATA[1] }}">{{ DATA[1] }} - {{ DATA[2] }}</label>
+                    <label class="form-check-label" for="{{ DATA[1] }}"><b>{{ DATA[1] }}</b> - {{ DATA[2] }}</label>
                   </div>
                 </div>
               {% endfor %}

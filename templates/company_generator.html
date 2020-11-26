@@ -9,5 +9,51 @@
 
 <!-- Content -->
 {% block content %}
+  <div class="col-10 offset-1 p-0 mt-3 mb-5">
+    <div class="row">
+      <div class="d-none d-md-block col-md-8">
+      </div>
+      <div class="col-12 col-md-4 mt-2rem form-group">
+        <select id="current_company" class="workers">
+            {% for Date in CompaniesNames %}
+                <option {% if SelectedID == Date[0] %} selected {% endif %} value={{ Date[0] }}>{{ Date[1] }}</option>
+            {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="col-10 offset-1 p-0">
+    <div class="mb-3">
+      <div class="row">
+        <div class="col-12 hovered">
+          <h3>Generator</h3>
+        </div>
+        <div class="col-10 offset-1 pt-5">
+            Dzięki tej stronie możesz w łatwy oraz szybki sposób przekonwertować dane firmowe znajdujące się na serwerze do pliku XLSX (Excel) <br><br>
+        </div>
+        <div class="col-12 row pt-5">
+            <div class="col-md-6 text-center">
+                <form action="/company/generator/{{ SelectedID }}" class="w-100" method="POST">
+                    <input type="hidden" class="form-control" id="do" value="Pracownicy">
+                    <button type="submit" class="btn btn-own"><span>Pracownicy</span></button>
+                    <div class="p-3">
+                        <p>Generuje liste pracownikow oraz wszystkie ich dane</p>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6 text-center">
+                <form action="/company/generator/{{ SelectedID }}" class="w-100" method="POST">
+                    <input type="hidden" class="form-control" id="do" value="Uprawnienia">
+                    <button type="submit" class="btn btn-own"><span>Uprawnienia</span></button>
+                    <div class="p-3">
+                        <p>Generuje liste uprawnień/stanowisk</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 {% endblock %}

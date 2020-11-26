@@ -304,7 +304,7 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
             cursor.execute("CREATE TABLE " + str(company_add_name) + '_Users'"("
                                                                      "ID INT(16) UNSIGNED PRIMARY KEY, "
                                                                      "Position VARCHAR(128) NULL DEFAULT NULL, "
-                                                                     "Salary BIGINT(64) NULL DEFAULT NULL,"
+                                                                     "Salary BIGINT(64) NOT NULL DEFAULT '0',"
                                                                      "Registered DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP"
                                                                      ")")
 
@@ -667,19 +667,15 @@ def addVacation(userID, companyID, reason, start, end):
             connection = mysql.connect()
             cursor = connection.cursor()
 
-            # Sprawdzanie czy istnieje juz stanowisko
-            cursor.execute("SELECT COUNT(1) FROM Vacations WHERE `User_ID` = '" + str(userID) + "'")
-            if not cursor.fetchone()[0]:
-
-                to_MySQL = (str(userID), str(companyID), str(reason), start, end)
-                cursor.execute("INSERT INTO Vacations (User_ID, Company_ID, Reason, Start_Data, End_Data) VALUES (%s, %s, %s, %s, %s)", to_MySQL)
-                connection.commit()
-
-            # Rozłączenie z bazą MySQL
-            cursor.close()
+            to_MySQL = (str(userID), str(companyID), str(reason), start, end)
+            cursor.execute("INSERT INTO Vacations (User_ID, Company_ID, Reason, Start_Data, End_Data) VALUES (%s, %s, %s, %s, %s)", to_MySQL)
+            connection.commit()
 
             # Rozłączenie z bazą MySQL
             return True
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
 
         # Error Log
         except Exception as Error:
@@ -771,6 +767,35 @@ def addRole(companyID, Name, View_User, Add_User, Remove_User, Modify_User, View
                 # # Dodanie do MySQL
                 to_MySQL = (str(Name), View_User, Add_User, Remove_User, Modify_User, View_Position, Add_Position, Remove_Position, Modify_Position, View_Vacations, Accept_Vacations)
                 cursor.execute("INSERT INTO " + str(getCompanyName(companyID)) + '_Permissions'" (Name, View_User, Add_User, Remove_User, Modify_User, View_Position, Add_Position, Remove_Position, Modify_Position, View_Vacations, Accept_Vacations) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", to_MySQL)
+                connection.commit()
+
+            else:
+
+                return False
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            # Return
+            return True
+
+        # Error Log
+        except Exception as Error:
+            print("addRole - MySQL Error")
+            print("Error: " + str(Error))
+
+def editRole(companyID, Name, View_User, Add_User, Remove_User, Modify_User, View_Position, Add_Position, Remove_Position, Modify_Position, View_Vacations, Accept_Vacations):
+    if companyID and Name and View_User and Add_User and Remove_User and Modify_User and View_Position and Add_Position and Remove_Position and Modify_Position and View_Vacations and Accept_Vacations:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            # Sprawdzanie czy istnieje juz stanowisko
+            cursor.execute("SELECT COUNT(1) FROM " + str(getCompanyName(companyID)) + '_Permissions'" WHERE `Name` = '" + Name + "'")
+            if cursor.fetchone()[0]:
+
+                cursor.execute("UPDATE " + str(getCompanyName(companyID)) + '_Permissions'" SET View_User = '" + str(View_User) + "', Add_User = '" + str(Add_User) + "', Remove_User = '" + str(Remove_User) + "', Modify_User = '" + str(Modify_User) + "', View_Position = '" + str(View_Position) + "', Add_Position = '" + str(Add_Position) + "', Remove_Position = '" + str(Remove_Position) + "', Modify_Position = '" + str(Modify_Position) + "', View_Vacations = '" + str(View_Vacations) + "', Accept_Vacations = '" + str(Accept_Vacations) + "' WHERE `Name` = '" + str(Name) + "'")
                 connection.commit()
 
             else:
@@ -995,8 +1020,6 @@ def createExcelWorkers(companyID):
             connection = mysql.connect()
             cursor = connection.cursor()
 
-            companyName = getCompanyName(companyID)
-
             cursor.execute("SELECT * FROM Users")
             Positions = cursor.fetchall()
 
@@ -1038,6 +1061,8 @@ def createExcelWorkers(companyID):
 
             workbook.close()
 
+            return True
+
         except Exception as Error:
             print("createExcelWorkers - Error")
             print("Error: " + str(Error))
@@ -1053,7 +1078,7 @@ def createExcelPermissions(companyID):
 
             companyName = getCompanyName(companyID)
 
-            cursor.execute("SELECT * " + str(companyName) + '_Permissions'"")
+            cursor.execute("SELECT * FROM " + str(companyName) + '_Permissions'"")
             Positions = cursor.fetchall()
 
             # Miejsce startu
@@ -1094,6 +1119,8 @@ def createExcelPermissions(companyID):
                 col = 0
 
             workbook.close()
+
+            return True
 
         except Exception as Error:
             print("createExcelPermissions - Error")
