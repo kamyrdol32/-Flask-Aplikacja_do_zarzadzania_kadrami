@@ -30,8 +30,6 @@ function findParentForm($element){
           }
         });
 
-        console.log($data);
-        return false;
         // Notyfikacje & Przekierowanie
         $.ajax({
           url: $url,
