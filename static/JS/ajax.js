@@ -23,7 +23,7 @@ function findParentForm($element){
         $($form).find("input, select").each(function($i, $input){
           $name = $($input).attr("id");
           if($($input).attr("type") == "checkbox"){
-            $selected = $($input).is(":checked") ? true : false;
+            $selected = $($input).is(":checked") ? 1 : 0;
             $data[$name] = $selected;
           } else {
             $data[$name] = $($input).val();

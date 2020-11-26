@@ -336,8 +336,8 @@ def company_generator():
 ### Vacations
 ####################
 
-@app.route('/company/vacation/')
-@app.route('/company/vacation/<int:companyID>')
+@app.route('/company/vacation/', methods=['POST', 'GET'])
+@app.route('/company/vacation/<int:companyID>', methods=['POST', 'GET'])
 @protected
 def company_workers_vacations(companyID=False):
 
@@ -366,6 +366,18 @@ def company_workers_vacations(companyID=False):
     else:
         flash("Nie posiadasz uprawnień!")
         return redirect("/")
+
+    if request.method == 'POST':
+        company_vacation_reason = request.form['company_vacation_reason']
+        company_vacation_start = request.form['company_vacation_start']
+        company_vacation_end = request.form['company_vacation_end']
+
+        if addVacation(session["ID"], companyID, company_vacation_reason, company_vacation_start, company_vacation_end):
+            flash("Pomyślnie dodano!")
+            return jsonify({"redirect": "/company/vacation/" + str(companyID)})
+        else:
+            flash("Podana pracownik jest juz w rejestrze!")
+            return jsonify({"redirect": "/company/vacation/" + str(companyID)})
 
     return render_template("company_workers_vacations.html", SelectedID=companyID, CompaniesNames=Companies, Vacations=Table)
 
@@ -400,12 +412,6 @@ def company_workers_vacations_cancel(companyID, userID):
         flash("Nie posiadasz uprawnień!")
         return redirect("/company/vacation/")
 
-
-@app.route('/company/vacation/add')
-@protected
-def company_workers_vacations_add():
-    print("TEST")
-
 ####################
 ### Permissions
 ####################
@@ -430,28 +436,67 @@ def company_permissions(companyID=False):
 
         PermissionsList = getCompanyPermissionsList()
 
+        if request.method == 'POST':
+
+            # Dodatanie nowego pracownika
+            if request.form['do'] == "add":
+
+                if getUserPermission(session["ID"], companyID, "Add_Position"):
+
+                    print("432")
+
+                    Name = request.form["company_permission_name"]
+                    View_User = request.form["View_User"]
+                    Add_User = request.form["Add_User"]
+                    Remove_User = request.form["Remove_User"]
+                    Modify_User = request.form["Modify_User"]
+                    View_Position = request.form["View_Position"]
+                    Add_Position = request.form["Add_Position"]
+                    Remove_Position = request.form["Remove_Position"]
+                    Modify_Position = request.form["Modify_Position"]
+                    View_Vacations = request.form["View_Vacations"]
+                    Accept_Vacations = request.form["Accept_Vacations"]
+
+                    if addRole(companyID, Name, View_User, Add_User, Remove_User, Modify_User, View_Position, Add_Position, Remove_Position, Modify_Position, View_Vacations, Accept_Vacations):
+                        flash("Pomyślnie dodano!")
+                        return jsonify({"redirect": "/company/permissions/" + str(companyID)})
+                    else:
+                        flash("Podana nazwa jest juz w rejestrze!")
+                        return jsonify({"redirect": "/company/permissions/" + str(companyID)})
+
+                else:
+                    flash("Nie posiadasz uprawnień!")
+                    return jsonify({"redirect": "/company/permissions/" + str(companyID)})
+
+
+            # Usuwanie nowego pracownika
+            if request.form['do'] == "edit":
+
+                if getUserPermission(session["ID"], companyID, "Modify_Position"):
+
+                    Name = request.form["Nazwa"]
+                    View_User = request.form["View_User"]
+                    Add_User = request.form["Add_User"]
+                    Remove_User = request.form["Remove_User"]
+                    Modify_User = request.form["Modify_User"]
+                    View_Position = request.form["View_Position"]
+                    Add_Position = request.form["Add_Position"]
+                    Remove_Position = request.form["Remove_Position"]
+                    Modify_Position = request.form["Modify_Position"]
+                    View_Vacations = request.form["View_Vacations"]
+                    Accept_Vacations = request.form["Accept_Vacations"]
+
+                    print(Name)
+                    print(Add_User)
+
+                else:
+                    flash("Nie posiadasz uprawnień!")
+                    return jsonify({"redirect": "/company/permissions/" + str(companyID)})
+
+
     else:
         flash("Nie posiadasz uprawnień!")
-        return redirect("/")
-
-    if request.method == 'POST':
-
-        # Dodatanie nowego pracownika
-        # if request.form['do'] == "add":
-
-        if getUserPermission(session["ID"], companyID, "Add_Position"):
-
-            View_User = request.form["View_User"]
-            Add_User = request.form["Add_User"]
-            Remove_User = request.form["Remove_User"]
-            Modify_User = request.form["Modify_User"]
-            View_Position = request.form["View_Position"]
-            Add_Position = request.form["Add_Position"]
-            Remove_Position = request.form["Remove_Position"]
-            View_Vacations = request.form["View_Vacations"]
-            View_User = request.form["View_User"]
-            print(View_User)
-
+        return jsonify({"redirect": "/"})
 
     return render_template("company_permissions.html", SelectedID=companyID, CompaniesNames=Companies, PositionsList=PositionsList, PermissionsList=PermissionsList)
 
@@ -493,6 +538,8 @@ def account_password():
 @protected
 def account_edit():
 
+    userData = getUserData(session["ID"])
+
     if request.method == 'POST':
         account_edit_name = request.form['account_edit_name']
         account_edit_surname = request.form['account_edit_surname']
@@ -509,7 +556,7 @@ def account_edit():
             flash("Zaaktualizowano informacje!")
             return jsonify({"redirect": "/account"})
 
-    return render_template("account_edit.html", States=getStates())
+    return render_template("account_edit.html", States=getStates(), userData=userData)
 
 ####################
 ### Messages

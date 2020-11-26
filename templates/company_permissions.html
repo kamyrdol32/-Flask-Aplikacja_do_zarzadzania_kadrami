@@ -48,7 +48,7 @@
                     <td style="width: 30%;" class="text-nowrap">{{ Data[1] }}</td>
                     <td style="width: 55%;" class="text-center text-nowrap"></td>
                     <td style="width: 10%;" class="text-right text-nowrap">
-                      <a onclick="editPermission(3)" ><i class="fas fa-pen"></i></a>
+                      <a onclick="editPermission({{ SelectedID }}, '{{ Data[1] }}')" ><i class="fas fa-pen"></i></a>
                       <a onclick="deletePermission()" ><i class="fas fa-trash" style="color: #B30606"></i></a>
                     </td>
                   </tr>
@@ -69,7 +69,7 @@
           <h5 class="modal-title">Dodaj stanowisko do firmy</h5>
         </div>
         <div class="modal-body">
-          <input type="hidden" class="form-control" id="action" value="add">
+          <input type="hidden" class="form-control" id="do" value="add">
           <div class="form-group col-12">
             <input type="text" class="form-control" id="company_permission_name" placeholder="Stanowisko">
           </div>
@@ -103,10 +103,11 @@
           <h5 class="modal-title">Edycja stanowiska NAZWA</h5>
         </div>
         <div class="modal-body">
-          <input type="hidden" class="form-control" id="action" value="edit">
+          <input type="hidden" class="form-control" id="do" value="edit">
           <div class="permissions-container">
               {% for DATA in PermissionsList %}
                 <div class="form-group col-12 row no-underline mb-2">
+                  <input type="hidden" class="form-control" id="Nazwa" name="Nazwa">
                   <div class="col-1">
                     <input type="checkbox" name="{{ DATA[1] }}" id="{{ DATA[1] }}">
                   </div>

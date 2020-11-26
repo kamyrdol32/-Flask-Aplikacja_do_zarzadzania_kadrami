@@ -16,16 +16,16 @@
         <h3>Moje dane</h3>
       </div>
       <div class="form-group col-12 col-md-5 offset-md-0 col-lg-3 offset-lg-0">
-        <input type="text" class="form-control" id="account_edit_name" placeholder="Imię">
+        <input type="text" class="form-control" id="account_edit_name" value="{{ userData[2] }}" placeholder="Imię">
       </div>
       <div class="form-group col-12 col-md-5 offset-md-1 col-lg-3 offset-lg-1">
-        <input type="text" class="form-control" id="account_edit_surname" placeholder="Nazwisko">
+        <input type="text" class="form-control" id="account_edit_surname" value="{{ userData[3] }}" placeholder="Nazwisko">
       </div>
       <div class="form-group col-12 col-md-5 offset-md-0 col-lg-3 offset-lg-1">
-        <input type="text" date="true" class="form-control type-date" id="account_edit_birth_data" placeholder="Data urodzenia">
+        <input type="text" date="true" class="form-control type-date" id="account_edit_birth_data" value="{{ userData[5] }}" placeholder="Data urodzenia">
       </div>
       <div class="form-group col-12 col-md-5 offset-md-0 col-lg-3 offset-lg-0">
-        <input type="text" class="form-control" id="account_edit_PESEL" placeholder="PESEL">
+        <input type="text" class="form-control" id="account_edit_PESEL" value="{{ userData[4] }}" placeholder="PESEL">
       </div>
     </div>
     <div class="row mt-4">
@@ -33,13 +33,13 @@
         <h3>Miejsce zamieszkania</h3>
       </div>
       <div class="form-group col-12 col-md-5 offset-md-0 col-lg-3 offset-lg-0">
-        <input type="text" class="form-control" id="account_edit_street" placeholder="Ulica">
+        <input type="text" class="form-control" id="account_edit_street" value="{{ userData[7] }}" placeholder="Ulica">
       </div>
       <div class="form-group col-12 col-md-5 offset-md-1 col-lg-3 offset-lg-1">
-        <input type="text" class="form-control" id="account_edit_city" placeholder="Miasto">
+        <input type="text" class="form-control" id="account_edit_city" value="{{ userData[8] }}" placeholder="Miasto">
       </div>
       <div class="form-group col-12 col-md-5 offset-md-0 col-lg-3 offset-lg-1">
-        <input type="text" class="form-control type-zip" id="account_edit_zip" placeholder="Kod pocztowy">
+        <input type="text" class="form-control type-zip" id="account_edit_zip" value="{{ userData[10] }}" placeholder="Kod pocztowy">
       </div>
       <div class="form-group col-12 col-md-5 offset-md-1 col-lg-3 offset-lg-0">
           <select class="custom-select" id="account_edit_state">
@@ -54,7 +54,7 @@
         <h3>Dane Kontaktowe</h3>
       </div>
       <div class="form-group col-12 col-md-5 offset-md-0 col-lg-3 offset-lg-0">
-        <input type="text" class="form-control type-phone-number" id="account_edit_phone_number" placeholder="Telefon">
+        <input type="text" class="form-control type-phone-number" id="account_edit_phone_number" value="{{ userData[6] }}" placeholder="Telefon">
       </div>
     </div>
 

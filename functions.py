@@ -304,7 +304,8 @@ def companyRegister(userID, company_add_name, company_add_nip, company_add_regon
             cursor.execute("CREATE TABLE " + str(company_add_name) + '_Users'"("
                                                                      "ID INT(16) UNSIGNED PRIMARY KEY, "
                                                                      "Position VARCHAR(128) NULL DEFAULT NULL, "
-                                                                     "Salary BIGINT(64) NULL DEFAULT NULL"
+                                                                     "Salary BIGINT(64) NULL DEFAULT NULL,"
+                                                                     "Registered DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP"
                                                                      ")")
 
             cursor.execute("CREATE TABLE " + str(company_add_name) + '_Permissions'"("
@@ -659,6 +660,32 @@ def cancelVacation(vacationID):
             print("cancelVacation - MySQL Error")
             print("Error: " + str(Error))
 
+def addVacation(userID, companyID, reason, start, end):
+    if userID and companyID and reason and start and end:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            # Sprawdzanie czy istnieje juz stanowisko
+            cursor.execute("SELECT COUNT(1) FROM Vacations WHERE `User_ID` = '" + str(userID) + "'")
+            if not cursor.fetchone()[0]:
+
+                to_MySQL = (str(userID), str(companyID), str(reason), start, end)
+                cursor.execute("INSERT INTO Vacations (User_ID, Company_ID, Reason, Start_Data, End_Data) VALUES (%s, %s, %s, %s, %s)", to_MySQL)
+                connection.commit()
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            # Rozłączenie z bazą MySQL
+            return True
+
+        # Error Log
+        except Exception as Error:
+            print("addVacation - MySQL Error")
+            print("Error: " + str(Error))
+
 ####################
 ### Permissions
 ####################
@@ -729,6 +756,37 @@ def getCompanyPermissionsList():
     except Exception as Error:
         print("getCompanyPermissionsList - Error")
         print("Error: " + str(Error))
+
+def addRole(companyID, Name, View_User, Add_User, Remove_User, Modify_User, View_Position, Add_Position, Remove_Position, Modify_Position, View_Vacations, Accept_Vacations):
+    if companyID and Name and View_User and Add_User and Remove_User and Modify_User and View_Position and Add_Position and Remove_Position and Modify_Position and View_Vacations and Accept_Vacations:
+        try:
+            # Łączność z MYSQL
+            connection = mysql.connect()
+            cursor = connection.cursor()
+
+            # Sprawdzanie czy istnieje juz stanowisko
+            cursor.execute("SELECT COUNT(1) FROM " + str(getCompanyName(companyID)) + '_Permissions'" WHERE `Name` = '" + Name + "'")
+            if not cursor.fetchone()[0]:
+
+                # # Dodanie do MySQL
+                to_MySQL = (str(Name), View_User, Add_User, Remove_User, Modify_User, View_Position, Add_Position, Remove_Position, Modify_Position, View_Vacations, Accept_Vacations)
+                cursor.execute("INSERT INTO " + str(getCompanyName(companyID)) + '_Permissions'" (Name, View_User, Add_User, Remove_User, Modify_User, View_Position, Add_Position, Remove_Position, Modify_Position, View_Vacations, Accept_Vacations) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", to_MySQL)
+                connection.commit()
+
+            else:
+
+                return False
+
+            # Rozłączenie z bazą MySQL
+            cursor.close()
+
+            # Return
+            return True
+
+        # Error Log
+        except Exception as Error:
+            print("addRole - MySQL Error")
+            print("Error: " + str(Error))
 
 ####################
 ### Messages
