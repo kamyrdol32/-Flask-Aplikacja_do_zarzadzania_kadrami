@@ -52,7 +52,10 @@ def protected(func):
 @protected
 def index():
 
-    return render_template("index.html")
+    User = getUserBasicData(session["ID"])
+    Companies = getUserCompaniesList(session["ID"])
+
+    return render_template("index.html", User=User, Companies=Companies)
 
 ####################
 ### Login & Register & Logout
@@ -359,6 +362,9 @@ def company_workers_delete(companyID=False, userID=False):
         flash("Nie posiadasz uprawnień!")
         return redirect("/company/workers")
 
+####################
+### Generator
+####################
 
 @app.route('/company/generator', methods=['POST', 'GET'])
 @app.route('/company/generator/<int:companyID>', methods=['POST', 'GET'])
@@ -378,17 +384,27 @@ def company_generator(companyID=False):
         Button = request.form['do']
         if Button == "Pracownicy":
             print("Pracownicy")
-            createExcelWorkers(companyID)
-            return send_from_directory(directory="upload", filename="Workers.xlsx")
+            if createExcelWorkers(companyID):
+                return jsonify({"redirect": "/company/generator/workers/" + str(companyID)})
         elif Button == "Uprawnienia":
             print("Uprawnienia")
-            createExcelPermissions(companyID)
-            return send_from_directory(directory="upload", filename="Permissions.xlsx", as_attachment=True)
+            if createExcelPermissions(companyID):
+                return jsonify({"redirect": "/company/generator/permissions/" + str(companyID)})
         else:
             flash("ERROR!")
             return redirect("/")
 
     return render_template("company_generator.html", SelectedID=companyID, CompaniesNames=Companies)
+
+@app.route('/company/generator/workers/<int:companyID>', methods=['POST', 'GET'])
+@protected
+def company_generator_workers(companyID=False):
+    return send_from_directory(directory="upload", filename="Workers.xlsx", as_attachment=True)
+
+@app.route('/company/generator/permissions/<int:companyID>', methods=['POST', 'GET'])
+@protected
+def company_generator_permissions(companyID=False):
+    return send_from_directory(directory="upload", filename="Permissions.xlsx", as_attachment=True)
 
 ####################
 ### Vacations

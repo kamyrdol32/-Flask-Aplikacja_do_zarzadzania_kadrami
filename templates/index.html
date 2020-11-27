@@ -10,5 +10,36 @@
 
 <!-- Content -->
 {% block content %}
+<div class="col-10 offset-1 p-0">
+    <div class="row mt-4">
+      <div class="col-12 hovered ">
+        <h3>Aplikacja do zarządzania kadrami</h3>
+      </div>
+      <div class="col-12 p-0">
+        <p class="h5">Witaj <b>{{ User[1] }} {{ User[2] }}</b></p>
+        <p class="">Dziękujemy za skorzystanie z Aplikacji do zarządzania kadrami</p>
+        <br>
+        <p class="">Aplikacja posiada następujące funkcjie:</p>
+        <ul>
+          <li><p>Możliwość pracowania w kilku firmach oraz zarządzanie nimi</p></li>
+          <li><p>Zarządzanie zarobkami</p></li>
+          <li><p>Zarządzanie uprawnieniami</p></li>
+          <li><p>Zarządzanie urlopami</p></li>
+          <li><p>Możliwość komunikowania się z innymi pracownikami</p></li>
+          <li><p>Generowanie plików excel zawierających dane znajdujące się w bazie danych</p></li>
+        </ul>
+        <br>
+        <p class="h5">Aktualnie jesteś przypisany do następujących firm:</p>
+        <ul>
+          {% for Data in Companies %}
+              <li><p>{{ Data[1] }}</p></li>
+          {% endfor %}
+        </ul>
+      </div>
 
+    </div>
+
+    <div class="row mt-4">
+    </div>
+</div>
 {% endblock %}
