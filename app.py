@@ -399,11 +399,13 @@ def company_generator(companyID=False):
 @app.route('/company/generator/workers/<int:companyID>', methods=['POST', 'GET'])
 @protected
 def company_generator_workers(companyID=False):
+    print(companyID)
     return send_from_directory(directory="upload", filename="Workers.xlsx", as_attachment=True)
 
 @app.route('/company/generator/permissions/<int:companyID>', methods=['POST', 'GET'])
 @protected
 def company_generator_permissions(companyID=False):
+    print(companyID)
     return send_from_directory(directory="upload", filename="Permissions.xlsx", as_attachment=True)
 
 ####################

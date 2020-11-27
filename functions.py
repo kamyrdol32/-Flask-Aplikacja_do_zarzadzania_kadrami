@@ -672,10 +672,10 @@ def addVacation(userID, companyID, reason, start, end):
             connection.commit()
 
             # Rozłączenie z bazą MySQL
-            return True
+            cursor.close()
 
             # Rozłączenie z bazą MySQL
-            cursor.close()
+            return True
 
         # Error Log
         except Exception as Error:
@@ -1038,14 +1038,17 @@ def createExcelWorkers(companyID):
                 "Address",
                 "City",
                 "State",
-                "Code"
+                "Code",
+                "Salary"
             ]
 
             cursor.close()
 
+            cell_format = workbook.add_format({'bold': True, 'italic': True})
+
             # Tworzenie opisow
             for Name in Names:
-                worksheet.write(row, col, Name)
+                worksheet.write(row, col, Name, cell_format)
                 col += 1
 
             row = 1
@@ -1102,9 +1105,11 @@ def createExcelPermissions(companyID):
 
             cursor.close()
 
+            cell_format = workbook.add_format({'bold': True, 'italic': True})
+
             # Tworzenie opisow
             for Name in Names:
-                worksheet.write(row, col, Name)
+                worksheet.write(row, col, Name, cell_format)
                 col += 1
 
             row = 1
