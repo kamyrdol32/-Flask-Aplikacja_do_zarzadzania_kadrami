@@ -76,9 +76,9 @@ $(document).ready(function(){
   })
 
   // Przekierowanie na odpowiedni adres po nadawcy/adresata
-  $(".contact-tile").on("click", function(Message){
-    $e = $(Message.target);
-    $id = $Message.attr("user-id");
+  $(".contact-tile").on("click", function(e){
+    $e = $(e.target);
+    $id = $e.attr("user-id");
     window.location = "/messages/"+$id;
   });
 
