@@ -6,14 +6,14 @@ Wykorzystane technologie:
   - **Python**:
       - Flask,
       - Flask Mail,
-      Flask MySQL,
-      Jinja2,
-      XlsxWriter,
+      - Flask MySQL,
+      - Jinja2,
+      - XlsxWriter,
   - **SQL**
   - **HTML**
   - **CSS**:
-    Bootstrap,
-    Bootstrap Notify,
+    - Bootstrap,
+    - Bootstrap Notify,
   - **JavaScript**:
-    Ajax,
-    Particles.js.
+    - Ajax,
+    - Particles.js.
