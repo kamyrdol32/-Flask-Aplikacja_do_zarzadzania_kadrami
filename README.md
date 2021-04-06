@@ -4,8 +4,8 @@ Jest to aplikacja stworzona na potrzeby napisania pracy inżynierskiej.
 
 Wykorzystane technologie:
   - **Python**:
-      Flask,
-      Flask Mail,
+      - Flask,
+      - Flask Mail,
       Flask MySQL,
       Jinja2,
       XlsxWriter,
