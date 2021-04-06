@@ -21,9 +21,9 @@ Wykorzystane technologie:
 # Funkcjonalność
 
 - **System autoryzacji**
-  - Logowanie
-  - Tworzenie konta
-  - Generowanie konta dla pracownika
+  - [x] Logowanie
+  - [x] Tworzenie konta
+  - [x] Generowanie konta dla pracownika
 - **System rejestrowania przedsiębiorstwa**
 - **System zarządzania pracownikami**
   - Podgląd informacji dotyczących pracownika
