@@ -18,7 +18,7 @@ Wykorzystane technologie:
     - Ajax,
     - Particles.js.
 
-# Założenia
+# Założenia podczat tworzenia
 
 - [x] **System autoryzacji**
   - Logowanie
