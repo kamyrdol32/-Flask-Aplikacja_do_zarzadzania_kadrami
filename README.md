@@ -3,17 +3,17 @@
 Jest to aplikacja stworzona na potrzeby napisania pracy inżynierskiej. 
 
 Wykorzystane technologie:
-  - Python:
+  - **Python**:
       Flask,
       Flask Mail,
       Flask MySQL,
       Jinja2,
       XlsxWriter,
-  - SQL
-  - HTML
-  - CSS:
+  - **SQL**
+  - **HTML**
+  - **CSS**:
     Bootstrap,
     Bootstrap Notify,
-  - JavaScript:
+  - **JavaScript**:
     Ajax,
     Particles.js.
