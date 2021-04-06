@@ -18,19 +18,19 @@ Wykorzystane technologie:
     - Ajax,
     - Particles.js.
 
-# Funkcjonalność
+# Założenia
 
-- **System autoryzacji**
+- [x] **System autoryzacji**
   - [x] Logowanie
   - [x] Tworzenie konta
   - [x] Generowanie konta dla pracownika
-- **System rejestrowania przedsiębiorstwa**
-- **System zarządzania pracownikami**
-  - Podgląd informacji dotyczących pracownika
-  - Zmiana stanowiska
-  - Zmiana wynagrodzenia
-  - Możliwość zwolnienia
-- **Zarządzanie stanowiskami oraz uprawnieniami**
-- **Zarządzanie urlopami**
-- **Generowanie plików XLSX (Excel) dotyczących pracowników oraz stanowisk**
-- **Możliwość korespondencji między pracownikami**
+- [x] **System rejestrowania przedsiębiorstwa**
+- [x] **System zarządzania pracownikami**
+  - [x] Podgląd informacji dotyczących pracownika
+  - [x] Zmiana stanowiska
+  - [x] Zmiana wynagrodzenia
+  - [x] Możliwość zwolnienia
+- [x] **Zarządzanie stanowiskami oraz uprawnieniami**
+- [x] **Zarządzanie urlopami**
+- [x] **Generowanie plików XLSX (Excel) dotyczących pracowników oraz stanowisk**
+- [x] **Możliwość korespondencji między pracownikami**
