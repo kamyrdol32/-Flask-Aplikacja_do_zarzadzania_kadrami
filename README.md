@@ -21,15 +21,15 @@ Wykorzystane technologie:
 # Założenia
 
 - [x] **System autoryzacji**
-  - [x] Logowanie
-  - [x] Tworzenie konta
-  - [x] Generowanie konta dla pracownika
+  - Logowanie
+  - Tworzenie konta
+  - Generowanie konta dla pracownika
 - [x] **System rejestrowania przedsiębiorstwa**
 - [x] **System zarządzania pracownikami**
-  - [x] Podgląd informacji dotyczących pracownika
-  - [x] Zmiana stanowiska
-  - [x] Zmiana wynagrodzenia
-  - [x] Możliwość zwolnienia
+  - Podgląd informacji dotyczących pracownika
+  - Zmiana stanowiska
+  - Zmiana wynagrodzenia
+  - Możliwość zwolnienia
 - [x] **Zarządzanie stanowiskami oraz uprawnieniami**
 - [x] **Zarządzanie urlopami**
 - [x] **Generowanie plików XLSX (Excel) dotyczących pracowników oraz stanowisk**
