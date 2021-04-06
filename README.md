@@ -17,3 +17,20 @@ Wykorzystane technologie:
   - **JavaScript**:
     - Ajax,
     - Particles.js.
+
+# Funkcjonalność
+
+- **System autoryzacji**
+  - Logowanie
+  - Tworzenie konta
+  - Generowanie konta dla pracownika
+- **System rejestrowania przedsiębiorstwa**
+- **System zarządzania pracownikami**
+  - Podgląd informacji dotyczących pracownika
+  - Zmiana stanowiska
+  - Zmiana wynagrodzenia
+  - Możliwość zwolnienia
+- **Zarządzanie stanowiskami oraz uprawnieniami**
+- **Zarządzanie urlopami**
+- **Generowanie plików XLSX (Excel) dotyczących pracowników oraz stanowisk**
+- **Możliwość korespondencji między pracownikami**
