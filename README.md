@@ -1,11 +1,11 @@
 # Autorzy
 [Kamil Żegleń](https://github.com/kamyrdol32) (kamyrdol32):
-- ![100%](https://progress-bar.dev/100?title=Backend)
-- ![20%](https://progress-bar.dev/20?title=Frondend)
+- **Backend**: ![100%](https://progress-bar.dev/100)
+- **Frondend**: ![20%](https://progress-bar.dev/20)
 
 [Prophet061](https://github.com/Prophet061):
-- ![0%](https://progress-bar.dev/0?title=Backend)
-- ![80%](https://progress-bar.dev/80?title=Frontend)
+- **Backend**: ![0%](https://progress-bar.dev/0)
+- **Frondend**: ![80%](https://progress-bar.dev/80)
 
 # Aplikacja do zarządzania kadrami
 
