@@ -1,3 +1,8 @@
+# Autorzy
+**Backend** - [Kamil Żegleń](https://github.com/kamyrdol32) (kamyrdol32)
+
+**Frontend** - [Prophet061](https://github.com/Prophet061)
+
 # Aplikacja do zarządzania kadrami
 
 Jest to aplikacja stworzona na potrzeby napisania pracy inżynierskiej. 
@@ -35,7 +40,4 @@ Wykorzystane technologie:
 - [x] **Generowanie plików XLSX (Excel) dotyczących pracowników oraz stanowisk**
 - [x] **Możliwość korespondencji między pracownikami**
 
-# Autorzy
-**Backend** - [Kamil Żegleń](https://github.com/kamyrdol32) (kamyrdol32)
-
-**Frontend** - [Prophet061](https://github.com/Prophet061)
+# Zdjęcia
