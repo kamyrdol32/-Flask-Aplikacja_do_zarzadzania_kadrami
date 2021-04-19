@@ -1,7 +1,7 @@
 # Autorzy
 [Kamil Żegleń](https://github.com/kamyrdol32) (kamyrdol32):
 - Backend: https://progress-bar.dev/100/
-- Frontend: https://progress-bar.dev/20/
+- Frontend: ![50%](https://progress-bar.dev/50)
 
 **Frontend** - [Prophet061](https://github.com/Prophet061)
 
