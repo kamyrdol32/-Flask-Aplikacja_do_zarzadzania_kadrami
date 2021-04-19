@@ -9,7 +9,7 @@
 
 |               | Second Header | Second Header |
 | ------------- | ------------- | ------------- |
-| kamyrdol32  | Content Cell  | Content Cell  |
+| Kamil Żegleń (kamyrdol32)  | Content Cell  | Content Cell  |
 | Prophet061  | Content Cell  | Content Cell  |
 
 # Aplikacja do zarządzania kadrami
