@@ -1,9 +1,3 @@
-# Zawartość
-* [Autorzy](#autorzy)
-* [Aplikacja do zarządzania kadrami](#aplikacja-do-zarzadzania-kadrami)
-* [Założenia podczas tworzenia](#zalozenia-podczas-tworzenia)
-* [Zdjęcia](#zdjecia)
-
 # Autorzy
 
 | Autorzy | Backend | Frontend |
