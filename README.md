@@ -1,14 +1,7 @@
 # Autorzy
-[Kamil Żegleń](https://github.com/kamyrdol32) (kamyrdol32):
-- **Backend**: ![100%](https://progress-bar.dev/100)
-- **Frondend**: ![20%](https://progress-bar.dev/20)
 
-[Prophet061](https://github.com/Prophet061):
-- ![0%](https://progress-bar.dev/0) **Backend**
-- ![80%](https://progress-bar.dev/80) **Frondend**
-
-|               | Backend | Frontend |
-| :---:        | ------------- | ------------- |
+| Autorzy | Backend | Frontend |
+| :---: | :---: | :---: |
 | Kamil Żegleń (kamyrdol32)  | ![100%](https://progress-bar.dev/100)  | ![20%](https://progress-bar.dev/20)  |
 | Prophet061  | ![0%](https://progress-bar.dev/0)  | ![80%](https://progress-bar.dev/80)  |
 
