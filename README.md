@@ -3,7 +3,9 @@
 - Backend: ![100%](https://progress-bar.dev/100)
 - Frontend: ![20%](https://progress-bar.dev/20)
 
-**Frontend** - [Prophet061](https://github.com/Prophet061)
+[Prophet061](https://github.com/Prophet061):
+- Backend: ![0%](https://progress-bar.dev/0)
+- Frontend: ![80%](https://progress-bar.dev/80)
 
 # Aplikacja do zarządzania kadrami
 
