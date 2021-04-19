@@ -9,7 +9,7 @@
 
 Jest to aplikacja stworzona na potrzeby napisania pracy inżynierskiej. 
 
-Wykorzystane technologie:
+## Wykorzystane technologie:
   - **Python**:
       - Flask,
       - Flask Mail,
@@ -25,7 +25,7 @@ Wykorzystane technologie:
     - Ajax,
     - Particles.js.
 
-# Założenia podczas tworzenia
+## Założenia podczas tworzenia
 
 - [x] **System autoryzacji**
   - Logowanie
