@@ -36,6 +36,6 @@ Wykorzystane technologie:
 - [x] **Możliwość korespondencji między pracownikami**
 
 # Autorzy
-**Backend** - Kamil Żegleń (kamyrdol32)
+**Backend** - [Kamil Żegleń](https://github.com/kamyrdol32) (kamyrdol32)
 
 **Frontend** - [Prophet061](https://github.com/Prophet061)
