@@ -34,3 +34,7 @@ Wykorzystane technologie:
 - [x] **Zarządzanie urlopami**
 - [x] **Generowanie plików XLSX (Excel) dotyczących pracowników oraz stanowisk**
 - [x] **Możliwość korespondencji między pracownikami**
+
+# Autorzy
+Backend - Kamil Żegleń (kamyrdol32)
+Frontend - [Prophet061](https://github.com/Prophet061)
