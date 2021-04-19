@@ -7,10 +7,10 @@
 - ![0%](https://progress-bar.dev/0) **Backend**
 - ![80%](https://progress-bar.dev/80) **Frondend**
 
-|               | Second Header | Second Header |
-| :---: | ------------- | ------------- |
-| Kamil Żegleń (kamyrdol32)  | Content Cell  | Content Cell  |
-| Prophet061  | Content Cell  | Content Cell  |
+|               | Backend | Frontend |
+| :---:        | ------------- | ------------- |
+| Kamil Żegleń (kamyrdol32)  | ![100%](https://progress-bar.dev/100)  | ![20%](https://progress-bar.dev/20)  |
+| Prophet061  | ![0%](https://progress-bar.dev/0)  | ![80%](https://progress-bar.dev/80)  |
 
 # Aplikacja do zarządzania kadrami
 
