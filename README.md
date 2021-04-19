@@ -8,7 +8,7 @@
 - ![80%](https://progress-bar.dev/80) **Frondend**
 
 |               | Second Header | Second Header |
-| ------------- | ------------- | ------------- |
+| :---: | ------------- | ------------- |
 | Kamil Żegleń (kamyrdol32)  | Content Cell  | Content Cell  |
 | Prophet061  | Content Cell  | Content Cell  |
 
