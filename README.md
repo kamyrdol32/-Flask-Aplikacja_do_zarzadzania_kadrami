@@ -37,5 +37,4 @@ Wykorzystane technologie:
 
 # Autorzy
 **Backend** - Kamil Żegleń (kamyrdol32)
-
 **Frontend** - [Prophet061](https://github.com/Prophet061)
