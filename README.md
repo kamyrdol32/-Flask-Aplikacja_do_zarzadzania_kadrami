@@ -2,8 +2,8 @@
 
 | Autorzy | Backend | Frontend |
 | :---: | :---: | :---: |
-| **Kamil Żegleń** (kamyrdol32)  | ![100%](https://progress-bar.dev/100)  | ![20%](https://progress-bar.dev/20)  |
-| **Jakub Janusz** (Prophet061)  | ![0%](https://progress-bar.dev/0)  | ![80%](https://progress-bar.dev/80)  |
+| **Kamil Żegleń** ([kamyrdol32](https://github.com/kamyrdol32))  | ![100%](https://progress-bar.dev/100)  | ![20%](https://progress-bar.dev/20)  |
+| **Jakub Janusz** ([Prophet061](https://github.com/Prophet061))  | ![0%](https://progress-bar.dev/0)  | ![80%](https://progress-bar.dev/80)  |
 
 # Aplikacja do zarządzania kadrami
 
