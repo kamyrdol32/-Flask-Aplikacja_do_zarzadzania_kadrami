@@ -1,5 +1,8 @@
 # Zawartość
 * [Autorzy](#autorzy)
+* [Aplikacja do zarządzania kadrami](#aplikacja-do-zarzadzania-kadrami)
+* [Założenia podczas tworzenia](#zalozenia-podczas-tworzenia)
+* [Zdjęcia](#zdjecia)
 
 # Autorzy
 
@@ -28,7 +31,7 @@ Wykorzystane technologie:
     - Ajax,
     - Particles.js.
 
-# Założenia podczat tworzenia
+# Założenia podczas tworzenia
 
 - [x] **System autoryzacji**
   - Logowanie
