@@ -42,4 +42,4 @@ Jest to aplikacja stworzona na potrzeby napisania pracy inżynierskiej.
 - [x] **Generowanie plików XLSX (Excel) dotyczących pracowników oraz stanowisk**
 - [x] **Możliwość korespondencji między pracownikami**
 
-#### :star: Podgląd: www.inzynierka.kamilzeglen.pl
+#### :star: Podgląd: http://inzynierka.kamilzeglen.pl
