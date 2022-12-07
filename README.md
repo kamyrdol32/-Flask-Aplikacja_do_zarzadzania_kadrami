@@ -41,5 +41,3 @@ Jest to aplikacja stworzona na potrzeby napisania pracy inżynierskiej.
 - [x] **Zarządzanie urlopami**
 - [x] **Generowanie plików XLSX (Excel) dotyczących pracowników oraz stanowisk**
 - [x] **Możliwość korespondencji między pracownikami**
-
-#### :star: Podgląd: http://inzynierka.kamilzeglen.pl/
