@@ -41,3 +41,7 @@ Jest to aplikacja stworzona na potrzeby napisania pracy inżynierskiej.
 - [x] **Zarządzanie urlopami**
 - [x] **Generowanie plików XLSX (Excel) dotyczących pracowników oraz stanowisk**
 - [x] **Możliwość korespondencji między pracownikami**
+
+# Zdjęcia
+### Strona głowna
+![Glowna](https://i.imgur.com/uehjfo4.png)
