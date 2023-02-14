@@ -1,15 +1,18 @@
-# Autorzy
+# Kadr.pl
 
-| Autorzy | Backend | Frontend |
+This application is an employee management system designed as part of an engineering project. It offers an easy-to-use interface for managing employee information, including personal details, job information, salary and vacations.
+
+## Authors
+
+| Author | Backend | Frontend |
 | :---: | :---: | :---: |
 | **Kamil Żegleń** ([kamyrdol32](https://github.com/kamyrdol32))  | ![90%](https://progress-bar.dev/90)  | ![20%](https://progress-bar.dev/20)  |
 | **Jakub Janusz** ([Prophet061](https://github.com/Prophet061))  | ![10%](https://progress-bar.dev/10)  | ![80%](https://progress-bar.dev/80)  |
 
-# Aplikacja do zarządzania kadrami
+## Installation
+`Comming soon`
 
-Jest to aplikacja stworzona na potrzeby napisania pracy inżynierskiej. 
-
-### Wykorzystane technologie:
+## Technologies used:
   - **Python**:
       - Flask,
       - Flask Mail,
@@ -25,23 +28,9 @@ Jest to aplikacja stworzona na potrzeby napisania pracy inżynierskiej.
     - Ajax,
     - Particles.js.
 
-### Założenia podczas tworzenia
+## Demo:
+`Comming soon`
 
-- [x] **System autoryzacji**
-  - Logowanie
-  - Tworzenie konta
-  - Generowanie konta dla pracownika
-- [x] **System rejestrowania przedsiębiorstwa**
-- [x] **System zarządzania pracownikami**
-  - Podgląd informacji dotyczących pracownika
-  - Zmiana stanowiska
-  - Zmiana wynagrodzenia
-  - Możliwość zwolnienia
-- [x] **Zarządzanie stanowiskami oraz uprawnieniami**
-- [x] **Zarządzanie urlopami**
-- [x] **Generowanie plików XLSX (Excel) dotyczących pracowników oraz stanowisk**
-- [x] **Możliwość korespondencji między pracownikami**
-
-# Zdjęcia
-### Strona głowna
-![Glowna](https://i.imgur.com/uehjfo4.png)
+## Photos
+### Main Page
+![Main Page](https://i.imgur.com/uehjfo4.png)
