@@ -6,8 +6,8 @@ This application is an employee management system designed as part of an enginee
 
 | Author | Backend | Frontend |
 | :---: | :---: | :---: |
-| **Kamil Żegleń** ([kamyrdol32](https://github.com/kamyrdol32))  | ![90%](https://progress-bar.dev/90)  | ![20%](https://progress-bar.dev/20)  |
-| **Jakub Janusz** ([Prophet061](https://github.com/Prophet061))  | ![10%](https://progress-bar.dev/10)  | ![80%](https://progress-bar.dev/80)  |
+| **Kamil Żegleń** ([kamyrdol32](https://github.com/kamyrdol32))  | 90% | 20% |
+| **Jakub Janusz** ([Prophet061](https://github.com/Prophet061))  | 10% | 80% |
 
 ## Installation
 `Comming soon`
